@@ -1,34 +1,28 @@
 {
   "implicitDependencies": {
     "angular.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
     "nx.json": "*"
   },
-  "affected": {
-    "defaultBase": "master"
-  },
-  "npmScope": "scappy.org",
+  "affected": { "defaultBase": "master" },
+  "npmScope": "ng-scrappy",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
+      "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "accessToken": "ZGY2YWMxNGUtYmFhNi00MjA4LThkYzMtNjFjOTFlOTllZjc4fHJlYWQtd3JpdGU=",
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
       }
     }
   },
   "projects": {
-    "ng-scrappy": {
-      "tags": []
-    },
-    "ng-scrappy-e2e": {
-      "tags": [],
-      "implicitDependencies": ["ng-scrappy"]
-    }
+    "ng-scrappy": { "tags": [] },
+    "ng-scrappy-e2e": { "tags": [], "implicitDependencies": ["ng-scrappy"] },
+    "functions": { "tags": [] }
   }
 }

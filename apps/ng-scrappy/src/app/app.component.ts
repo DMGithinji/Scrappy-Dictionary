@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'scappy.org-root',
+  selector: 'ng-scrappy-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
