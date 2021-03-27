@@ -45,6 +45,7 @@
     "firebase": "^8.3.1",
     "firebase-admin": "^9.5.0",
     "firebase-functions": "^3.13.2",
+    "puppeteer": "^8.0.0",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "^0.10.2"
@@ -85,6 +86,7 @@
   },
   "firebase-functions-dependencies": [
     "firebase-admin",
-    "firebase-functions"
+    "firebase-functions",
+    "puppeteer"
   ]
 }
