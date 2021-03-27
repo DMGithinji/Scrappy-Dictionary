@@ -1,3 +1,3 @@
 module.exports = {
-  projects: ['<rootDir>/apps/ng-scrappy'],
+  projects: ['<rootDir>/apps/ng-scrappy', '<rootDir>/apps/functions'],
 };
