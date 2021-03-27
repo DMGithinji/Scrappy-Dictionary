@@ -1,8 +1,9 @@
-import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
+import { config } from 'firebase-functions';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-export const helloWorld = functions.https.onRequest((request, response) => {
-  response.send('Hello from Firebase!');
-});
+// Init Firebase Upload
+const conf = config().firebase;
+admin.initializeApp(conf);
+
+// export all modules.
+export * from './app/scrapper/scrapper.function';
