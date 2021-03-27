@@ -4,7 +4,6 @@ export interface ITranslationResults {
   example: string;
   translation: string;
 }
-
 export interface ITranslationLinkData {
   word: string;
   trlLink: string;

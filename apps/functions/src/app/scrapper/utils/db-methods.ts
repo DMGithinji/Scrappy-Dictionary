@@ -1,4 +1,4 @@
-import { ITranslationLinkData } from '../interfaces/translation.interface';
+import { ITranslationLinkData, ITranslationResults } from '../interfaces/translation.interface';
 
 /**
  * Check's if word exists
@@ -14,4 +14,22 @@ export async function isWordNew(db: FirebaseFirestore.Firestore, trlData: ITrans
     .get();
 
   return trlRef.empty;
+}
+
+
+/**
+ * Gets translation data and save it to DB
+ * @param {FirebaseFirestore.Firestore} db
+ * @param {ITranslationLinkData} trlData
+ * @return {void}
+ */
+ export async function saveTrl(db: FirebaseFirestore.Firestore, lang: string, trlRes: ITranslationResults) {
+  try {
+    const repo = await db.collection(`dictionary/${lang}/words`);
+    repo.add(trlRes);
+
+    console.log(`[saveTrl]. Saved word - ${trlRes.word}`);
+  } catch (err) {
+    console.error('[saveTrl]. Error saving translation data - ', err);
+  }
 }
