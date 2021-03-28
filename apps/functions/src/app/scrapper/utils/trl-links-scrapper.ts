@@ -12,6 +12,9 @@ export const scrapeTrlLinks = async (lang: string) => {
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
+    // Configure the navigation timeout
+    await page.setDefaultNavigationTimeout(0);
+
     console.log(`Getting translation links from ${lang} page`);
 
     await page.goto(`https://www.lughayangu.com/${lang}/`);

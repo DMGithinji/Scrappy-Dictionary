@@ -34,6 +34,9 @@ export const scrapeTrlData = async (trlData: ITranslationLinkData) => {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
 
+  // Configure the navigation timeout
+  await page.setDefaultNavigationTimeout(0);
+
   await page.goto(link);
   await page.waitForSelector('.en-translation', { visible: true });
 
