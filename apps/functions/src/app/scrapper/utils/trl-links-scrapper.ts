@@ -1,4 +1,6 @@
+import * as _ from 'lodash';
 import * as puppeteer from 'puppeteer';
+
 // eslint-disable-next-line no-unused-vars
 import { ITranslationLinkData } from '../interfaces/translation.interface';
 
@@ -9,35 +11,42 @@ import { ITranslationLinkData } from '../interfaces/translation.interface';
  */
 export const scrapeTrlLinks = async (lang: string) => {
   try {
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
 
-    // Configure the navigation timeout
-    await page.setDefaultNavigationTimeout(0);
+    const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
+                     "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
+                     "W", "X", "Y", "Z"];
+    const combinedTrls = await Promise.all(letters
+      .map(async (l) => {
+        const browser = await puppeteer.launch({ headless: true });
+        const page = await browser.newPage();
 
-    console.log(`Getting translation links from ${lang} page`);
+        // Configure the navigation timeout
+        await page.setDefaultNavigationTimeout(0);
 
-    await page.goto(`https://www.lughayangu.com/${lang}/`);
-    await page.waitForSelector('a', { visible: true });
+        console.log(`Getting translation links from ${lang} page - Letter ${l}`);
+        await page.goto(`https://www.lughayangu.com/${lang}/az/${l}`);
+        await page.waitForSelector('a', { visible: true });
 
-    await page.exposeFunction('getTrlLinkData', getTrlLinkData);
+        await page.exposeFunction('getTrlLinkData', getTrlLinkData);
 
-    const trlLinkData = await page.evaluate(async (lang) => {
-      const languageElements = document.querySelectorAll('a');
+        const trlLinkData = await page.evaluate(async (lang) => {
+          const languageElements = document.querySelectorAll('a');
 
-      const urls = Array.from(languageElements).map((v) => v.href);
+          const urls = Array.from(languageElements).map((v) => v.href);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return await (window as any).getTrlLinkData(urls, lang);
-    }, lang);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          return await (window as any).getTrlLinkData(urls, lang);
+        }, lang);
 
-    await browser.close();
+        console.log(`${lang} - Letter: ${l} - ${trlLinkData.length} trl links scrapped`);
+        await browser.close();
 
-    console.log(`${lang}- ${trlLinkData.length} trl links scrapped`);
-    return trlLinkData as ITranslationLinkData[];
+        return trlLinkData as ITranslationLinkData;
+      }));
+
+      return _.flatMap(combinedTrls);
   } catch (err) {
     console.log(`[scrapeTrlLinks]. Error - ${err}`);
-    return null;
   }
 };
 
