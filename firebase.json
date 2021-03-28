@@ -1,10 +1,11 @@
 {
   "functions": {
+    "runtime": "nodejs10",
     "predeploy": [
       "yarn lint functions",
       "yarn build functions --prod",
       "node tools/scripts/build-functions-package.js"
     ],
-    "source": "/"
+    "source": "dist/apps/functions"
   }
 }

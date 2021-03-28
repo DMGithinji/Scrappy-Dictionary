@@ -4,7 +4,7 @@ const deps = packageJson['firebase-functions-dependencies'];
 
 // Template of package.json for Firebase Functions
 const firebaseFunctionsPackageJson = {
-  engines: { node: '12' },
+  engines: { node: '10' },
   main: 'main.js',
 
   // filter only dependencies we need for Firebase Functions
@@ -20,7 +20,7 @@ console.log(
   JSON.stringify(firebaseFunctionsPackageJson, null, 2)
 );
 
-const path = 'dist/apps/firebase-functions/package.json'; // Where to save generated package.json file
+const path = 'dist/apps/functions/package.json'; // Where to save generated package.json file
 
 fs.writeFileSync(path, JSON.stringify(firebaseFunctionsPackageJson));
 console.log(`${path} written successfully.`);
