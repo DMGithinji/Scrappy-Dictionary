@@ -33,3 +33,26 @@ export async function isWordNew(db: FirebaseFirestore.Firestore, trlData: ITrans
     console.error('[saveTrl]. Error saving translation data - ', err);
   }
 }
+
+
+/**
+ * Get's languages to get translations for from db
+ * @param {FirebaseFirestore} db
+ * @return {string[]} List of languages
+ */
+export async function getSupportedLangs(db: FirebaseFirestore.Firestore) {
+  const snapshot = await firestoreQuery(db, 'supported-languages');
+  return snapshot.map((doc) => doc.language);
+}
+
+
+/**
+ * Queries given collection path, returns docs within it
+ * @param {FirebaseFirestore} db
+ * @param {string} collectionPath
+ * @return {DocumentData} document data
+ */
+export async function firestoreQuery(db: FirebaseFirestore.Firestore, collectionPath: string) {
+  const snapshot = await db.collection(collectionPath).get();
+  return snapshot.docs.map((doc) => doc.data());
+}

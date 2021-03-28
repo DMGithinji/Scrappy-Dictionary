@@ -3,7 +3,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
 import { scrapeTrlLinks } from './utils/trl-links-scrapper';
-import { isWordNew } from './utils/db-methods';
+import { getSupportedLangs, isWordNew } from './utils/db-methods';
 import { publishToPubsub } from './utils/pubsub-publisher';
 
 
@@ -29,7 +29,7 @@ export const scrappy = functions
     console.log('Executing scrappy.');
 
     // Step 1. Get all trl links for each language
-    const langs = ['sheng'];
+    const langs =  await getSupportedLangs(db);
 
     const trlLinkDataPromises = langs.map((lang: string) => {
       return scrapeTrlLinks(lang);
