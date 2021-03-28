@@ -20,12 +20,11 @@ export const scrapeTrlLinks = async (lang: string) => {
     await page.exposeFunction('getTrlLinkData', getTrlLinkData);
 
     const trlLinkData = await page.evaluate(async (lang) => {
-      // eslint-disable-next-line no-undef
       const languageElements = document.querySelectorAll('a');
 
       const urls = Array.from(languageElements).map((v) => v.href);
 
-      // eslint-disable-next-line no-undef
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return await (window as any).getTrlLinkData(urls, lang);
     }, lang);
 
