@@ -10,16 +10,18 @@ import * as _ from 'lodash';
   const langObjs = await getSupportedLangs(db);
   const langs = langObjs.map(obj => obj.language);
 
-  console.log(langs);
   const res = await Promise.all(
     langs.map(async (lang) => {
       const snapshot = await db
         .collection(`dictionary/${lang}/words`)
         .where('word', '==', word)
         .get();
-      return snapshot.docs.map((doc) => doc.data());
+      return snapshot.docs.map((doc) => {
+        const trl = doc.data();
+        trl.language = lang;
+        return trl;
+      });
     }))
-    console.log(JSON.stringify(res));
 
     return _.flatMap(res);
 }
@@ -31,7 +33,11 @@ import * as _ from 'lodash';
  * @return {string[]} List of Translation Objects
  */
  export async function getLangWords(db: FirebaseFirestore.Firestore, lang: string) {
-  return  await queryCollection(db, `dictionary/${lang}/words`);
+  const trls = await queryCollection(db, `dictionary/${lang}/words`);
+  return trls.map(trl => {
+    trl.language = lang;
+    return trl;
+  })
 }
 
 

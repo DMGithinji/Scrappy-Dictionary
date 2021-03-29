@@ -12,8 +12,7 @@ import { publishToPubsub } from './utils/pubsub-publisher';
 const serviceAccount = require('./../../environments/service-account.json');
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://cloudfunc-101.firebaseio.com',
+  credential: admin.credential.cert(serviceAccount)
 });
 
 const db = admin.firestore();
@@ -52,7 +51,6 @@ export const scrappy = functions
     // Step 3. Getting translations and saving
     //         Dividing work to different handlers
     //         because of fxns timing & memory limits
-
     const trlDataChunks = _.chunk(filtered, 10);
 
     await Promise.all(trlDataChunks.map(async (chunk) => {
