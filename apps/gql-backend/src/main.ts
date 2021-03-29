@@ -1,18 +1,13 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
+import { ApolloServer } from 'apollo-server';
+import { resolvers } from './app/translation.resolver'
+import { typeDefs } from './app/schema/translation.typeDef';
 
-import express from 'express';
-
-const app = express();
-
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to gql-backend!' });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  introspection: false
 });
 
-const port = process.env.port || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
+server.listen({ port: process.env.PORT || 4003 }).then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
 });
-server.on('error', console.error);
