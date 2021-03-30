@@ -1,9 +1,12 @@
 import * as admin from 'firebase-admin';
-import { ApolloError, ValidationError} from 'apollo-server';
+import { ApolloError, ValidationError } from 'apollo-server';
 
 import { Language, Translation } from './schema/translation.interface';
-import { getLangWords, getSupportedLangs, searchWord } from './utils/db-queries';
-
+import {
+  getLangWords,
+  getSupportedLangs,
+  searchWord,
+} from './utils/db-queries';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const serviceAccount = require('./../environments/service-account.json');
@@ -14,10 +17,9 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-
 export const resolvers = {
   Query: {
-    async translations(_: null, args: { language: string, word: string }) {
+    async translations(_: null, args: { language: string; word: string }) {
       try {
         // Random query for words in a language
         if (args.language) {
@@ -27,7 +29,10 @@ export const resolvers = {
         // Search for word
         else if (args.word) {
           const results = await searchWord(db, args.word);
-          return results as Translation[] || new ValidationError('Error during search');
+          return (
+            (results as Translation[]) ||
+            new ValidationError('Error during search')
+          );
         }
       } catch (error) {
         throw new ApolloError(error);
@@ -40,6 +45,6 @@ export const resolvers = {
       } catch (error) {
         throw new ApolloError(error);
       }
-    }
-  }
-}
+    },
+  },
+};

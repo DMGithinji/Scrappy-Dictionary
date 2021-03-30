@@ -5,8 +5,10 @@ import { PubSub } from '@google-cloud/pubsub';
  * @param data
  * @param channelName
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function publishToPubsub(data: any, channelName: string): Promise<string> {
+export async function publishToPubsub(
+  data,
+  channelName: string
+): Promise<string> {
   console.log(`Publishing to ${channelName}`);
   const pubsub = new PubSub();
   const topic = pubsub.topic(channelName).publisher;

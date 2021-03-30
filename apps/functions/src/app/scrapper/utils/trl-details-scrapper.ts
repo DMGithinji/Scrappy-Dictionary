@@ -1,7 +1,9 @@
 import * as puppeteer from 'puppeteer';
-import { ITranslationLinkData, ITranslationResults } from '../interfaces/translation.interface';
-import { saveTrl } from './db-methods';
-
+import {
+  ITranslationLinkData,
+  ITranslationResults,
+} from '../interfaces/translation.interface';
+import { saveTrl } from './db-queries';
 
 /**
  * Gets translation data and save it to DB
@@ -9,7 +11,10 @@ import { saveTrl } from './db-methods';
  * @param {ITranslationLinkData} trlData
  * @return {void}
  */
- export async function getAndSave(db: FirebaseFirestore.Firestore, trlData: ITranslationLinkData) {
+export async function getAndSave(
+  db: FirebaseFirestore.Firestore,
+  trlData: ITranslationLinkData
+) {
   try {
     const trlResults = await scrapeTrlData(trlData);
 
@@ -20,8 +25,6 @@ import { saveTrl } from './db-methods';
     console.error('[getAndSave]. Error gettng translation data - ', err);
   }
 }
-
-
 
 /**
  * 1. Visits word url, gets description,
@@ -60,11 +63,11 @@ export const scrapeTrlData = async (trlData: ITranslationLinkData) => {
     await browser.close();
 
     return trlResults as ITranslationResults;
-  } catch(e) {
-    console.error(`Error getting translation data: - ${e} for word there ${trlData.word}`);
+  } catch (e) {
+    console.error(
+      `Error getting translation data: - ${e} for word there ${trlData.word}`
+    );
   }
-
-
 };
 
 /**

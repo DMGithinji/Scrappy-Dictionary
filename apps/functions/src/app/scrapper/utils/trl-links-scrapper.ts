@@ -11,19 +11,21 @@ import { ITranslationLinkData } from '../interfaces/translation.interface';
  */
 export const scrapeTrlLinks = async (lang: string) => {
   try {
+    // TODO: Chunk requests for A-Z to split to different PUBSUBS and
+    //       DON'T run function with all letters at once to avoid DDOS
+    const letters = ["A", "B"];
 
-    const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
-                     "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
-                     "W", "X", "Y", "Z"];
-    const combinedTrls = await Promise.all(letters
-      .map(async (l) => {
+    const combinedTrls = await Promise.all(
+      letters.map(async (l) => {
         const browser = await puppeteer.launch({ headless: true });
         const page = await browser.newPage();
 
         // Configure the navigation timeout
         await page.setDefaultNavigationTimeout(0);
 
-        console.log(`Getting translation links from ${lang} page - Letter ${l}`);
+        console.log(
+          `Getting translation links from ${lang} page - Letter ${l}`
+        );
         await page.goto(`https://www.lughayangu.com/${lang}/az/${l}`);
         await page.waitForSelector('a', { visible: true });
 
@@ -38,13 +40,16 @@ export const scrapeTrlLinks = async (lang: string) => {
           return await (window as any).getTrlLinkData(urls, lang);
         }, lang);
 
-        console.log(`${lang} - Letter: ${l} - ${trlLinkData.length} trl links scrapped`);
+        console.log(
+          `${lang} - Letter: ${l} - ${trlLinkData.length} trl links scrapped`
+        );
         await browser.close();
 
         return trlLinkData as ITranslationLinkData;
-      }));
+      })
+    );
 
-      return _.flatMap(combinedTrls);
+    return _.flatMap(combinedTrls);
   } catch (err) {
     console.log(`[scrapeTrlLinks]. Error - ${err}`);
   }
