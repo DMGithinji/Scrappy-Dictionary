@@ -1,6 +1,5 @@
 import { gql } from 'apollo-server';
 
-
 export const typeDefs = gql`
   type Translation {
     word: String!
@@ -14,9 +13,8 @@ export const typeDefs = gql`
     language: String!
   }
 
-
   type Query {
     translations(language: String, word: String): [Translation]
     languages: [Language]
   }
-`
+`;
