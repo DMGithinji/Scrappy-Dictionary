@@ -36,8 +36,11 @@ export async function saveTrl(
 ) {
   try {
     const repo = await db.collection(`dictionary/${lang}/words`);
+
+    trlRes.word = trlRes.word[0].toUpperCase() + trlRes.word.slice(1);
     trlRes.createdAt = firestore.Timestamp.now();
     trlRes.language = lang;
+
     repo.add(trlRes);
 
     console.log(`[saveTrl]. Saved word - ${trlRes.word}`);

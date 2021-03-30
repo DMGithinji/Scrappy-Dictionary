@@ -7,6 +7,7 @@ export const typeDefs = gql`
     meaning: String!
     example: String
     translation: String
+    relatedWords: [String]
   }
 
   type Language {

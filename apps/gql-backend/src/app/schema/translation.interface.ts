@@ -4,6 +4,7 @@ export interface Translation {
   meaning: string;
   example: string;
   translation: string;
+  relatedWords: string[];
 }
 
 export interface Language {

@@ -58,11 +58,29 @@ export const scrapeTrlData = async (trlData: ITranslationLinkData) => {
     let translation = await page.evaluate((el) => el.textContent, trlEl);
     translation = removePrefix(cleanText(translation));
 
-    const trlResults = { word, link, meaning, example, translation };
+    const relatedWords = await page.evaluate(() => {
+      const relatedEl = document.querySelectorAll('a');
+
+      return Array.from(relatedEl)
+        .map((v) => {
+          if (v.classList.contains('word-list')) {
+            return v.textContent;
+          }
+        })
+        .filter((word) => !!word);
+    });
 
     await browser.close();
 
-    return trlResults as ITranslationResults;
+    return ({
+      word,
+      link,
+      meaning,
+      example,
+      translation,
+      relatedWords,
+    }) as ITranslationResults;
+
   } catch (e) {
     console.error(
       `Error getting translation data: - ${e} for word there ${trlData.word}`

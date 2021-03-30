@@ -11,6 +11,7 @@ export interface ITranslationResults extends IObject {
   example: string;
   translation: string;
   language?: string;
+  relatedWords?: string[];
 }
 export interface ITranslationLinkData {
   word: string;
