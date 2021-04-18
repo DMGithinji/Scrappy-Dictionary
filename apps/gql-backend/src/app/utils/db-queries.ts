@@ -12,23 +12,22 @@ export async function searchWord(
   const langObjs = await getSupportedLangs(db);
   const langs = langObjs.map((obj) => obj.language);
 
-  const res = await Promise.all(
-    langs.map(async (lang) => {
-      const snapshot = await db
-        .collection(`dictionary/${lang}/words`)
-        .where('word', '==', word)
-        .orderBy('word')
-        .get();
-      const trl = snapshot.docs.map((doc) => {
-        const t = doc.data();
-        t.language = lang;
-        return t;
-      });
-      return trl;
-    })
-  );
+  try {
+    const res = await Promise.all(
+      langs.map(async (lang) => {
+        const snapshot = await db
+          .collection(`dictionary/${lang}/words`)
+          .where('word', '==', word)
+          .get();
 
-  return _.flatMap(res);
+        return snapshot.docs.map((doc) => doc.data());
+      })
+    );
+
+    return _.flatMap(res);
+  } catch (e) {
+    throw Error(`[searchWord]: - Error querying for word ${word} - ${e}`);
+  }
 }
 
 /**
@@ -40,11 +39,13 @@ export async function getLangWords(
   db: FirebaseFirestore.Firestore,
   lang: string
 ) {
-  const trls = await queryCollection(db, `dictionary/${lang}/words`, 'word');
-  return trls.map((trl) => {
-    trl.language = lang;
-    return trl;
-  });
+  try {
+    return await queryCollection(db, `dictionary/${lang}/words`, 'word');
+  } catch (e) {
+    throw Error(
+      `[getLangWords]: - Error querying language words for ${lang} - ${e}`
+    );
+  }
 }
 
 /**
