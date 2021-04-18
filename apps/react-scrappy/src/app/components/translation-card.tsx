@@ -1,10 +1,12 @@
 import React from 'react';
 import { ITranslation } from '@ng-scrappy/models';
 import { Link } from 'react-router-dom';
+import { capitalize, slice } from '../utils/capitalize.util';
 
 export default function TranslationCard(props: { trl: ITranslation }) {
 
   const { trl } = props;
+  const meaning = trl.meaning ? slice(capitalize(trl.meaning), 80) : '';
   return (
     <div className="card card-body m-2">
         <div className="d-flex justify-content-between">
@@ -13,28 +15,16 @@ export default function TranslationCard(props: { trl: ITranslation }) {
             <small className="badge badge-warning">{trl.language}</small>
           </div>
         </div>
-        <p>{slice(capitalize(trl.meaning), 80)}</p>
+        <p>{meaning}</p>
 
-        <Link to={`/word/${trl.word}`} className="btn btn-secondary">
+        <Link to={`/${trl.language}/word/${trl.word}`} className="btn btn-secondary">
           <small className="mt-2">
-            Explore more...
+            Read more...
           </small>
         </Link>
 
     </div>
   )
 
-}
-
-const capitalize = (sentence: string) => {
-  return sentence.slice(0, 1).toUpperCase() + sentence.slice(1,);
-}
-
-const slice = (sentence: string, limit: number) => {
-  if (sentence.length <= limit) {
-    return sentence;
-  }
-
-  return sentence.slice(0, limit) + '...'
 }
 

@@ -23,7 +23,7 @@ export class App extends Component {
         <Router>
           <div className="container">
             <div className={styles.app}>
-              <header>
+              <header className="mb-5">
                 <div className="d-flex justify-content-center align-items-center">
                   <img
                     className="logo"
@@ -35,9 +35,9 @@ export class App extends Component {
               </header>
 
               <main>
-                  <Route exact path="/:language" component={Home} />
-                  <Route exact path="/:language/words" component={TranslationList} />
-                  <Route exact path="/:language/:word" component={TranslationDetail} />
+                <Route exact path="/:language" component={Home} />
+                <Route exact path="/:language/words" component={TranslationList} />
+                <Route exact path="/:language/word/:word" component={TranslationDetail} />
               </main>
             </div>
           </div>
