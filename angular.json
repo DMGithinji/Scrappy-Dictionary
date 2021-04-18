@@ -268,6 +268,27 @@
           }
         }
       }
+    },
+    "backend-graphql": {
+      "root": "libs/backend/graphql",
+      "sourceRoot": "libs/backend/graphql/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/backend/graphql/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/backend/graphql"],
+          "options": {
+            "jestConfig": "libs/backend/graphql/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
