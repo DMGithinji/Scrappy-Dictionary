@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server';
 
-export const typeDefs = gql`
+export const scrapperTypeDefs = gql`
   type Translation {
     word: String!
     language: String

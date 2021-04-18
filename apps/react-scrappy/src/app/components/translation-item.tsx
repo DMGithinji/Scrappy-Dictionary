@@ -1,17 +1,7 @@
 import React, { Fragment } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { ITranslation } from '@ng-scrappy/models';
 
-interface Translation {
-  id: string;
-  language: string
-  word: string;
-  meaning: string;
-  example: string;
-  translation: string;
-  relatedWords: string[];
-}
-
-export default function TranslationItem(props: { trl: Translation }) {
+export default function TranslationItem(props: { trl: ITranslation }) {
 
   const { trl } = props;
   return (

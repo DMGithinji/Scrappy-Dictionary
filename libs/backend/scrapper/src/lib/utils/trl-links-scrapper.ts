@@ -1,8 +1,7 @@
 import * as _ from 'lodash';
 import * as puppeteer from 'puppeteer';
 
-// eslint-disable-next-line no-unused-vars
-import { ITranslationLinkData } from '../interfaces/translation.interface';
+import { ITranslationLinkData } from '@ng-scrappy/models';
 
 /**
  * Extract word links from provided links

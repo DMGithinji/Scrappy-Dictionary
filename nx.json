@@ -1,18 +1,13 @@
 {
   "implicitDependencies": {
     "angular.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
     "nx.json": "*"
   },
-  "affected": {
-    "defaultBase": "master"
-  },
+  "affected": { "defaultBase": "master" },
   "npmScope": "ng-scrappy",
   "tasksRunnerOptions": {
     "default": {
@@ -26,28 +21,16 @@
     }
   },
   "projects": {
-    "ng-scrappy": {
-      "tags": []
-    },
-    "ng-scrappy-e2e": {
-      "tags": [],
-      "implicitDependencies": ["ng-scrappy"]
-    },
-    "functions": {
-      "tags": []
-    },
-    "backend-scrapper": {
-      "tags": []
-    },
-    "backend-graphql": {
-      "tags": []
-    },
-    "react-scrappy": {
-      "tags": []
-    },
+    "ng-scrappy": { "tags": [] },
+    "ng-scrappy-e2e": { "tags": [], "implicitDependencies": ["ng-scrappy"] },
+    "functions": { "tags": [] },
+    "backend-scrapper": { "tags": [] },
+    "backend-graphql": { "tags": [] },
+    "react-scrappy": { "tags": [] },
     "react-scrappy-e2e": {
       "tags": [],
       "implicitDependencies": ["react-scrappy"]
-    }
+    },
+    "models": { "tags": [] }
   }
 }

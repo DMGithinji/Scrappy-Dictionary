@@ -1,5 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import { ITranslationLinkData } from '@ng-scrappy/models';
 import { getAndSave } from './../utils/trl-details-scrapper';
 
 const db = admin.firestore();
@@ -18,7 +19,7 @@ export const dataSaver = functions
         ? Buffer.from(message.data, 'base64').toString()
         : null;
 
-      const toTrl = JSON.parse(messageBody);
+      const toTrl = JSON.parse(messageBody) as ITranslationLinkData[];
 
       await Promise.all(
         toTrl.map(async (data) => {

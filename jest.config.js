@@ -5,5 +5,6 @@ module.exports = {
     '<rootDir>/libs/backend/scrapper',
     '<rootDir>/libs/backend/graphql',
     '<rootDir>/apps/react-scrappy',
+    '<rootDir>/libs/models',
   ],
 };

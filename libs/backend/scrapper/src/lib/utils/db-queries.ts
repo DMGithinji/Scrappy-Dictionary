@@ -2,7 +2,7 @@ import { firestore } from 'firebase-admin';
 import {
   ITranslationLinkData,
   ITranslationResults,
-} from '../interfaces/translation.interface';
+} from '@ng-scrappy/models';
 
 /**
  * Check's if word exists

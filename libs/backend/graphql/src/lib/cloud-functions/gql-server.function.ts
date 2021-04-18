@@ -3,8 +3,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { https } from 'firebase-functions';
 
 import { resolvers } from './../resolvers/translation.resolver';
-import { typeDefs } from './../schema/translation.typeDef';
-
+import { scrapperTypeDefs as typeDefs} from '@ng-scrappy/models';
 
 function gqlServer() {
   const app = express();

@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin';
 import { ApolloError, ValidationError } from 'apollo-server';
 
-import { Language, Translation } from './../schema/translation.interface';
+import { ILanguage, ITranslation } from '@ng-scrappy/models';
 import {
   getLangWords,
   getSupportedLangs,
@@ -23,7 +23,7 @@ export const resolvers = {
         else if (args.word) {
           const results = await searchWord(db, args.word);
           return (
-            (results as Translation[]) ||
+            (results as ITranslation[]) ||
             new ValidationError('Error during search')
           );
         }
@@ -34,7 +34,7 @@ export const resolvers = {
     async languages() {
       try {
         const langs = await getSupportedLangs(db);
-        return langs as Language[];
+        return langs as ILanguage[];
       } catch (error) {
         throw new ApolloError(error);
       }

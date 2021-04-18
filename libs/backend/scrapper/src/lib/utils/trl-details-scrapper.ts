@@ -2,7 +2,7 @@ import * as puppeteer from 'puppeteer';
 import {
   ITranslationLinkData,
   ITranslationResults,
-} from '../interfaces/translation.interface';
+} from '@ng-scrappy/models';
 import { saveTrl } from './db-queries';
 
 /**

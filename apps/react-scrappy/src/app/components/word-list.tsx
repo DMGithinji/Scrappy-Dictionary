@@ -1,16 +1,8 @@
 import React, { Fragment } from 'react';
 import { useQuery, gql } from '@apollo/client';
+import { ITranslation } from '@ng-scrappy/models';
 import TranslationItem from './translation-item';
 
-interface Translation {
-  id: string;
-  language: string
-  word: string;
-  meaning: string;
-  example: string;
-  translation: string;
-  relatedWords: string[];
-}
 
 const WORDS_LIST_QUERY = gql`
   query GetLanguageWords($language: String!) {
@@ -32,7 +24,7 @@ export default function WordList(props: { lang: string }) {
 
   return(
     <Fragment>
-      {data.translations.map((trl: Translation) => (
+      {data.translations.map((trl: ITranslation) => (
         <TranslationItem key={trl.word} trl={trl} />
       ))}
     </Fragment>
