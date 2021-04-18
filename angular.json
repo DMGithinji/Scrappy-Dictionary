@@ -247,6 +247,27 @@
           }
         }
       }
+    },
+    "backend-scrapper": {
+      "root": "libs/backend/scrapper",
+      "sourceRoot": "libs/backend/scrapper/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/backend/scrapper/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/backend/scrapper"],
+          "options": {
+            "jestConfig": "libs/backend/scrapper/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

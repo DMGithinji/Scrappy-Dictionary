@@ -24,6 +24,7 @@
     "ng-scrappy": { "tags": [] },
     "ng-scrappy-e2e": { "tags": [], "implicitDependencies": ["ng-scrappy"] },
     "functions": { "tags": [] },
-    "gql-backend": { "tags": [] }
+    "gql-backend": { "tags": [] },
+    "backend-scrapper": { "tags": [] }
   }
 }
