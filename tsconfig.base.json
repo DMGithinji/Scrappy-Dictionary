@@ -8,6 +8,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
+    "jsx": "react",
     "target": "ES2018",
     "module": "esnext",
     "lib": ["es2017", "dom"],
@@ -25,5 +26,8 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules", "tmp"],
+  "files": [
+    "apps/react-scrappy/src/main.tsx"
+]
 }

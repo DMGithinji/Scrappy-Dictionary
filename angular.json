@@ -29,6 +29,20 @@
     },
     "@nrwl/angular:component": {
       "style": "scss"
+    },
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint"
+      }
     }
   },
   "projects": {
@@ -235,6 +249,106 @@
           "options": {
             "jestConfig": "libs/backend/graphql/jest.config.js",
             "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "react-scrappy": {
+      "root": "apps/react-scrappy",
+      "sourceRoot": "apps/react-scrappy/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/react-scrappy",
+            "index": "apps/react-scrappy/src/index.html",
+            "main": "apps/react-scrappy/src/main.tsx",
+            "polyfills": "apps/react-scrappy/src/polyfills.ts",
+            "tsConfig": "apps/react-scrappy/tsconfig.app.json",
+            "assets": [
+              "apps/react-scrappy/src/favicon.ico",
+              "apps/react-scrappy/src/assets"
+            ],
+            "styles": ["apps/react-scrappy/src/styles.scss"],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/react-scrappy/src/environments/environment.ts",
+                  "with": "apps/react-scrappy/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "react-scrappy:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "react-scrappy:build:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/react-scrappy/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/react-scrappy"],
+          "options": {
+            "jestConfig": "apps/react-scrappy/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "react-scrappy-e2e": {
+      "root": "apps/react-scrappy-e2e",
+      "sourceRoot": "apps/react-scrappy-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/react-scrappy-e2e/cypress.json",
+            "tsConfig": "apps/react-scrappy-e2e/tsconfig.e2e.json",
+            "devServerTarget": "react-scrappy:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "react-scrappy:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/react-scrappy-e2e/**/*.{js,ts}"]
           }
         }
       }
