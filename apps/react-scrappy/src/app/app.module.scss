@@ -12,8 +12,13 @@
     font-size: 20px;
   }
 
-  h1, h4, p, span, small {
+  h1, h4, span, small {
     text-transform: capitalize;
+  }
+
+  p {
+    letter-spacing: 0.5px;
+    font-size: 13px;
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { ITranslation } from '@ng-scrappy/models';
-import TranslationItem from './translation-item';
+import TranslationCard from './translation-card';
 
 
 const WORDS_LIST_QUERY = gql`
@@ -14,9 +14,9 @@ const WORDS_LIST_QUERY = gql`
   }
 `;
 
-export default function WordList(props: { lang: string }) {
+export default function WordList(props) {
   const { loading, error, data } = useQuery(WORDS_LIST_QUERY, {
-    variables: { language: props.lang },
+    variables: { language: props.match.params.language },
   });
 
   if (loading) return <p>Loading...</p>;
@@ -25,7 +25,7 @@ export default function WordList(props: { lang: string }) {
   return(
     <Fragment>
       {data.translations.map((trl: ITranslation) => (
-        <TranslationItem key={trl.word} trl={trl} />
+        <TranslationCard key={trl.word} trl={trl} />
       ))}
     </Fragment>
   )
