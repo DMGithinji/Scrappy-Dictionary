@@ -2,13 +2,13 @@ import * as _ from 'lodash';
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-import { scrapeTrlLinks } from './utils/trl-links-scrapper';
-import { getSupportedLangs, isWordNew } from './utils/db-queries';
-import { publishToPubsub } from './utils/pubsub-publisher';
+import { scrapeTrlLinks } from './../utils/trl-links-scrapper';
+import { getSupportedLangs, isWordNew } from './../utils/db-queries';
+import { publishToPubsub } from './../utils/pubsub-publisher';
 
 // Init Firebase Upload
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const serviceAccount = require('./../../environments/service-account.json');
+const serviceAccount = require('@ng-scrappy/service-json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

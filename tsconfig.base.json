@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@ng-scrappy/service-json": ["apps/functions/src/environments/service-account.json"],
       "@ng-scrappy/backend/scrapper": ["libs/backend/scrapper/src/index.ts"]
     },
     "resolveJsonModule": true,

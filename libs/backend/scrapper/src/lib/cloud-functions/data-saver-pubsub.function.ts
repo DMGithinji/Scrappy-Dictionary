@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
-import { getAndSave } from './utils/trl-details-scrapper';
+import { getAndSave } from './../utils/trl-details-scrapper';
 
 const db = admin.firestore();
 

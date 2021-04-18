@@ -1,6 +1,2 @@
-// import * as admin from 'firebase-admin';
+export * from '@ng-scrappy/backend/scrapper';
 
-
-// export all modules.
-export * from './app/scrapper/scrapper.function';
-export * from './app/scrapper/data-saver-pubsub.function';
