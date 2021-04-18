@@ -11,7 +11,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-
 export class App extends Component {
 
   activeLanguage = 'swahili';
@@ -45,7 +44,5 @@ export class App extends Component {
     )
   }
 }
-
-
 
 export default App;
