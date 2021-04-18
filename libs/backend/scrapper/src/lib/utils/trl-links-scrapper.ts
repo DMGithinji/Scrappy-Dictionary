@@ -55,6 +55,43 @@ export const scrapeTrlLinks = async (lang: string) => {
 };
 
 /**
+ * Extract word links from provided links
+ * @param {string} lang
+ * @return {{urls: string[], wordUrls: string[]}}
+ */
+ export const scrapePopularTrlLinks = async (lang: string) => {
+  try {
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
+
+    console.log(`Getting translation links from ${lang} page`);
+
+    await page.goto(`https://www.lughayangu.com/${lang}/`);
+    await page.waitForSelector('a', { visible: true });
+
+    await page.exposeFunction('getTrlLinkData', getTrlLinkData);
+
+    const trlLinkData = await page.evaluate(async (lang) => {
+      // eslint-disable-next-line no-undef
+      const languageElements = document.querySelectorAll('a');
+
+      const urls = Array.from(languageElements).map((v) => v.href);
+
+      // eslint-disable-next-line no-undef
+      return await (window as any).getTrlLinkData(urls, lang);
+    }, lang);
+
+    await browser.close();
+
+    console.log(`${lang}- ${trlLinkData.length} trl links scrapped`);
+    return trlLinkData as ITranslationLinkData[];
+  } catch (err) {
+    console.log(`[scrapeTrlLinks]. Error - ${err}`);
+    return null;
+  }
+};
+
+/**
  * Extract the relevant translation links from all provided links
  * @param {string[]} urls
  * @param {string} language

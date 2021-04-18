@@ -17,7 +17,7 @@ export async function isWordNew(
 ) {
   const trlRef = await db
     .collection(`dictionary/${trlData.language}/words`)
-    .where('word', '==', trlData.word)
+    .where('word', '==', trlData.word.toLowerCase())
     .get();
 
   return trlRef.empty;
@@ -37,7 +37,7 @@ export async function saveTrl(
   try {
     const repo = await db.collection(`dictionary/${lang}/words`);
 
-    trlRes.word = trlRes.word[0].toUpperCase() + trlRes.word.slice(1);
+    trlRes.word = trlRes.word.toLowerCase();
     trlRes.createdAt = firestore.Timestamp.now();
     trlRes.language = lang;
 

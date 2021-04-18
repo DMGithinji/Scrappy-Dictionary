@@ -2,9 +2,11 @@ import * as _ from 'lodash';
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-import { scrapeTrlLinks } from './../utils/trl-links-scrapper';
+import { ITranslationLinkData } from '@ng-scrappy/models';
+import { scrapePopularTrlLinks, scrapeTrlLinks } from './../utils/trl-links-scrapper';
 import { getSupportedLangs, isWordNew } from './../utils/db-queries';
 import { publishToPubsub } from './../utils/pubsub-publisher';
+import { getAndSave } from '../utils/trl-details-scrapper';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const serviceAccount = require('@ng-scrappy/service-json');
@@ -35,13 +37,13 @@ export const scrappy = functions
     //       Maybe don't scrape for all languages at once,
     //       to avoid DDOS, schedule @ different times per language
     const trlLinkDataPromises = langs.map((lang: string) => {
-      return scrapeTrlLinks(lang);
+      return scrapePopularTrlLinks(lang);
     });
     const trlLinkData = await Promise.all(trlLinkDataPromises);
 
     // Step 2. Filter out saved data
-    const flattened = _.flatten(trlLinkData);
-    const filtered = [];
+    const flattened = _.flatten(trlLinkData) as ITranslationLinkData[];
+    const filtered: ITranslationLinkData[] = [];
 
     await Promise.all(
       flattened.map(async (data) => {
@@ -60,11 +62,17 @@ export const scrappy = functions
     // Step 3. Getting translations and saving
     //         Dividing work to different handlers
     //         because of fxns timing & memory limits
-    const trlDataChunks = _.chunk(filtered, 10);
+    // const trlDataChunks = _.chunk(filtered, 10) as ITranslationLinkData[][];
+
+    // await Promise.all(
+    //   trlDataChunks.map(async (chunk) => {
+    //     return await publishToPubsub(chunk, 'dataSaver');
+    //   })
+    // );
 
     await Promise.all(
-      trlDataChunks.map(async (chunk) => {
-        return await publishToPubsub(chunk, 'dataSaver');
+      filtered.slice(0, 9).map(async (data) => {
+        return await getAndSave(db, data);
       })
     );
 
