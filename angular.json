@@ -197,57 +197,6 @@
         }
       }
     },
-    "gql-backend": {
-      "root": "apps/gql-backend",
-      "sourceRoot": "apps/gql-backend/src",
-      "projectType": "application",
-      "prefix": "gql-backend",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/apps/gql-backend",
-            "main": "apps/gql-backend/src/main.ts",
-            "tsConfig": "apps/gql-backend/tsconfig.app.json",
-            "assets": ["apps/gql-backend/src/assets"]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/gql-backend/src/environments/environment.ts",
-                  "with": "apps/gql-backend/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "gql-backend:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/gql-backend/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/gql-backend"],
-          "options": {
-            "jestConfig": "apps/gql-backend/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "backend-scrapper": {
       "root": "libs/backend/scrapper",
       "sourceRoot": "libs/backend/scrapper/src",
