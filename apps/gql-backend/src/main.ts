@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server';
-import { resolvers } from './app/translation.resolver';
+import { resolvers } from './app/resolvers/translation.resolver';
 import { typeDefs } from './app/schema/translation.typeDef';
 
 const server = new ApolloServer({

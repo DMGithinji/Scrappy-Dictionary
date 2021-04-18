@@ -1,15 +1,15 @@
 import * as admin from 'firebase-admin';
 import { ApolloError, ValidationError } from 'apollo-server';
 
-import { Language, Translation } from './schema/translation.interface';
+import { Language, Translation } from './../schema/translation.interface';
 import {
   getLangWords,
   getSupportedLangs,
   searchWord,
-} from './utils/db-queries';
+} from './../firebase-utils/db-queries';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const serviceAccount = require('./../environments/service-account.json');
+const serviceAccount = require('./../../environments/service-account.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
