@@ -44,6 +44,7 @@
     "@google-cloud/pubsub": "^2.10.0",
     "@nrwl/angular": "11.5.2",
     "apollo-server": "^3.0.0-alpha.3",
+    "apollo-server-express": "^2.23.0",
     "express": "4.17.1",
     "firebase": "^8.3.1",
     "firebase-admin": "^9.5.0",
@@ -95,9 +96,10 @@
     "firebase-admin",
     "firebase-functions",
     "puppeteer",
-    "@google-cloud/pubsub"
-  ],
-  "gql-backend-dependencies": [
+    "@google-cloud/pubsub",
+    "apollo-server",
+    "express",
+    "apollo-server-express",
     "apollo-server@beta",
     "firebase-admin",
     "graphql",

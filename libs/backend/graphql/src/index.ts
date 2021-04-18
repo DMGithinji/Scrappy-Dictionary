@@ -1,1 +1,1 @@
-export * from './lib/backend-graphql';
+export { scrappyApi } from './lib/cloud-functions/gql-server.function';

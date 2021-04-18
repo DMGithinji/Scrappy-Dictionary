@@ -6,7 +6,6 @@ import { scrapeTrlLinks } from './../utils/trl-links-scrapper';
 import { getSupportedLangs, isWordNew } from './../utils/db-queries';
 import { publishToPubsub } from './../utils/pubsub-publisher';
 
-// Init Firebase Upload
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const serviceAccount = require('@ng-scrappy/service-json');
 
