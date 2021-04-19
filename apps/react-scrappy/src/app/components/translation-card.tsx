@@ -8,18 +8,18 @@ export default function TranslationCard(props: { trl: ITranslation }) {
   const { trl } = props;
   const meaning = trl.meaning ? slice(capitalize(trl.meaning), 80) : '';
   return (
-    <div className="card card-body m-2">
+    <div className="card bg-light border-warning card-body m-2 mb-3">
         <div className="d-flex justify-content-between">
-          <h4 className="mb-3">{trl.word}</h4>
+          <h4 className="mb-4">{trl.word}</h4>
           <div>
             <small className="badge badge-warning">{trl.language}</small>
           </div>
         </div>
         <p>{meaning}</p>
 
-        <Link to={`/${trl.language}/word/${trl.word}`} className="btn btn-secondary">
-          <small className="mt-2">
-            Read more...
+        <Link to={`/${trl.language}/word/${trl.word}`} className="link-item">
+          <small className="mt-4 text-muted">
+            <u>Read more...</u>
           </small>
         </Link>
 

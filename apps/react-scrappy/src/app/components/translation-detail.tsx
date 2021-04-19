@@ -32,10 +32,12 @@ export default function TranslationDetail(props) {
 
 
   return(
-    <div className="mr-2 ml-2 card bg-light">
+    <div className="m-2 pb-3 card bg-light">
       <div className="card-header d-flex justify-content-between">
-        <div className=" text-muted">Translation</div>
-        <div><span className="badge badge-warning">{lang}</span></div>
+        <div className="text-secondary">Translation</div>
+        <Link to={`/${lang}/words`}>
+          <span className="badge badge-warning">{lang}</span>
+        </Link>
       </div>
       <div className="card-body">
         <h2 className="card-title">{capitalize(trl.word)}</h2>
@@ -44,20 +46,22 @@ export default function TranslationDetail(props) {
 
       <hr/>
 
-      <div className="card-body">
+      <div className="card-body mb-0">
         <p className="text-muted">Example</p>
         <p>{trl.example ? capitalize(trl.example) : `😞 No example available.`}</p>
         <p className="text-muted">Translated to...</p>
         <p>{trl.translation ? capitalize(trl.translation) : `😒 No translation provided!`}</p>
       </div>
 
-      <div className="card-body">
-        <p className="text-muted">Related Words</p>
+      <hr/>
+
+      <div className="card m-3 bg-light border-secondary">
+        <p className="text-muted p-2 mb-0">Related Words</p>
 
         <div className="list-group list-group-flush m-0 p-0">
           {trl.relatedWords.map((word, i) =>
             <Link to={`/${lang}/word/${word.toLowerCase()}`}>
-              <span key={word} className="list-group-item pl-2 text-secondary">{capitalize(word)}</span>
+              <span key={word} className="list-group-item pl-2 text-muted">{capitalize(word)}</span>
             </Link>
           )}
         </div>

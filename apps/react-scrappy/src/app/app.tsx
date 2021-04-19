@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client/react';
@@ -15,8 +15,8 @@ const client = new ApolloClient({
 });
 
 export class App extends Component {
-  activeLanguage = 'swahili';
-
+  // TODO: Get route and based on language param set active
+  activeLang = this.props.children ??  'swahili';
   render() {
     return (
       <ApolloProvider client={client}>
@@ -24,14 +24,17 @@ export class App extends Component {
           <div className="container">
             <div className={styles.app}>
               <header className="mb-5">
-                <div className="d-flex justify-content-center align-items-center">
-                  <img
-                    className="logo"
-                    src="https://img.icons8.com/bubbles/50/000000/book.png"
-                    alt="logo"
-                  />
-                  <h1> Scrappy Dictionary </h1>
-                </div>
+                <Link to={`/${this.activeLang}`}>
+                  <div className="d-flex justify-content-center align-items-center">
+                    <img
+                      className="logo"
+                      src="https://img.icons8.com/bubbles/50/000000/book.png"
+                      alt="logo"
+                    />
+                    <h1 className="text-warning"> Scrappy Dictionary </h1>
+                  </div>
+                  </Link>
+
               </header>
 
               <main>
