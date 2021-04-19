@@ -36,8 +36,16 @@ export class App extends Component {
 
               <main>
                 <Route exact path="/:language" component={Home} />
-                <Route exact path="/:language/words" component={TranslationList} />
-                <Route exact path="/:language/word/:word" component={TranslationDetail} />
+                <Route
+                  exact
+                  path="/:language/words"
+                  component={TranslationList}
+                />
+                <Route
+                  exact
+                  path="/:language/word/:word"
+                  component={TranslationDetail}
+                />
               </main>
             </div>
           </div>
