@@ -12,6 +12,8 @@ export const scrapperTypeDefs = gql`
 
   type Language {
     language: String!
+    description: String!
+    popular: [String]
   }
 
   type Query {

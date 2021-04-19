@@ -5,20 +5,19 @@ import { capitalize, slice } from '../utils/capitalize.util';
 
 export default function LanguageCard(props: { language: ILanguage }) {
   const langData = props.language;
-  const lang = langData.language;
+  const lang = langData;
 
   return (
     <div className="lang-card">
-      <div className="card bg-light border-warning m-2">
+      <div className="card bg-light border-warning m-3">
         <div className="card-body">
-          <h1 className="card-title">{capitalize(lang)}</h1>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+          <h1 className="card-title">{capitalize(lang.language)}</h1>
+          <p className="card-text text-wrap">
+            {capitalize(lang.description)}
           </p>
         </div>
         <div className="card-footer">
-          <Link to={`/${lang}/words`}>
+          <Link to={`/${lang.language}/words`}>
             <button className="btn btn-outline-warning">Open dictionary</button>
           </Link>
         </div>

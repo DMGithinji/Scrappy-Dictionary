@@ -20,6 +20,7 @@ const LANGUAGES_QUERY = gql`
   query GetLanguages {
     languages {
       language
+      description
     }
   }
 `;
@@ -36,6 +37,7 @@ export default function Home(props) {
   if (error) return <p>Error :(</p>;
 
   const lang = props.match.params.language;
+  const activeLang = supportedLangs.find(l => l.language === lang);
   const otherLangs = supportedLangs.filter(l => l.language !== lang)
 
   return (
@@ -45,8 +47,7 @@ export default function Home(props) {
         <div className="card-body">
           <h1 className="card-title">{capitalize(lang)}</h1>
           <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            {capitalize(activeLang.description)}
           </p>
         </div>
         <div className="card-footer">
