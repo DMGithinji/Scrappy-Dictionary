@@ -43,3 +43,7 @@
   min-width: 100%;
 
 }
+
+.app :global(.btn) {
+  white-space: nowrap !important;
+}

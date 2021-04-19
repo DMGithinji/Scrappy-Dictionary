@@ -37,7 +37,7 @@ export const scrappy = functions
     //       Maybe don't scrape for all languages at once,
     //       to avoid DDOS, schedule @ different times per language
     const trlLinkDataPromises = langs.map((lang: string) => {
-      return scrapePopularTrlLinks(lang);
+      return scrapeTrlLinks(lang);
     });
     const trlLinkData = await Promise.all(trlLinkDataPromises);
 
@@ -62,19 +62,19 @@ export const scrappy = functions
     // Step 3. Getting translations and saving
     //         Dividing work to different handlers
     //         because of fxns timing & memory limits
-    // const trlDataChunks = _.chunk(filtered, 10) as ITranslationLinkData[][];
-
-    // await Promise.all(
-    //   trlDataChunks.map(async (chunk) => {
-    //     return await publishToPubsub(chunk, 'dataSaver');
-    //   })
-    // );
+    const trlDataChunks = _.chunk(filtered, 10) as ITranslationLinkData[][];
 
     await Promise.all(
-      filtered.slice(0, 9).map(async (data) => {
-        return await getAndSave(db, data);
+      trlDataChunks.map(async (chunk) => {
+        return await publishToPubsub(chunk, 'dataSaver');
       })
     );
+
+    // await Promise.all(
+    //   filtered.slice(0, 9).map(async (data) => {
+    //     return await getAndSave(db, data);
+    //   })
+    // );
 
     res.send('Completed getting translation data for langs');
   });

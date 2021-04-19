@@ -16,7 +16,7 @@ const client = new ApolloClient({
 
 export class App extends Component {
   // TODO: Get route and based on language param set active
-  activeLang = this.props.children ??  'swahili';
+  activeLang = this.props.children ??  'gikuyu';
   render() {
     return (
       <ApolloProvider client={client}>

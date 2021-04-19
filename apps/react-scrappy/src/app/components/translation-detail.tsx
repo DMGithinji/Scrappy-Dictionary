@@ -33,8 +33,8 @@ export default function TranslationDetail(props) {
 
   return(
     <div className="m-2 pb-3 card bg-light">
-      <div className="card-header d-flex justify-content-between">
-        <div className="text-secondary">Translation</div>
+      <div className="card-header pb-0 d-flex justify-content-between">
+        <p className="text-secondary">Translation</p>
         <Link to={`/${lang}/words`}>
           <span className="badge badge-warning">{lang}</span>
         </Link>
@@ -56,12 +56,12 @@ export default function TranslationDetail(props) {
       <hr/>
 
       <div className="card m-3 bg-light border-secondary">
-        <p className="text-muted p-2 mb-0">Related Words</p>
+        <p className="text-secondary p-2 mb-0">Related Words</p>
 
         <div className="list-group list-group-flush m-0 p-0">
           {trl.relatedWords.map((word, i) =>
             <Link to={`/${lang}/word/${word.toLowerCase()}`}>
-              <span key={word} className="list-group-item pl-2 text-muted">{capitalize(word)}</span>
+              <u key={word} className="list-group-item pl-2 text-dark">{capitalize(word)}</u>
             </Link>
           )}
         </div>
