@@ -1,7 +1,7 @@
 import React from 'react';
-import { ILanguage, ITranslation } from '@ng-scrappy/models';
+import { ILanguage } from '@ng-scrappy/models';
 import { Link } from 'react-router-dom';
-import { capitalize, slice } from '../utils/capitalize.util';
+import { capitalize } from '../utils/capitalize.util';
 
 export default function LanguageCard(props: { language: ILanguage }) {
   const langData = props.language;
@@ -11,7 +11,7 @@ export default function LanguageCard(props: { language: ILanguage }) {
     <div className="lang-card">
       <div className="card bg-light border-warning m-3">
         <div className="card-body">
-          <h1 className="card-title">{capitalize(lang.language)}</h1>
+          <h1 className="card-title text-capitalize">{lang.language}</h1>
           <p className="card-text text-wrap">
             {capitalize(lang.description)}
           </p>

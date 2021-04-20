@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Redirect, Route } from 'react-router-dom';
 
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client/react';
@@ -8,6 +8,8 @@ import TranslationList from './components/translation-list';
 import styles from './app.module.scss';
 import TranslationDetail from './components/translation-detail';
 import Home from './components/home';
+import SearchComponent from './components/search-component';
+import ActiveLangToggle from './components/active-lang-toggle';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/cloudfunc-101/us-central1/scrappyApi',
@@ -15,13 +17,15 @@ const client = new ApolloClient({
 });
 
 export class App extends Component {
-  // TODO: Get route and based on language param set active
-  activeLang = this.props.children ??  'gikuyu';
+  activeLang = localStorage.getItem('scrappy_active_lang') ?? 'swahili';
+
   render() {
     return (
       <ApolloProvider client={client}>
         <Router>
           <div className="container">
+            <ActiveLangToggle />
+
             <div className={styles.app}>
               <header className="mb-5">
                 <Link to={`/${this.activeLang}`}>
@@ -33,11 +37,15 @@ export class App extends Component {
                     />
                     <h1 className="text-warning"> Scrappy Dictionary </h1>
                   </div>
-                  </Link>
-
+                </Link>
               </header>
 
+              <SearchComponent />
+
               <main>
+                <Route exact path="/">
+                  <Redirect to={`/${this.activeLang}`} />
+                </Route>
                 <Route exact path="/:language" component={Home} />
                 <Route
                   exact

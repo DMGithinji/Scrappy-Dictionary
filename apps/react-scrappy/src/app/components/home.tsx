@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { ILanguage, ITranslation } from '@ng-scrappy/models';
-import TranslationCard from './translation-card';
+import { ILanguage } from '@ng-scrappy/models';
 import { capitalize } from '../utils/capitalize.util';
 import { Link } from 'react-router-dom';
 import LanguageCard from './language-card';
@@ -47,7 +46,7 @@ export default function Home(props) {
   return (
     <div>
       <div className="card  bg-light border-warning m-2">
-        <span className="card-header text-warning">Active</span>
+        <span className="card-header text-warning">Language</span>
         <div className="card-body">
           <h1 className="card-title">{capitalize(lang)}</h1>
           <p className="card-text">
@@ -64,7 +63,7 @@ export default function Home(props) {
       <hr/>
 
       <div className="card bg-light border-light m-2 p-3">
-        <h5 className="text-center text-dark">Popular {capitalize(lang)} Searches</h5>
+        <h5 className="text-center text-dark text-capitalize">Popular {lang} Searches</h5>
 
         <div className="scrolling-wrapper d-flex mt-2">
           {activeLang.popular.map((word) => (
