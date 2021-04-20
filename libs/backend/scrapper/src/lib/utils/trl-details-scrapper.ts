@@ -83,7 +83,7 @@ export const scrapeTrlData = async (trlData: ITranslationLinkData) => {
 
   } catch (e) {
     console.error(
-      `Error getting translation data: - ${e} for word there ${trlData.word}`
+      `[scrapeTrlData]. Error getting translation data: - ${e} for word there ${trlData.word}`
     );
   }
 };

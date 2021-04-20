@@ -31,9 +31,9 @@ export const scrapeTrlLinks = async (lang: string) => {
         await page.exposeFunction('getTrlLinkData', getTrlLinkData);
 
         const trlLinkData = await page.evaluate(async (lang) => {
-          const languageElements = document.querySelectorAll('a');
+          const languageElements = document.querySelectorAll('.word-list');
 
-          const urls = Array.from(languageElements).map((v) => v.href);
+          const urls = Array.from(languageElements).map((v: HTMLAnchorElement) => v.href);
 
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           return await (window as any).getTrlLinkData(urls, lang);
@@ -73,9 +73,9 @@ export const scrapeTrlLinks = async (lang: string) => {
 
     const trlLinkData = await page.evaluate(async (lang) => {
       // eslint-disable-next-line no-undef
-      const languageElements = document.querySelectorAll('a');
+      const languageElements = document.querySelectorAll('.word-list');
 
-      const urls = Array.from(languageElements).map((v) => v.href);
+      const urls = Array.from(languageElements).map((v: HTMLAnchorElement) => v.href);
 
       // eslint-disable-next-line no-undef
       return await (window as any).getTrlLinkData(urls, lang);
@@ -98,29 +98,29 @@ export const scrapeTrlLinks = async (lang: string) => {
  * @return {{trlLink: string, word: string}[]}
  */
 const getTrlLinkData = (urls: string[], language: string) => {
-  const initialLimit = `https://www.lughayangu.com/${language}/az/Z`;
-  const lowerLimit = 'https://www.lughayangu.com/create';
 
   const trlLinks = [];
-  let startAdding = false;
 
-  for (let i = 0; i < urls.length; i++) {
-    const trlLink = urls[i];
-
-    if (trlLink === lowerLimit && startAdding) {
-      break;
-    }
-    if (startAdding) {
+  urls.forEach((trlLink) => {
+    if (linkIsValid(trlLink)) {
       const word = getWord(trlLink);
       const trlData = { language, word, trlLink };
+
+      console.log(JSON.stringify(trlData));
       trlLinks.push(trlData);
     }
-    if (!startAdding) {
-      startAdding = trlLink === initialLimit;
-    }
-  }
+  })
+
   return (trlLinks as ITranslationLinkData[]).slice(1);
 };
+
+
+/**
+ * Validates link before it's added to trlLinkData
+ */
+ function linkIsValid(trlLink: string) {
+  return trlLink.split('/').length === 5;
+}
 
 /**
  * @param {string} trlUrl
