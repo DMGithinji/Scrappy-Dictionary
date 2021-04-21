@@ -20,7 +20,12 @@ export async function isWordNew(
     .where('word', '==', trlData.word.toLowerCase())
     .get();
 
-  return trlRef.empty;
+  const blacklistRef = await db
+    .collection(`blacklisted-words`)
+    .where('word', '==', trlData.word.toLowerCase())
+    .get();
+
+  return trlRef.empty && blacklistRef.empty;
 }
 
 /**
@@ -41,12 +46,22 @@ export async function saveTrl(
     trlRes.createdAt = firestore.Timestamp.now();
     trlRes.language = lang;
 
-    repo.add(trlRes);
+    await repo.add(trlRes);
 
     console.log(`[saveTrl]. Saved word - ${trlRes.word}`);
   } catch (err) {
     console.error('[saveTrl]. Error saving translation data - ', err);
   }
+}
+
+
+export async function addToBlacklist(
+  db: FirebaseFirestore.Firestore,
+  trlLinkData: ITranslationLinkData
+) {
+    const repo = await db.collection(`blacklisted-words`);
+    trlLinkData.word = trlLinkData.word.toLowerCase();
+    await repo.add(trlLinkData);
 }
 
 /**

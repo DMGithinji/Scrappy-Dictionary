@@ -3,7 +3,7 @@ import {
   ITranslationLinkData,
   ITranslationResults,
 } from '@ng-scrappy/models';
-import { saveTrl } from './db-queries';
+import { addToBlacklist, saveTrl } from './db-queries';
 
 /**
  * Gets translation data and save it to DB
@@ -17,11 +17,11 @@ export async function getAndSave(
 ) {
   try {
     const trlResults = await scrapeTrlData(trlData);
-
     if (trlResults && trlResults.word && trlResults.meaning) {
       await saveTrl(db, trlData.language, trlResults);
     }
   } catch (err) {
+    await addToBlacklist(db, trlData);
     console.error('[getAndSave]. Error gettng translation data - ', err);
   }
 }
@@ -44,7 +44,7 @@ export const scrapeTrlData = async (trlData: ITranslationLinkData) => {
     await page.setDefaultNavigationTimeout(0);
 
     await page.goto(link);
-    await page.waitForSelector('.en-translation', { visible: true });
+    await page.waitForSelector('.en-translation', { visible: true, timeout: 10000});
 
     const meaningEl = await page.$('.lang-meaning');
     let meaning = await page.evaluate((el) => el.textContent, meaningEl);

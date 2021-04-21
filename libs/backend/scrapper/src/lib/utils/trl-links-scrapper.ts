@@ -12,7 +12,7 @@ export const scrapeTrlLinks = async (lang: string) => {
   try {
     // TODO: Chunk requests for A-Z to split to different PUBSUBS and
     //       DON'T run function with all letters at once to avoid DDOS
-    const letters = ["A", "B"];
+    const letters = [ "M", "N", "O", "P", "Q", "R", "S"];
 
     const combinedTrls = await Promise.all(
       letters.map(async (l) => {
@@ -106,7 +106,6 @@ const getTrlLinkData = (urls: string[], language: string) => {
       const word = getWord(trlLink);
       const trlData = { language, word, trlLink };
 
-      console.log(JSON.stringify(trlData));
       trlLinks.push(trlData);
     }
   })

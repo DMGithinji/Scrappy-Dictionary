@@ -18,7 +18,7 @@ admin.initializeApp({
 const db = admin.firestore();
 
 const runtimeOpts = {
-  timeoutSeconds: 300,
+  timeoutSeconds: 540,
   memory: '1GB',
 } as functions.RuntimeOptions;
 
@@ -36,7 +36,8 @@ export const scrappy = functions
       //       if scrapping all the words in alphabet for a language
       //
       //       Maybe don't scrape for all languages at once,
-      //       to avoid DDOS, schedule @ different times per language
+      //       to avoid DDOS, schedule @ different times or run async await
+      //       batches manageable for the site
       const trlLinkDataPromises = langs.map((lang: string) => {
         return scrapeTrlLinks(lang);
       });
@@ -71,17 +72,23 @@ export const scrappy = functions
       //   })
       // );
 
-      await Promise.all(
-        filtered.slice(0, 10).map(async (data) => {
-          return await getAndSave(db, data);
-        })
-      );
+      // await Promise.all(
+      //   filtered.slice(0, 20).map(async (data) => {
+      //     return await getAndSave(db, data);
+      //   })
+      // );
+
+      const chunks = _.chunk(filtered, 8);
+      for (let i = 0; i <= chunks.length; i++) {
+        if (chunks[i])
+          await Promise.all(chunks[i].map(async c => await getAndSave(db, c)));
+      }
 
       res.send('Completed getting translation data for langs');
     }
 
     catch(err) {
-      console.log('Error scrapping', err);
+      console.log('[scrapper]:- Error scrapping', err);
     }
 
   });
