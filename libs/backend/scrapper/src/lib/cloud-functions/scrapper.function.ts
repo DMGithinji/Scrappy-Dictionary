@@ -3,7 +3,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
 import { ILanguage, ITranslationLinkData } from '@ng-scrappy/models';
-import { scrapePopularTrlLinks, scrapeTrlLinks } from './../utils/trl-links-scrapper';
+import { scrapeTrlLinks } from './../utils/trl-links-scrapper';
 import { getSupportedLangs, isWordNew } from '@ng-scrappy/backend/db';
 import { publishToPubsub } from './../utils/pubsub-publisher';
 import { getAndSave } from '../utils/trl-details-scrapper';

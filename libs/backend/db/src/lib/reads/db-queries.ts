@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { ILanguage, ITranslationLinkData } from '@ng-scrappy/models';
+import { ILanguage, ITranslation, ITranslationLinkData } from '@ng-scrappy/models';
 
 
 /**
@@ -43,7 +43,7 @@ export async function getLanguageWords(
   lang: string
 ) {
   try {
-    return await queryCollection(db, `dictionary/${lang}/words`, 'word');
+    return await queryCollection(db, `dictionary/${lang}/words`, 'word') as any as ITranslation[];
   } catch (e) {
     throw Error(
       `[getLanguageWords]: - Error querying language words for ${lang} - ${e}`
@@ -100,5 +100,9 @@ export async function isWordNew(
 ) {
   const orderBy = orderProp ?? 'createdAt';
   const snapshot = await db.collection(collectionPath).orderBy(orderBy).get();
-  return snapshot.docs.map((doc) => doc.data());
+  return snapshot.docs.map((doc) => {
+    const data = doc.data();
+    data.id = doc.id;
+    return data;
+  });
 }

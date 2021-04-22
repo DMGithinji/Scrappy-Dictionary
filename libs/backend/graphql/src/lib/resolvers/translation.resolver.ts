@@ -3,7 +3,7 @@ import { ApolloError, ValidationError } from 'apollo-server';
 
 import { ILanguage, ITranslation } from '@ng-scrappy/models';
 import {
-  getLangWords,
+  getLanguageWords,
   getSupportedLangs,
   searchWord,
 } from '@ng-scrappy/backend/db';
@@ -16,7 +16,7 @@ export const resolvers = {
       try {
         // Random query for words in a language
         if (args.language) {
-          const trls = await getLangWords(db, args.language);
+          const trls = await getLanguageWords(db, args.language);
           return trls || new ValidationError('Language not supported');
         }
         // Search for word
