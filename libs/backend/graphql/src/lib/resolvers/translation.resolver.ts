@@ -6,7 +6,7 @@ import {
   getLangWords,
   getSupportedLangs,
   searchWord,
-} from './../firebase-utils/db-queries';
+} from '@ng-scrappy/backend/db';
 
 const db = admin.firestore();
 
@@ -31,6 +31,7 @@ export const resolvers = {
         throw new ApolloError(error);
       }
     },
+
     async languages() {
       try {
         const langs = await getSupportedLangs(db);

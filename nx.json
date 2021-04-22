@@ -31,6 +31,7 @@
       "tags": [],
       "implicitDependencies": ["react-scrappy"]
     },
-    "models": { "tags": [] }
+    "models": { "tags": [] },
+    "backend-db": { "tags": [] }
   }
 }

@@ -2,9 +2,9 @@ import * as _ from 'lodash';
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-import { ITranslationLinkData } from '@ng-scrappy/models';
+import { ILanguage, ITranslationLinkData } from '@ng-scrappy/models';
 import { scrapePopularTrlLinks, scrapeTrlLinks } from './../utils/trl-links-scrapper';
-import { getSupportedLangs, isWordNew } from './../utils/db-queries';
+import { getSupportedLangs, isWordNew } from '@ng-scrappy/backend/db';
 import { publishToPubsub } from './../utils/pubsub-publisher';
 import { getAndSave } from '../utils/trl-details-scrapper';
 
@@ -38,8 +38,8 @@ export const scrappy = functions
       //       Maybe don't scrape for all languages at once,
       //       to avoid DDOS, schedule @ different times or run async await
       //       batches manageable for the site
-      const trlLinkDataPromises = langs.map((lang: string) => {
-        return scrapeTrlLinks(lang);
+      const trlLinkDataPromises = langs.map((lang: ILanguage) => {
+        return scrapeTrlLinks(lang.language);
       });
       const trlLinkData = await Promise.all(trlLinkDataPromises);
 

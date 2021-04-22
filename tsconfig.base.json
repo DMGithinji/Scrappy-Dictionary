@@ -21,7 +21,8 @@
       ],
       "@ng-scrappy/backend/scrapper": ["libs/backend/scrapper/src/index.ts"],
       "@ng-scrappy/backend/graphql": ["libs/backend/graphql/src/index.ts"],
-      "@ng-scrappy/models": ["libs/models/src/index.ts"]
+      "@ng-scrappy/models": ["libs/models/src/index.ts"],
+      "@ng-scrappy/backend/db": ["libs/backend/db/src/index.ts"]
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,

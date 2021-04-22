@@ -1,11 +1,13 @@
 import * as _ from 'lodash';
+import { ILanguage, ITranslationLinkData } from '@ng-scrappy/models';
+
 
 /**
  * Queries a word's translations from the different lang collections
  * @param {FirebaseFirestore} db
  * @return {string[]} List of languages
  */
-export async function searchWord(
+ export async function searchWord(
   db: FirebaseFirestore.Firestore,
   word: string
 ) {
@@ -30,12 +32,13 @@ export async function searchWord(
   }
 }
 
+
 /**
  * Queries words in a language collection
  * @param {FirebaseFirestore} db
  * @return {string[]} List of Translation Objects
  */
-export async function getLangWords(
+export async function getLanguageWords(
   db: FirebaseFirestore.Firestore,
   lang: string
 ) {
@@ -43,19 +46,46 @@ export async function getLangWords(
     return await queryCollection(db, `dictionary/${lang}/words`, 'word');
   } catch (e) {
     throw Error(
-      `[getLangWords]: - Error querying language words for ${lang} - ${e}`
+      `[getLanguageWords]: - Error querying language words for ${lang} - ${e}`
     );
   }
 }
+
+
+/**
+ * Check's if word exists
+ * Returns true if it doesn't exist
+ * @param {FirebaseFirestore.Firestore} db
+ * @param {ITranslationLinkData} trlData
+ * @return {void}
+ */
+export async function isWordNew(
+  db: FirebaseFirestore.Firestore,
+  trlData: ITranslationLinkData
+) {
+  const trlRef = await db
+    .collection(`dictionary/${trlData.language}/words`)
+    .where('word', '==', trlData.word.toLowerCase())
+    .get();
+
+  const blacklistRef = await db
+    .collection(`blacklisted-words`)
+    .where('word', '==', trlData.word.toLowerCase())
+    .get();
+
+  return trlRef.empty && blacklistRef.empty;
+}
+
 
 /**
  * Queries supported languages
  * @param {FirebaseFirestore} db
  * @return {string[]} List of languages
  */
-export async function getSupportedLangs(db: FirebaseFirestore.Firestore) {
-  return await queryCollection(db, 'supported-languages');
+ export async function getSupportedLangs(db: FirebaseFirestore.Firestore) {
+  return await queryCollection(db, 'supported-languages') as any as ILanguage[];
 }
+
 
 /**
  * Queries data for the given collection path
@@ -63,7 +93,7 @@ export async function getSupportedLangs(db: FirebaseFirestore.Firestore) {
  * @param {string} collectionPath
  * @return {DocumentData} document data
  */
-export async function queryCollection(
+ export async function queryCollection(
   db: FirebaseFirestore.Firestore,
   collectionPath: string,
   orderProp?: string

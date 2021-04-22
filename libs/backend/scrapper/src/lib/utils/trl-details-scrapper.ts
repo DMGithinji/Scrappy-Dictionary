@@ -3,7 +3,7 @@ import {
   ITranslationLinkData,
   ITranslationResults,
 } from '@ng-scrappy/models';
-import { addToBlacklist, saveTrl } from './db-queries';
+import { addToBlacklist, saveTrl } from '@ng-scrappy/backend/db';
 
 /**
  * Gets translation data and save it to DB
