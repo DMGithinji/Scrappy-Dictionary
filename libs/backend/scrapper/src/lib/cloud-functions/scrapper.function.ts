@@ -3,17 +3,14 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
 import { ILanguage, ITranslationLinkData } from '@ng-scrappy/models';
-import { scrapeTrlLinks } from './../utils/trl-links-scrapper';
 import { getSupportedLangs, isWordNew } from '@ng-scrappy/backend/db';
+import { scrapeTrlLinks } from './../utils/trl-links-scrapper';
 import { publishToPubsub } from './../utils/pubsub-publisher';
 import { getAndSave } from '../utils/trl-details-scrapper';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const serviceAccount = require('@ng-scrappy/service-json');
+const config = functions.config().firebase;
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+admin.initializeApp(config);
 
 const db = admin.firestore();
 
@@ -69,12 +66,6 @@ export const scrappy = functions
       // await Promise.all(
       //   trlDataChunks.map(async (chunk) => {
       //     return await publishToPubsub(chunk, 'dataSaver');
-      //   })
-      // );
-
-      // await Promise.all(
-      //   filtered.slice(0, 20).map(async (data) => {
-      //     return await getAndSave(db, data);
       //   })
       // );
 
