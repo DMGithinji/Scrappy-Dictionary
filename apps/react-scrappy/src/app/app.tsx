@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Link, Redirect, Route } from 'react-router-dom
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client/react';
 
+import { SkeletonTheme } from "react-loading-skeleton";
 import styles from './app.module.scss';
 
-import {  ActiveLangToggle,  HomePage, SearchComponent,  TranslationList, TranslationDetail } from './components';
+import {  ActiveLangToggle,  HomePage, SearchComponent,  TranslationList, TranslationDetail }from './components';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/cloudfunc-101/us-central1/scrappyApi',
@@ -41,6 +42,8 @@ export class App extends Component {
               <SearchComponent />
               </div>
 
+              <SkeletonTheme color="#c2c5c3" highlightColor="#e2e2e2">
+
               <main>
                 <Route exact path="/">
                   <Redirect to={`/${this.activeLang}`} />
@@ -57,6 +60,9 @@ export class App extends Component {
                   component={TranslationDetail}
                 />
               </main>
+
+              </SkeletonTheme>;
+
             </div>
           </div>
         </Router>

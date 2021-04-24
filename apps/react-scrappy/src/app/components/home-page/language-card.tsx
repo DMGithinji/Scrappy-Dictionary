@@ -1,6 +1,9 @@
 import React from 'react';
-import { ILanguage } from '@ng-scrappy/models';
 import { Link } from 'react-router-dom';
+
+import Skeleton from 'react-loading-skeleton';
+
+import { ILanguage } from '@ng-scrappy/models';
 import { capitalize } from '../../utils/capitalize.util';
 
 export default function LanguageCard(props: { language: ILanguage }) {
@@ -11,15 +14,23 @@ export default function LanguageCard(props: { language: ILanguage }) {
     <div className="lang-card">
       <div className="card bg-light border-warning m-3">
         <div className="card-body">
-          <h1 className="card-title text-capitalize">{lang.language}</h1>
+          <h1 className="card-title text-capitalize">
+            {lang?.language || <Skeleton width="250" />}
+          </h1>
           <p className="card-text text-wrap">
-            {capitalize(lang.description)}
+            {lang ? capitalize(lang.description) : <Skeleton count={6} />}
           </p>
         </div>
         <div className="card-footer">
-          <Link to={`/${lang.language}/words`}>
-            <button className="btn btn-outline-warning">Open dictionary</button>
-          </Link>
+          {lang ? (
+            <Link to={`/${lang.language}/words`}>
+              <button className="btn btn-outline-warning">
+                Open dictionary
+              </button>
+            </Link>
+          ) : (
+            <Skeleton height={40} width={140} />
+          )}
         </div>
       </div>
     </div>
