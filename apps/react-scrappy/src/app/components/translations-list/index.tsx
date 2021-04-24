@@ -14,7 +14,7 @@ const WORDS_LIST_QUERY = gql`
   }
 `;
 
-export default function WordList(props) {
+export function TranslationList(props) {
   const { loading, error, data } = useQuery(WORDS_LIST_QUERY, {
     variables: { language: props.match.params.language },
   });

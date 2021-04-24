@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Switch, useLocation } from 'react-router-dom';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { useQuery, gql } from '@apollo/client';
 import { ILanguage } from '@ng-scrappy/models';
@@ -16,7 +16,7 @@ const LANGUAGES_QUERY = gql`
 const setActiveLang = (lang) =>
   localStorage.setItem('scrappy_active_lang', lang);
 
-export default function ActiveLangToggle() {
+export function ActiveLangToggle() {
   const location = useLocation();
   const activeLang = location.pathname.split('/')[1];
   const langsData = useQuery(LANGUAGES_QUERY);

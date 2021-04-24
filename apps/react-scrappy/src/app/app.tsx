@@ -4,12 +4,9 @@ import { BrowserRouter as Router, Link, Redirect, Route } from 'react-router-dom
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client/react';
 
-import TranslationList from './components/translation-list';
 import styles from './app.module.scss';
-import TranslationDetail from './components/translation-detail';
-import Home from './components/home';
-import SearchComponent from './components/search/search-component';
-import ActiveLangToggle from './components/active-lang-toggle';
+
+import {  ActiveLangToggle,  HomePage, SearchComponent,  TranslationList, TranslationDetail } from './components';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/cloudfunc-101/us-central1/scrappyApi',
@@ -48,7 +45,7 @@ export class App extends Component {
                 <Route exact path="/">
                   <Redirect to={`/${this.activeLang}`} />
                 </Route>
-                <Route exact path="/:language" component={Home} />
+                <Route exact path="/:language" component={HomePage} />
                 <Route
                   exact
                   path="/:language/words"

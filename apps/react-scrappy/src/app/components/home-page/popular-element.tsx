@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { capitalize } from '../utils/capitalize.util';
+import { capitalize } from '../../utils/capitalize.util';
 
 export default function PopularElement(props: {
   language: string;

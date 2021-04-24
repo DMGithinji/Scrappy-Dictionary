@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { ILanguage } from '@ng-scrappy/models';
-import { capitalize } from '../utils/capitalize.util';
 import { Link } from 'react-router-dom';
 import LanguageCard from './language-card';
 import PopularElement from './popular-element';
+import { capitalize } from '../../utils/capitalize.util';
 
 const WORDS_LIST_QUERY = gql`
   query GetLanguageWords($language: String!) {
@@ -26,7 +26,7 @@ const LANGUAGES_QUERY = gql`
   }
 `;
 
-export default function Home(props) {
+export function HomePage(props) {
   const { loading, error, data } = useQuery(WORDS_LIST_QUERY, {
     variables: { language: props.match.params.language },
   });
@@ -35,13 +35,11 @@ export default function Home(props) {
   const supportedLangs: ILanguage[] = langsData?.data?.languages ?? [];
 
   const lang = props.match.params.language;
-  const activeLang = supportedLangs.find(l => l.language === lang);
-  const otherLangs = supportedLangs.filter(l => l.language !== lang);
+  const activeLang = supportedLangs.find((l) => l.language === lang);
+  const otherLangs = supportedLangs.filter((l) => l.language !== lang);
 
   if (loading || !activeLang) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
-
-
 
   return (
     <div>
@@ -49,9 +47,7 @@ export default function Home(props) {
         <span className="card-header text-warning">Language</span>
         <div className="card-body">
           <h1 className="card-title">{capitalize(lang)}</h1>
-          <p className="card-text">
-            {capitalize(activeLang.description)}
-          </p>
+          <p className="card-text">{capitalize(activeLang.description)}</p>
         </div>
         <div className="card-footer">
           <Link to={`/${lang}/words`}>
@@ -60,10 +56,12 @@ export default function Home(props) {
         </div>
       </div>
 
-      <hr/>
+      <hr />
 
       <div className="card bg-light border-light m-2 p-3">
-        <h5 className="text-center text-dark text-capitalize">Popular {lang} Searches</h5>
+        <h5 className="text-center text-dark text-capitalize">
+          Popular {lang} Searches
+        </h5>
 
         <div className="scrolling-wrapper d-flex mt-2">
           {activeLang.popular.map((word) => (

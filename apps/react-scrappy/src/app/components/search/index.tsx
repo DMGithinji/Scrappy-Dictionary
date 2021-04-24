@@ -32,13 +32,11 @@ const searchClient = {
 };
 
 const resetResults = () => {
-  const list = document.getElementsByClassName(
-    'ais-SearchBox-reset'
-  )[0] as HTMLButtonElement;
+  const list = document.getElementsByClassName('ais-SearchBox-reset')[0] as HTMLButtonElement;
   list.click();
 };
 
-export default function SearchComponent() {
+export function SearchComponent() {
   return (
     <div>
       <InstantSearch searchClient={searchClient} indexName="dictionary">

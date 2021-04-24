@@ -1,7 +1,7 @@
 import React from 'react';
 import { ITranslation } from '@ng-scrappy/models';
 import { Link } from 'react-router-dom';
-import { capitalize, slice } from '../utils/capitalize.util';
+import { capitalize, slice } from '../../utils/capitalize.util';
 
 export default function TranslationCard(props: { trl: ITranslation }) {
 

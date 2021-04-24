@@ -1,7 +1,7 @@
 import React from 'react';
 import { ILanguage } from '@ng-scrappy/models';
 import { Link } from 'react-router-dom';
-import { capitalize } from '../utils/capitalize.util';
+import { capitalize } from '../../utils/capitalize.util';
 
 export default function LanguageCard(props: { language: ILanguage }) {
   const langData = props.language;

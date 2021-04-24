@@ -1,9 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { ITranslation } from '@ng-scrappy/models';
 import { Link } from 'react-router-dom';
-
-import { capitalize } from '../utils/capitalize.util';
+import { capitalize } from '../../utils/capitalize.util';
 
 
 const WORD_QUERY = gql`
@@ -19,7 +18,7 @@ const WORD_QUERY = gql`
   }
 `;
 
-export default function TranslationDetail(props) {
+export function TranslationDetail(props) {
   const { loading, error, data } = useQuery(WORD_QUERY, {
     variables: { word: props.match.params.word },
   });
