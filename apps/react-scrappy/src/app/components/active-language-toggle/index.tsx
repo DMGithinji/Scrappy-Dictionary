@@ -1,5 +1,4 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 
 import { useQuery, gql } from '@apollo/client';
 import { ILanguage } from '@ng-scrappy/models';
@@ -13,12 +12,7 @@ const LANGUAGES_QUERY = gql`
   }
 `;
 
-const setActiveLang = (lang) =>
-  localStorage.setItem('scrappy_active_lang', lang);
-
-export function ActiveLangToggle() {
-  const location = useLocation();
-  const activeLang = location.pathname.split('/')[1];
+export function ActiveLangToggle({ updateActiveLang, activeLang }) {
   const langsData = useQuery(LANGUAGES_QUERY);
   const supportedLangs: ILanguage[] = langsData?.data?.languages ?? [];
   const otherLangs = supportedLangs.filter((l) => l.language !== activeLang);
@@ -41,12 +35,12 @@ export function ActiveLangToggle() {
       >
         {otherLangs.map((lang) => (
           <Link to={`/${lang.language}`}>
-            <span
-              onClick={() => setActiveLang(lang.language)}
+            <button
+              onClick={() => updateActiveLang(lang.language)}
               className="dropdown-item bg-transparent"
             >
               {lang.language}
-            </span>
+            </button>
           </Link>
         ))}
       </div>
