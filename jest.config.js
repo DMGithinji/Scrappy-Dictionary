@@ -7,5 +7,6 @@ module.exports = {
     '<rootDir>/apps/react-scrappy',
     '<rootDir>/libs/models',
     '<rootDir>/libs/backend/db',
+    '<rootDir>/libs/backend/algolia-search',
   ],
 };

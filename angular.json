@@ -394,6 +394,27 @@
           }
         }
       }
+    },
+    "backend-algolia-search": {
+      "root": "libs/backend/algolia-search",
+      "sourceRoot": "libs/backend/algolia-search/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/backend/algolia-search/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/backend/algolia-search"],
+          "options": {
+            "jestConfig": "libs/backend/algolia-search/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }
