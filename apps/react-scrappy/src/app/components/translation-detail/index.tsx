@@ -6,6 +6,7 @@ import Skeleton from 'react-loading-skeleton';
 import { ITranslation } from '@ng-scrappy/models';
 import { Link } from 'react-router-dom';
 import { capitalize } from '../../utils/capitalize.util';
+import { setAsWord } from '../../utils/space-fixer.util';
 
 
 const WORD_QUERY = gql`
@@ -43,7 +44,7 @@ export function TranslationDetail(props) {
         </Link>
       </div>
       <div className="card-body">
-        <h2 className="card-title">{loaded ? capitalize(trl.word) : <Skeleton width={100} />}</h2>
+        <h2 className="card-title">{loaded ? setAsWord(trl.word) : <Skeleton width={100} />}</h2>
         <p className="card-text">{loaded ? (trl.meaning ? capitalize(trl.meaning) : `😬 Meaning wasn't provided`) : <Skeleton count={2} width={350} className="d-block mb-2"/>}</p>
       </div>
 

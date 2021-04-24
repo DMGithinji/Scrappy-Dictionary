@@ -5,6 +5,7 @@ import Skeleton from 'react-loading-skeleton';
 
 import { ITranslation } from '@ng-scrappy/models';
 import { capitalize, slice } from '../../utils/capitalize.util';
+import { setAsWord } from '../../utils/space-fixer.util';
 
 export default function TranslationCard(props: { trl: ITranslation }) {
   const { trl } = props;
@@ -12,7 +13,7 @@ export default function TranslationCard(props: { trl: ITranslation }) {
   return (
     <div className="card bg-light border-warning card-body m-2 mb-3">
       <div className="d-flex justify-content-between">
-        <h4 className="mb-4">{trl?.word || <Skeleton width={60} />}</h4>
+        <h4 className="mb-4">{ trl ? setAsWord(trl.word) : <Skeleton width={60} />}</h4>
         <div>
           {trl ? (
             <small className="badge badge-warning">{trl.language}</small>

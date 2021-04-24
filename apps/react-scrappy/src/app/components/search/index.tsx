@@ -4,6 +4,7 @@ import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-dom';
 
 import './search-component.scss';
+import { setAsWord } from '../../utils/space-fixer.util';
 
 const appId = process.env.NX_ALGOLIA_APP_ID;
 const searchKey = process.env.NX_ALGOLIA_SEARCH_KEY;
@@ -56,7 +57,7 @@ const Hit = ({ hit }) => (
       className="list-group-item d-flex justify-content-between align-items-center"
       onClick={(e) => resetResults()}
     >
-      <span className="text-white">{hit.word}</span>
+      <span className="text-white">{setAsWord(hit.word)}</span>
       <span className="badge badge-warning badge-pill text-light">
         {hit.language}
       </span>
