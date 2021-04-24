@@ -9,3 +9,4 @@
 
 export * from '@ng-scrappy/backend/scrapper';
 export * from '@ng-scrappy/backend/graphql';
+export * from '@ng-scrappy/backend/algolia-search';

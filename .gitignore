@@ -42,3 +42,4 @@ Thumbs.db
 firebase-debug.log
 pubsub-debug.log
 ui-debug.log
+.runtimeconfig.json

@@ -8,7 +8,7 @@ import { scrapeTrlLinks } from './../utils/trl-links-scrapper';
 import { publishToPubsub } from './../utils/pubsub-publisher';
 import { getAndSave } from '../utils/trl-details-scrapper';
 
-const config = functions.config().firebase;
+const config = functions.config().service_account;
 
 admin.initializeApp(config);
 
