@@ -8,7 +8,7 @@ import TranslationList from './components/translation-list';
 import styles from './app.module.scss';
 import TranslationDetail from './components/translation-detail';
 import Home from './components/home';
-import SearchComponent from './components/search-component';
+import SearchComponent from './components/search/search-component';
 import ActiveLangToggle from './components/active-lang-toggle';
 
 const client = new ApolloClient({
@@ -27,7 +27,7 @@ export class App extends Component {
             <ActiveLangToggle />
 
             <div className={styles.app}>
-              <header className="mb-5">
+              <header className="mb-4">
                 <Link to={`/${this.activeLang}`}>
                   <div className="d-flex justify-content-center align-items-center">
                     <img
@@ -40,7 +40,9 @@ export class App extends Component {
                 </Link>
               </header>
 
+              <div className="pb-2">
               <SearchComponent />
+              </div>
 
               <main>
                 <Route exact path="/">
