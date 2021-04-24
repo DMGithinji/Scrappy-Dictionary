@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { ILanguage, ITranslation, ITranslationLinkData } from '@ng-scrappy/models';
+import { ILanguage, ITranslation, ITranslationLinkData, ITranslationResults } from '@ng-scrappy/models';
 
 
 /**
@@ -43,7 +43,7 @@ export async function getLanguageWords(
   lang: string
 ) {
   try {
-    return await queryCollection(db, `dictionary/${lang}/words`, 'word') as any as ITranslation[];
+    return await queryCollection(db, `dictionary/${lang}/words`, 'word') as any as ITranslationResults[];
   } catch (e) {
     throw Error(
       `[getLanguageWords]: - Error querying language words for ${lang} - ${e}`
