@@ -5,6 +5,8 @@ import Skeleton from 'react-loading-skeleton';
 
 import { ITranslation } from '@ng-scrappy/models';
 import { Link } from 'react-router-dom';
+
+import Error from './../error';
 import { capitalize } from '../../utils/capitalize.util';
 import { setAsWord } from '../../utils/space-fixer.util';
 
@@ -32,7 +34,7 @@ export function TranslationDetail(props) {
 
   const loaded = trl && lang;
 
-  if (error) return <p>Error loading word :(</p>;
+  if (error) return  <Error />;
 
 
   return(
@@ -40,12 +42,12 @@ export function TranslationDetail(props) {
       <div className="card-header pb-0 d-flex justify-content-between">
         <p className="text-secondary">{loaded ? 'Translation' : <Skeleton width={80} />}</p>
         <Link to={`/${lang}/words`}>
-          <span className="badge badge-warning">{loaded ? lang : <Skeleton width={40} />}</span>
+          {loaded ? <span className="badge badge-warning"></span> : <Skeleton width={40} height={12}/>}
         </Link>
       </div>
       <div className="card-body">
         <h2 className="card-title">{loaded ? setAsWord(trl.word) : <Skeleton width={100} />}</h2>
-        <p className="card-text">{loaded ? (trl.meaning ? capitalize(trl.meaning) : `😬 Meaning wasn't provided`) : <Skeleton count={2} width={350} className="d-block mb-2"/>}</p>
+        <p className="card-text">{loaded ? (trl.meaning ? capitalize(trl.meaning) : `😬 Meaning wasn't provided`): <Skeleton count={2} width={250} className="d-block mb-2"/>}</p>
       </div>
 
       <hr/>

@@ -3,6 +3,7 @@ import { useQuery, gql } from '@apollo/client';
 
 import { ITranslation } from '@ng-scrappy/models';
 import TranslationCard from './translation-card';
+import Error from './../error';
 
 const WORDS_LIST_QUERY = gql`
   query GetLanguageWords($language: String!) {
@@ -19,7 +20,7 @@ export function TranslationList(props) {
     variables: { language: props.match.params.language },
   });
 
-  if (error) return <p>Error :(</p>;
+  if (error) return <Error />;
 
   return (
     <div className="d-flex flex-column">

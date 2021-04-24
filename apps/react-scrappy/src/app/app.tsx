@@ -61,7 +61,7 @@ export class App extends React.Component {
               <div className="pb-2">
                 <SearchComponent />
               </div>
-              <SkeletonTheme color="#c2c5c3" highlightColor="#e2e2e2">
+              <SkeletonTheme color="#fff" highlightColor="#f3f3f3">
                 <main>
                   <Route exact path="/">
                     <Redirect to={`/${this.state.activeLang}`} />

@@ -8,6 +8,7 @@ import { ILanguage } from '@ng-scrappy/models';
 
 import LanguageCard from './language-card';
 import PopularElement from './popular-element';
+import Error from './../error';
 import { capitalize } from '../../utils/capitalize.util';
 
 const LANGUAGES_QUERY = gql`
@@ -28,7 +29,7 @@ export function HomePage(props) {
   const activeLang = supportedLangs.find((l) => l.language === lang);
   const otherLangs = supportedLangs.filter((l) => l.language !== lang);
 
-  if (error) return <p>Error :(</p>;
+  if (error) return <Error />;
 
   return (
     <div>
