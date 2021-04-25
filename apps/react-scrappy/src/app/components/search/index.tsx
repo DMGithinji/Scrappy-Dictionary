@@ -32,8 +32,9 @@ const searchClient = {
   },
 };
 
-const resetResults = () => {
-  const list = document.getElementsByClassName('ais-SearchBox-reset')[0] as HTMLButtonElement;
+const resetResults = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  e.currentTarget.blur();
+  const list = document.getElementsByClassName('ais-SearchBox-reset')[0] as HTMLTextAreaElement;
   list.click();
 };
 
@@ -55,7 +56,7 @@ const Hit = ({ hit }) => (
   <Link to={`/${hit.language}/word/${hit.word.toLowerCase()}`}>
     <div
       className="list-group-item d-flex justify-content-between align-items-center"
-      onClick={(e) => resetResults()}
+      onClick={(e) => resetResults(e)}
     >
       <span className="text-white">{setAsWord(hit.word)}</span>
       <span className="badge badge-warning badge-pill text-light">
