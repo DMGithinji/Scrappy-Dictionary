@@ -7,7 +7,7 @@ import Error from './../error';
 
 const WORDS_LIST_QUERY = gql`
   query GetLanguageWords($language: String!) {
-    translations(language: $language) {
+    dictionary(language: $language) {
       word
       language
       meaning
@@ -25,7 +25,7 @@ export function TranslationList(props) {
   return (
     <div className="d-flex flex-column">
       {data
-        ? data.translations.map((trl: ITranslation) => (
+        ? data.dictionary.map((trl: ITranslation) => (
             <TranslationCard key={trl.word} trl={trl} />
           ))
         : [...Array(10)].map((x, i) => (<TranslationCard key={i} trl={null} />))}

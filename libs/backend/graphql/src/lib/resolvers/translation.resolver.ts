@@ -12,7 +12,7 @@ const db = admin.firestore();
 
 export const resolvers = {
   Query: {
-    async translations(_: null, args: { language: string; word: string }) {
+    async dictionary(_: null, args: { language: string; word: string }) {
       try {
         // Random query for words in a language
         if (args.language) {

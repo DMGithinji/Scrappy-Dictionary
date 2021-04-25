@@ -13,7 +13,7 @@ import { setAsWord } from '../../utils/space-fixer.util';
 
 const WORD_QUERY = gql`
   query GetWordTranslation($word: String!) {
-    translations(word: $word) {
+    dictionary(word: $word) {
       word
       language
       meaning
@@ -29,7 +29,7 @@ export function TranslationDetail(props) {
     variables: { word: props.match.params.word },
   });
 
-  const trl = data ? data.translations[0] : null as ITranslation;
+  const trl = data ? data.dictionary[0] : null as ITranslation;
   const lang = props.match.params.language;
 
   const loaded = trl && lang;

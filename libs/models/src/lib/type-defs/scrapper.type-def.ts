@@ -17,7 +17,7 @@ export const scrapperTypeDefs = gql`
   }
 
   type Query {
-    translations(language: String, word: String): [Translation]
+    dictionary(language: String, word: String): [Translation]
     languages: [Language]
   }
 `;
