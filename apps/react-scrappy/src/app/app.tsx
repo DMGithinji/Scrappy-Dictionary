@@ -11,7 +11,7 @@ import { ApolloProvider } from '@apollo/client/react';
 
 import { SkeletonTheme } from 'react-loading-skeleton';
 import styles from './app.module.scss';
-import logo from './../assets/images/icon-128x128.png';
+import logo from './../assets/images/logo.png';
 
 import {
   ActiveLangToggle,
@@ -62,7 +62,7 @@ export class App extends React.Component {
               <div className="pb-2">
                 <SearchComponent />
               </div>
-              <SkeletonTheme color="#fff" highlightColor="#f3f3f3">
+              <SkeletonTheme color="#fff" highlightColor="#e1e1e1">
                 <main>
                   <Route exact path="/">
                     <Redirect to={`/${this.state.activeLang}`} />

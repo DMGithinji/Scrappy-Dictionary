@@ -16,7 +16,10 @@ export default function TranslationCard(props: { trl: ITranslation }) {
         <h4 className="mb-4">{ trl ? setAsWord(trl.word) : <Skeleton width={60} />}</h4>
         <div>
           {trl ? (
-            <small className="badge badge-warning">{trl.language}</small>
+            <Link to={`/${trl.language}`} className="link-item">
+              <small className="badge badge-warning">{trl.language}</small>
+            </Link>
+
           ) : (
             <Skeleton width={30} />
           )}
@@ -26,7 +29,7 @@ export default function TranslationCard(props: { trl: ITranslation }) {
 
       {trl ? (
         <Link to={`/${trl.language}/word/${trl.word}`} className="link-item">
-          <small className="mt-4 text-muted">
+          <small className="mt-4 text-dark">
             <u>Read more...</u>
           </small>
         </Link>

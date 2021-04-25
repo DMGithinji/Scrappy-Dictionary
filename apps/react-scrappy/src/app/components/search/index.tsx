@@ -33,9 +33,9 @@ const searchClient = {
 };
 
 const resetResults = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  const resetEl = document.getElementsByClassName('ais-SearchBox-reset')[0] as HTMLTextAreaElement;
+  resetEl.click();
   e.currentTarget.blur();
-  const list = document.getElementsByClassName('ais-SearchBox-reset')[0] as HTMLTextAreaElement;
-  list.click();
 };
 
 export function SearchComponent() {

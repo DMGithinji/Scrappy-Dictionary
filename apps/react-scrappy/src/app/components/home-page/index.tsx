@@ -74,8 +74,8 @@ export function HomePage(props) {
 
         <div className="scrolling-wrapper d-flex flex-row mt-2">
           {!loading
-            ? activeLang.popular.map((word) => (
-                <PopularElement key={lang.word} language={lang} word={word} />
+            ? activeLang.popular.map((word, i) => (
+                <PopularElement key={i} language={lang} word={word} />
               ))
             : <Skeleton count={3} height={35} width={90} className={'mr-3 flex-fill'}/>}
         </div>

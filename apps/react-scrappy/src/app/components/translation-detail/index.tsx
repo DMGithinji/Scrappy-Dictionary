@@ -42,7 +42,7 @@ export function TranslationDetail(props) {
       <div className="card-header pb-0 d-flex justify-content-between">
         <p className="text-secondary">{loaded ? 'Translation' : <Skeleton width={80} />}</p>
         <Link to={`/${lang}/words`}>
-          {loaded ? <span className="badge badge-warning"></span> : <Skeleton width={40} height={12}/>}
+          {loaded ? <span className="badge badge-warning">{lang}</span> : <Skeleton width={40} height={12}/>}
         </Link>
       </div>
       <div className="card-body">
@@ -56,7 +56,7 @@ export function TranslationDetail(props) {
         <p className="text-muted">{loaded ? 'Example' : <Skeleton width={100} />}</p>
         <p>{loaded ? (trl.example ? capitalize(trl.example) : `😞 No example available.`) : <Skeleton />}</p>
         <p className="text-muted">{loaded ? 'Translated to...' : <Skeleton width={200} />}</p>
-        <p>{loaded ? (trl.translation ? capitalize(trl.translation) : `😞 No example available.`) : <Skeleton />}</p>
+        <p>{loaded ? (trl.translation ? capitalize(trl.translation) : `😞 The translation wasn't provided.`) : <Skeleton />}</p>
       </div>
 
       <hr/>
@@ -67,7 +67,7 @@ export function TranslationDetail(props) {
         <div className="list-group list-group-flush m-0 p-0">
           {loaded ?
             (trl.relatedWords.map((word, i) =>
-            <Link to={`/${lang}/word/${word.toLowerCase()}`}>
+            <Link to={`/${lang}/word/${word.toLowerCase()}`} key={i}>
               <u key={word} className="list-group-item pl-2 text-dark">{capitalize(word)}</u>
             </Link>))
             : <Skeleton count={4} height={14} width={45} className={'ml-2 mb-3 mt-3 d-block'}/>}
