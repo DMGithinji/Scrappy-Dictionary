@@ -1,7 +1,6 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "parser": "babel-eslint",
   "plugins": ["@nrwl/nx"],
   "overrides": [
     {
