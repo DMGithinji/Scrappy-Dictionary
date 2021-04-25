@@ -8,7 +8,7 @@
     "postinstall": "node ./decorate-angular-cli.js && ngcc --properties es2015 browser module main",
     "nx": "nx",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --no-content-hash",
     "test": "ng test",
     "firebase:serve": "concurrently --kill-others \"yarn run build functions --watch\" \"firebase serve --only functions\"",
     "firebase:shell": "concurrently --kill-others \"yarn run build functions --watch\" \"firebase functions:shell\" --raw",

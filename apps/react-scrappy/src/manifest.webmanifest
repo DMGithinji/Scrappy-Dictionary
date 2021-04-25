@@ -1,0 +1,26 @@
+{
+  "name": "scrappy",
+  "short_name": "Scrappy Dictionary",
+  "theme_color": "#E8592A",
+  "background_color": "#212121",
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./assets/icons/icon-128x128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "./assets/icons/icon-256x256.png",
+      "type": "image/png",
+      "sizes": "256x256"
+    },
+    {
+      "src": "./assets/icons/icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

@@ -269,7 +269,9 @@
             "tsConfig": "apps/react-scrappy/tsconfig.app.json",
             "assets": [
               "apps/react-scrappy/src/favicon.ico",
-              "apps/react-scrappy/src/assets"
+              "apps/react-scrappy/src/assets",
+              "apps/react-scrappy/src/manifest.webmanifest",
+              "apps/react-scrappy/src/serviceWorker.js"
             ],
             "styles": ["apps/react-scrappy/src/styles.scss"],
             "scripts": [],

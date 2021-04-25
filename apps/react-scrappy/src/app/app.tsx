@@ -11,6 +11,7 @@ import { ApolloProvider } from '@apollo/client/react';
 
 import { SkeletonTheme } from 'react-loading-skeleton';
 import styles from './app.module.scss';
+import logo from './../assets/images/icon-128x128.png';
 
 import {
   ActiveLangToggle,
@@ -51,7 +52,7 @@ export class App extends React.Component {
                   <div className="d-flex justify-content-center align-items-center">
                     <img
                       className="logo"
-                      src="https://img.icons8.com/bubbles/50/000000/book.png"
+                      src={logo}
                       alt="logo"
                     />
                     <h1 className="text-warning"> Scrappy Dictionary </h1>
