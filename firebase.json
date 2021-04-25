@@ -7,5 +7,20 @@
       "node tools/scripts/build-functions-package.js"
     ],
     "source": "dist/apps/functions"
+  },
+  "hosting": {
+    "target": "rx-scrappy",
+    "public": "dist/apps/react-scrappy",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }
