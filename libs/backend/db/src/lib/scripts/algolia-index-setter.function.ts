@@ -9,12 +9,16 @@ const ADMIN_KEY = functions.config().algolia.key;
 const client = algoliasearch(APP_ID, ADMIN_KEY);
 const index = client.initIndex('dictionary');
 
+
+/**
+ * Saves trl to algolia for search indexing
+ * @param trlData
+ */
 export function setToAlgolia(trlData: ITranslationResults[])
 {
   trlData.map((trl) => {
-
     const objectID = trl.id;
-    console.log(`Saving obj with word ${trl.word}`)
+    console.log(`Saving obj with word ${trl.word}`);
     return index.saveObject({ ...trl, objectID });
   });
 }

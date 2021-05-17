@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-import { getLanguageWords, getSupportedLangs, setSuggestions, setToAlgolia } from '@ng-scrappy/backend/db';
+import { getLanguageWords, getSupportedLangs, setRelatedWords, setToAlgolia } from '@ng-scrappy/backend/db';
 import { verifyPopularWords } from '../scripts/fix-missing-popular-words.function';
 
 const db = admin.firestore();
@@ -18,7 +18,7 @@ export const tempScript = functions
       // await Promise.all(langs.map(async (lang, i) => {
 
       //   const langTrls = await getLanguageWords(db, lang.language);
-      //   // return await setSuggestions(db, langTrls)
+      //   // return await setRelatedWords(db, langTrls)
 
       //   // return setToAlgolia(langTrls)
       // }))

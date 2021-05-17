@@ -22,7 +22,7 @@ import {
 } from './components';
 
 const client = new ApolloClient({
-  uri: 'https://us-central1-cloudfunc-101.cloudfunctions.net/scrappyApi',
+  uri: 'http://localhost:5000/cloudfunc-101/us-central1/scrappyApi',
   cache: new InMemoryCache(),
 });
 

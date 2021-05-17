@@ -1,13 +1,13 @@
 import * as _ from 'lodash';
-import { ILanguage, ITranslation, ITranslationLinkData, ITranslationResults } from '@ng-scrappy/models';
+import {
+  ILanguage,
+  ITranslationLinkData,
+  ITranslationResults,
+} from '@ng-scrappy/models';
 
 
-/**
- * Queries a word's translations from the different lang collections
- * @param {FirebaseFirestore} db
- * @return {string[]} List of languages
- */
- export async function searchWord(
+/**  Queries a word's translations from the different language collections */
+export async function searchWord(
   db: FirebaseFirestore.Firestore,
   word: string
 ) {
@@ -33,22 +33,15 @@ import { ILanguage, ITranslation, ITranslationLinkData, ITranslationResults } fr
 }
 
 
-/**
- * Queries words in a language collection
- * @param {FirebaseFirestore} db
- * @return {string[]} List of Translation Objects
- */
-export async function getLanguageWords(
-  db: FirebaseFirestore.Firestore,
-  lang: string
-) {
-  try {
-    return await queryCollection(db, `dictionary/${lang}/words`, 'word') as any as ITranslationResults[];
-  } catch (e) {
-    throw Error(
-      `[getLanguageWords]: - Error querying language words for ${lang} - ${e}`
-    );
-  }
+/** Queries supported languages */
+export async function getSupportedLangs(db: FirebaseFirestore.Firestore) {
+  return (queryCollection(db, 'supported-languages') as any) as ILanguage[];
+}
+
+
+/** Queries words in a language collection */
+export async function getLanguageWords(db: FirebaseFirestore.Firestore, lang: string) {
+  return (queryCollection(db, `dictionary/${lang}/words`, 'word') as any) as ITranslationResults[];
 }
 
 
@@ -78,28 +71,20 @@ export async function isWordNew(
 
 
 /**
- * Queries supported languages
- * @param {FirebaseFirestore} db
- * @return {string[]} List of languages
- */
- export async function getSupportedLangs(db: FirebaseFirestore.Firestore) {
-  return await queryCollection(db, 'supported-languages') as any as ILanguage[];
-}
-
-
-/**
  * Queries data for the given collection path
  * @param {FirebaseFirestore} db
  * @param {string} collectionPath
  * @return {DocumentData} document data
  */
- export async function queryCollection(
+export async function queryCollection(
   db: FirebaseFirestore.Firestore,
   collectionPath: string,
   orderProp?: string
 ) {
   const orderBy = orderProp ?? 'createdAt';
-  const snapshot = await db.collection(collectionPath).orderBy(orderBy).get();
+  const snapshot = await db.collection(collectionPath)
+                            .orderBy(orderBy)
+                            .get();
   return snapshot.docs.map((doc) => {
     const data = doc.data();
     data.id = doc.id;

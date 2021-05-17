@@ -2,12 +2,7 @@ import { firestore } from 'firebase-admin';
 import { ITranslationLinkData, ITranslationResults } from '@ng-scrappy/models';
 
 
-/**
- * Gets translation data and save it to DB
- * @param {FirebaseFirestore.Firestore} db
- * @param {ITranslationLinkData} trlData
- * @return {void}
- */
+/** Save translation data to DB */
 export async function saveTrl(
   db: FirebaseFirestore.Firestore,
   lang: string,
@@ -29,11 +24,7 @@ export async function saveTrl(
 }
 
 
-/**
- * Adds word not to be scrapped for translation to db
- * @param db
- * @param trlLinkData
- */
+/** Adds word not to be scrapped for translation to db */
 export async function addToBlacklist(
   db: FirebaseFirestore.Firestore,
   trlLinkData: ITranslationLinkData

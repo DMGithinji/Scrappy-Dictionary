@@ -1,27 +1,38 @@
 import * as _ from 'lodash';
-import { ITranslationResults } from "@ng-scrappy/models";
+import { ITranslationResults } from '@ng-scrappy/models';
 
+/**
+ * Sets relatedWords to a tranlation from random existing words in language
+ */
+export function setRelatedWords(db, trlData: ITranslationResults[]) {
+  const suggestedWordsList = _.chunk(trlData.map((t) => t.word), 4);
 
-export async function setSuggestions(db, trlData: ITranslationResults[])
-{
-  const suggestedWords = _.chunk(trlData.map(t => t.word), 4);
-  await Promise.all(trlData.map(async (trl, ind) => {
-    const index = (ind % suggestedWords.length);
-    let suggested = suggestedWords[index];
+  return trlData.map(async (trl, ind) =>
+  {
+    const index = ind % suggestedWordsList.length;
+    let related = suggestedWordsList[index];
 
-    if (suggested.includes(trl.word) && suggested.length !== 4) {
-      suggested = suggestedWords.find(chunk => chunk.find(trl => trl.relatedWords.length === 4 && !suggested.includes(trl.word)))
+    const isRelatedInvalid = (trl, suggestions) =>
+      trl.relatedWords.length !== 4 || suggestions.includes(trl.word);
+
+    if (isRelatedInvalid(trl, related))
+    {
+      related = suggestedWordsList.find((sugg) =>
+        sugg.find((trl) => !isRelatedInvalid(trl, related)));
     }
 
-    trl.relatedWords = suggested;
-    await update(db, trl)
+    trl.relatedWords = related;
+    await update(db, trl);
 
-    return {suggestedWords, suggested};
-  }))
+  })
 }
 
-async function update (db: FirebaseFirestore.Firestore, trlData: ITranslationResults)
-{
-  await db.collection(`dictionary/${trlData.language}/words`).doc(trlData.id).update(trlData);
-  console.log(`Updated trlData of related words of ${trlData.word} to ${trlData.relatedWords}`);
+/** Updates the db */
+async function update(
+  db: FirebaseFirestore.Firestore,
+  trlData: ITranslationResults
+) {
+  db.collection(`dictionary/${trlData.language}/words`)
+    .doc(trlData.id)
+    .update(trlData);
 }
