@@ -40,8 +40,11 @@ export async function getSupportedLangs(db: FirebaseFirestore.Firestore) {
 
 
 /** Queries words in a language collection */
-export async function getLanguageWords(db: FirebaseFirestore.Firestore, lang: string) {
-  return (queryCollection(db, `dictionary/${lang}/words`, 'word') as any) as ITranslationResults[];
+export async function getLanguageWords(db: FirebaseFirestore.Firestore, lang: string, limit: number, cursor: string) {
+  const path = `dictionary/${lang}/words`;
+  const orderBy =  'word';
+
+  return (queryCollection(db, path, orderBy, limit, cursor) as any) as ITranslationResults[];
 }
 
 
@@ -72,18 +75,21 @@ export async function isWordNew(
 
 /**
  * Queries data for the given collection path
- * @param {FirebaseFirestore} db
- * @param {string} collectionPath
- * @return {DocumentData} document data
  */
 export async function queryCollection(
   db: FirebaseFirestore.Firestore,
   collectionPath: string,
-  orderProp?: string
+  orderBy = 'createdAt',
+  limit = 10,
+  cursor?: string
 ) {
-  const orderBy = orderProp ?? 'createdAt';
+
+  const queryCursor = cursor ?? 0;
+
   const snapshot = await db.collection(collectionPath)
                             .orderBy(orderBy)
+                            .startAfter(queryCursor)
+                            .limit(limit)
                             .get();
   return snapshot.docs.map((doc) => {
     const data = doc.data();
