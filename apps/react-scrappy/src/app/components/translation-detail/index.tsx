@@ -1,5 +1,5 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 
 import Skeleton from 'react-loading-skeleton';
 
@@ -9,23 +9,11 @@ import { Link } from 'react-router-dom';
 import Error from './../error';
 import { capitalize } from '../../utils/capitalize.util';
 import { setAsWord } from '../../utils/space-fixer.util';
+import { TRANSLATION_DETAILS_QUERY } from '../../queries/translations.queries';
 
-
-const WORD_QUERY = gql`
-  query GetWordTranslation($word: String!) {
-    dictionary(word: $word) {
-      word
-      language
-      meaning
-      example
-      translation
-      relatedWords
-    }
-  }
-`;
 
 export function TranslationDetail(props) {
-  const { loading, error, data } = useQuery(WORD_QUERY, {
+  const { loading, error, data } = useQuery(TRANSLATION_DETAILS_QUERY, {
     variables: { word: props.match.params.word },
   });
 

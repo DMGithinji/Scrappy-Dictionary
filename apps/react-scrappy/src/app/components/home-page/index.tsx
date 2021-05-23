@@ -3,26 +3,18 @@ import { Link } from 'react-router-dom';
 
 import Skeleton from 'react-loading-skeleton';
 
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { ILanguage } from '@ng-scrappy/models';
 
 import LanguageCard from './language-card';
 import PopularElement from './popular-element';
 import Error from './../error';
 import { capitalize } from '../../utils/capitalize.util';
+import { DETAILED_LANGUAGES_QUERY } from '../../queries/translations.queries';
 
-const LANGUAGES_QUERY = gql`
-  query GetLanguages {
-    languages {
-      language
-      description
-      popular
-    }
-  }
-`;
 
 export function HomePage(props) {
-  const { loading, error, data } = useQuery(LANGUAGES_QUERY);
+  const { loading, error, data } = useQuery(DETAILED_LANGUAGES_QUERY);
   const supportedLangs: ILanguage[] = data?.languages ?? [];
 
   const lang = props.match.params.language;

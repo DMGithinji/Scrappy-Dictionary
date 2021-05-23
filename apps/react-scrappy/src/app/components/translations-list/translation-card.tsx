@@ -7,6 +7,7 @@ import { ITranslation } from '@ng-scrappy/models';
 import { capitalize, slice } from '../../utils/capitalize.util';
 import { setAsWord } from '../../utils/space-fixer.util';
 
+
 export default function TranslationCard(props: { trl: ITranslation }) {
   const { trl } = props;
   const meaning = trl?.meaning ? slice(capitalize(trl.meaning), 80) : '';

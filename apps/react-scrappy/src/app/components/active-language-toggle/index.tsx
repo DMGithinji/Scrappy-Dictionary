@@ -1,19 +1,13 @@
 import React from 'react';
 
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { ILanguage } from '@ng-scrappy/models';
 import { Link } from 'react-router-dom';
+import { SUMMARIZED_LANGUAGES_QUERY } from '../../queries/translations.queries';
 
-const LANGUAGES_QUERY = gql`
-  query GetLanguages {
-    languages {
-      language
-    }
-  }
-`;
 
 export function ActiveLangToggle({ updateActiveLang, activeLang }) {
-  const langsData = useQuery(LANGUAGES_QUERY);
+  const langsData = useQuery(SUMMARIZED_LANGUAGES_QUERY);
   const supportedLangs: ILanguage[] = langsData?.data?.languages ?? [];
   const otherLangs = supportedLangs.filter((l) => l.language !== activeLang);
 
