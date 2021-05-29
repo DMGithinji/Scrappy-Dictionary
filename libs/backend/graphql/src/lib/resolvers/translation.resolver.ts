@@ -14,11 +14,10 @@ export const resolvers = {
   Query: {
     async dictionary(_: null, args: { language: string; word: string, limit: number, cursor: string }) {
       try {
-        const limit = args.limit ?? 10;
         const cursor = args.cursor ?? null;
 
         if (args.language) {
-          const trls = await getLanguageWords(db, args.language, limit, cursor);
+          const trls = await getLanguageWords(db, args.language, args.limit, cursor);
           return trls || new ValidationError('Language not supported');
         }
         // Search for word

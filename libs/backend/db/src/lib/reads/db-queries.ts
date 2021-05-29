@@ -80,7 +80,7 @@ export async function queryCollection(
   db: FirebaseFirestore.Firestore,
   collectionPath: string,
   orderBy = 'createdAt',
-  limit = 10,
+  limit = 5,
   cursor?: string
 ) {
 

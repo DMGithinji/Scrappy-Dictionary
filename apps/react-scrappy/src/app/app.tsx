@@ -20,10 +20,24 @@ import {
   TranslationList,
   TranslationDetail,
 } from './components';
+import { relayStylePagination } from '@apollo/client/utilities';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/cloudfunc-101/us-central1/scrappyApi',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          dictionary: {
+            keyArgs: false,
+            merge(existing = [], incoming) {
+              return [...existing, ...incoming];
+            }
+          },
+        },
+      },
+    },
+  }),
 });
 
 export class App extends React.Component {
@@ -50,11 +64,7 @@ export class App extends React.Component {
               <header className="mb-4">
                 <Link to={`/${this.state.activeLang}`}>
                   <div className="d-flex justify-content-center align-items-center">
-                    <img
-                      className="logo"
-                      src={logo}
-                      alt="logo"
-                    />
+                    <img className="logo" src={logo} alt="logo" />
                     <h1 className="text-warning"> Scrappy Dictionary </h1>
                   </div>
                 </Link>
@@ -84,7 +94,7 @@ export class App extends React.Component {
           </div>
         </Router>
       </ApolloProvider>
-    )
+    );
   }
 }
 
