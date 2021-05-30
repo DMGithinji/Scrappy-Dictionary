@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Link,
@@ -48,29 +48,33 @@ const client = new ApolloClient({
   }),
 });
 
-export class App extends React.Component {
-  state = {
-    activeLang: localStorage.getItem('scrappy_active_lang') ?? 'swahili',
-  };
+export const LanguageContext = React.createContext({
+  activeLang: "swahili",
+  setLanguage: (() => {
+    // Set default
+  }) as any
+});
 
-  updateActiveLang = (lang) => {
-    this.setState({ activeLang: lang });
-    localStorage.setItem('scrappy_active_lang', lang);
-  };
+export const App = () => {
+  const language = localStorage.getItem('scrappy_active_lang') ?? 'swahili'
+  const [activeLang, setLanguage] = useState(language)
+  const value = { activeLang, setLanguage };
 
-  render() {
+  useEffect(() => {
+    localStorage.setItem('scrappy_active_lang', activeLang);
+  }, [activeLang])
+
+
     return (
       <ApolloProvider client={client}>
         <Router>
+        <LanguageContext.Provider value={value}>
           <div className="container">
-            <ActiveLangToggle
-              updateActiveLang={this.updateActiveLang}
-              activeLang={this.state.activeLang}
-            />
+            <ActiveLangToggle />
 
             <div className={styles.app}>
               <header className="mb-4">
-                <Link to={`/${this.state.activeLang}`}>
+                <Link to={`/${activeLang}`}>
                   <div className="d-flex justify-content-center align-items-center">
                     <img className="logo" src={logo} alt="logo" />
                     <h1 className="text-warning"> Scrappy Dictionary </h1>
@@ -83,7 +87,7 @@ export class App extends React.Component {
               <SkeletonTheme color="#fff" highlightColor="#e1e1e1">
                 <main>
                   <Route exact path="/">
-                    <Redirect to={`/${this.state.activeLang}`} />
+                    <Redirect to={`/${activeLang}`} />
                   </Route>
                   <Route exact path="/:language" component={HomePage} />
                   <Route
@@ -100,10 +104,10 @@ export class App extends React.Component {
               </SkeletonTheme>
             </div>
           </div>
+          </LanguageContext.Provider>
         </Router>
       </ApolloProvider>
     );
-  }
 }
 
 export default App;

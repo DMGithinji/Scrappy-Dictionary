@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { useQuery } from '@apollo/client';
 import { ILanguage } from '@ng-scrappy/models';
 import { Link } from 'react-router-dom';
 import { SUMMARIZED_LANGUAGES_QUERY } from '../../queries/translations.queries';
+import { LanguageContext } from '../../app';
 
 
-export function ActiveLangToggle({ updateActiveLang, activeLang }) {
+export function ActiveLangToggle() {
   const langsData = useQuery(SUMMARIZED_LANGUAGES_QUERY);
   const supportedLangs: ILanguage[] = langsData?.data?.languages ?? [];
+
+  const { activeLang, setLanguage } = useContext(LanguageContext);
   const otherLangs = supportedLangs.filter((l) => l.language !== activeLang);
 
   return (
@@ -35,7 +38,7 @@ export function ActiveLangToggle({ updateActiveLang, activeLang }) {
         {otherLangs.map((lang, i) => (
           <Link to={`/${lang.language}`} key={i}>
             <button
-              onClick={() => updateActiveLang(lang.language)}
+              onClick={() => setLanguage(lang.language)}
               className="dropdown-item bg-light text-capitalize"
             >
               {lang.language}
