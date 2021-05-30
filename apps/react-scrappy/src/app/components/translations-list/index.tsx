@@ -3,19 +3,21 @@ import { useQuery } from '@apollo/client';
 
 import { ITranslation } from '@ng-scrappy/models';
 import TranslationCard from './translation-card';
+import { useScroll } from './useScroll';
 import Error from './../error';
 import { WORDS_LIST_QUERY } from '../../queries/translations.queries';
-
 
 export function TranslationList(props) {
   const language = props.match.params.language;
   const limit = 5;
+  const scrollHeight = useScroll();
 
   const { loading, error, data, fetchMore, networkStatus  } = useQuery(WORDS_LIST_QUERY, {
     variables: { language },
     notifyOnNetworkStatusChange: true,
   });
 
+  // Trigger loader animation
   const [isLoading, setLoader] = useState(false);
   useEffect(() => {
     const isLoading = networkStatus === 3 || loading;
@@ -24,28 +26,25 @@ export function TranslationList(props) {
     return () => setLoader(false);
   }, [networkStatus, loading]);
 
-
-  const observerRef = useRef(null);
+  // Trigger infinite scroll
   useEffect(() => {
-    const options = {
-      root: document.querySelector("#list"),
-      threshold: 0.1,
-    };
-    observerRef.current = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      if (entry.isIntersecting) {
-        (entry.target as any).click();
-      }
-    }, options);
-  }, []);
+    const list = document.getElementById('list');
+    const listHeight = list.clientHeight + list.offsetTop;
+    const height = scrollHeight.y + window.screenY;
 
-  const [buttonRef, setButtonRef] = useState(null);
-  useEffect(() => {
-    if (buttonRef && !isLoading) {
-      // observerRef.current.observe(document.querySelector("#buttonLoadMore"));
+    // HACKY: 800 is the approx height of the list with one request-batch
+    const isInRange = (listHeight - height) < 800;
+    const initial = (height === 0);
+
+    const loadMoreButton = document.querySelector("#buttonLoadMore");
+
+    if (initial || isInRange && loadMoreButton) {
+      (loadMoreButton as any).click();
     }
-  }, [buttonRef, isLoading]);
+  }, [scrollHeight]);
 
+
+  // Updates cursor for pagination
   const [cursor, setCursor] = useState(null);
   useEffect(() => {
     if (data?.dictionary[0].language === language) {
@@ -59,45 +58,35 @@ export function TranslationList(props) {
   }, [data, language]);
 
 
-  if (error) {
-    console.log(error);
-    return <div>Error</div>;
-  }
-
-
   if (error) return <Error />;
 
 
   return (
-    <div style={{height: "1000px"}}>
-      <div id="list" className="d-flex flex-column">
-        { (data)
-           ? data.dictionary.map((trl: ITranslation) => ( <TranslationCard key={trl.word} trl={trl} />))
-           : [...Array(5)].map((x, i) => (<TranslationCard key={i} trl={null} />))}
+    <div id="list">
+      { (data)
+          ? data.dictionary.map((trl: ITranslation) => ( <TranslationCard key={trl.word} trl={trl} />))
+          : [...Array(5)].map((x, i) => (<TranslationCard key={i} trl={null} />))}
 
-        <div className="row d-flex justify-content-center">
-          {isLoading
-            ? <Loader />
-            : <div
-                className="btn btn-warning"
-                ref={setButtonRef}
-                id="buttonLoadMore"
-                onClick={() =>
-                  fetchMore({
-                    variables: {
-                      cursor,
-                      language,
-                      limit
-                    },
-                  })
-                }
-              >
-                Load More
-              </div>
-            }
-        </div>
+      <div className="row d-flex justify-content-center">
+        {isLoading
+          ? <Loader />
+          : <div
+              className="btn btn-warning d-none"
+              id="buttonLoadMore"
+              onClick={() =>
+                fetchMore({
+                  variables: {
+                    cursor,
+                    language,
+                    limit
+                  },
+                })
+              }
+            >
+              Load More
+            </div>
+          }
       </div>
-
     </div>
   );
 }
