@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 import React from 'react';
 import {
   BrowserRouter as Router,
@@ -20,8 +22,10 @@ import {
   TranslationList,
   TranslationDetail,
 } from './components';
-import { relayStylePagination } from '@apollo/client/utilities';
 
+
+const getLang = (dictionary) => dictionary[0]?.language ?? null;
+const isValid = (dictionary) => !!dictionary.length;
 const client = new ApolloClient({
   uri: 'http://localhost:5000/cloudfunc-101/us-central1/scrappyApi',
   cache: new InMemoryCache({
@@ -31,7 +35,11 @@ const client = new ApolloClient({
           dictionary: {
             keyArgs: false,
             merge(existing = [], incoming) {
-              return [...existing, ...incoming];
+              if (isValid(incoming) && getLang(incoming) === getLang(existing)) {
+                const dictionary = [...existing, ...incoming];
+                return _.uniqBy(dictionary, (x) => x.word);
+              }
+              return incoming;
             }
           },
         },
