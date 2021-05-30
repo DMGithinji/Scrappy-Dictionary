@@ -6,6 +6,8 @@ import {
   Link,
   Redirect,
   Route,
+  useLocation,
+  withRouter,
 } from 'react-router-dom';
 
 import { ApolloClient, InMemoryCache } from '@apollo/client';
@@ -24,10 +26,18 @@ import {
 } from './components';
 
 
+export const LanguageContext = React.createContext({
+  activeLang: 'swahili',
+  setLanguage: (() => {
+    // Set default
+  }) as any,
+});
+
+
 const getLang = (dictionary) => dictionary[0]?.language ?? null;
 const isValid = (dictionary) => !!dictionary.length;
 const client = new ApolloClient({
-  uri: 'http://localhost:5000/cloudfunc-101/us-central1/scrappyApi',
+  uri: 'https://us-central1-cloudfunc-101.cloudfunctions.net/scrappyApi',
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
@@ -35,12 +45,15 @@ const client = new ApolloClient({
           dictionary: {
             keyArgs: false,
             merge(existing = [], incoming) {
-              if (isValid(incoming) && getLang(incoming) === getLang(existing)) {
+              if (
+                isValid(incoming) &&
+                getLang(incoming) === getLang(existing)
+              ) {
                 const dictionary = [...existing, ...incoming];
                 return _.uniqBy(dictionary, (x) => x.word);
               }
               return incoming;
-            }
+            },
           },
         },
       },
@@ -48,66 +61,70 @@ const client = new ApolloClient({
   }),
 });
 
-export const LanguageContext = React.createContext({
-  activeLang: "swahili",
-  setLanguage: (() => {
-    // Set default
-  }) as any
-});
+
+function _ScrollToTop(props) {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return props.children;
+}
+const ScrollToTop = withRouter(_ScrollToTop);
 
 export const App = () => {
-  const language = localStorage.getItem('scrappy_active_lang') ?? 'swahili'
-  const [activeLang, setLanguage] = useState(language)
+  const language = localStorage.getItem('scrappy_active_lang') ?? 'swahili';
+  const [activeLang, setLanguage] = useState(language);
   const value = { activeLang, setLanguage };
 
   useEffect(() => {
     localStorage.setItem('scrappy_active_lang', activeLang);
-  }, [activeLang])
+  }, [activeLang]);
 
+  return (
+    <ApolloProvider client={client}>
+      <Router>
+        <ScrollToTop>
+          <LanguageContext.Provider value={value}>
+            <div className="container">
+              <ActiveLangToggle />
 
-    return (
-      <ApolloProvider client={client}>
-        <Router>
-        <LanguageContext.Provider value={value}>
-          <div className="container">
-            <ActiveLangToggle />
-
-            <div className={styles.app}>
-              <header className="mb-4">
-                <Link to={`/${activeLang}`}>
-                  <div className="d-flex justify-content-center align-items-center">
-                    <img className="logo" src={logo} alt="logo" />
-                    <h1 className="text-warning"> Scrappy Dictionary </h1>
-                  </div>
-                </Link>
-              </header>
-              <div className="pb-2">
-                <SearchComponent />
+              <div className={styles.app}>
+                <header className="mb-4">
+                  <Link to={`/${activeLang}`}>
+                    <div className="d-flex justify-content-center align-items-center">
+                      <img className="logo" src={logo} alt="logo" />
+                      <h1 className="text-warning"> Scrappy Dictionary </h1>
+                    </div>
+                  </Link>
+                </header>
+                <div className="pb-2">
+                  <SearchComponent />
+                </div>
+                <SkeletonTheme color="#fff" highlightColor="#e1e1e1">
+                  <main>
+                    <Route exact path="/">
+                      <Redirect to={`/${activeLang}`} />
+                    </Route>
+                    <Route exact path="/:language" component={HomePage} />
+                    <Route
+                      exact
+                      path="/:language/words"
+                      component={TranslationList}
+                    />
+                    <Route
+                      exact
+                      path="/:language/word/:word"
+                      component={TranslationDetail}
+                    />
+                  </main>
+                </SkeletonTheme>
               </div>
-              <SkeletonTheme color="#fff" highlightColor="#e1e1e1">
-                <main>
-                  <Route exact path="/">
-                    <Redirect to={`/${activeLang}`} />
-                  </Route>
-                  <Route exact path="/:language" component={HomePage} />
-                  <Route
-                    exact
-                    path="/:language/words"
-                    component={TranslationList}
-                  />
-                  <Route
-                    exact
-                    path="/:language/word/:word"
-                    component={TranslationDetail}
-                  />
-                </main>
-              </SkeletonTheme>
             </div>
-          </div>
           </LanguageContext.Provider>
-        </Router>
-      </ApolloProvider>
-    );
-}
+        </ScrollToTop>
+      </Router>
+    </ApolloProvider>
+  );
+};
 
 export default App;
