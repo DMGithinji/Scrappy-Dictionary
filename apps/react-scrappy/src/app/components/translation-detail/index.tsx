@@ -17,7 +17,7 @@ export function TranslationDetail(props) {
     variables: { word: props.match.params.word },
   });
 
-  const trl = data ? data.dictionary[0] : null as ITranslation;
+  const trl = data ? data.searchWord[0] : null as ITranslation;
   const lang = props.match.params.language;
 
   const loaded = trl && lang;

@@ -29,8 +29,8 @@ export const WORDS_LIST_QUERY = gql`
 `;
 
 export const TRANSLATION_DETAILS_QUERY = gql`
-  query GetWordTranslation($word: String!) {
-    dictionary(word: $word) {
+  query GetWordTranslation($word: String) {
+    searchWord(word: $word) {
       word
       language
       meaning

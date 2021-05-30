@@ -17,7 +17,8 @@ export const scrapperTypeDefs = gql`
   }
 
   type Query {
-    dictionary(language: String, word: String, limit: Int, cursor: String): [Translation]
     languages: [Language]
+    dictionary(language: String, limit: Int, cursor: String): [Translation]
+    searchWord(word: String): [Translation]
   }
 `;

@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin';
 import { ApolloError, ValidationError } from 'apollo-server';
 
-import { ILanguage, ITranslation } from '@ng-scrappy/models';
+import { ILanguage } from '@ng-scrappy/models';
 import {
   getLanguageWords,
   getSupportedLangs,
@@ -12,7 +12,7 @@ const db = admin.firestore();
 
 export const resolvers = {
   Query: {
-    async dictionary(_: null, args: { language: string; word: string, limit: number, cursor: string }) {
+    async dictionary(_: null, args: { language: string; limit: number, cursor: string }) {
       try {
         const cursor = args.cursor ?? null;
 
@@ -20,12 +20,21 @@ export const resolvers = {
           const trls = await getLanguageWords(db, args.language, args.limit, cursor);
           return trls || new ValidationError('Language not supported');
         }
+
+        return new ValidationError('No language passed');
+
+      } catch (error) {
+        throw new ApolloError(error);
+      }
+    },
+
+    async searchWord(_: null, args: { word: string }) {
+      try {
         // Search for word
-          const results = await searchWord(db, args.word);
-          return (
-            (results as ITranslation[]) ||
-            new ValidationError('Error during search')
-          );
+        const results = await searchWord(db, args.word);
+        return (
+          results || new ValidationError('Error during search')
+        );
       } catch (error) {
         throw new ApolloError(error);
       }
