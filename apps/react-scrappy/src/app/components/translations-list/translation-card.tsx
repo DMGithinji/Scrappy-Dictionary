@@ -26,7 +26,7 @@ export default function TranslationCard(props: { trl: ITranslation }) {
           )}
         </div>
       </div>
-      <p>{meaning || <Skeleton width={300}/>}</p>
+      <p>{meaning || <Skeleton width={150}/>}</p>
 
       {trl ? (
         <Link to={`/${trl.language}/word/${trl.word}`} className="link-item">

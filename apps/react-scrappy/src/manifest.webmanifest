@@ -1,8 +1,8 @@
 {
   "name": "Rx-Scrappy",
   "short_name": "Rx-Scrappy",
-  "theme_color": "#E8592A",
-  "background_color": "#212121",
+  "theme_color": "#101010",
+  "background_color": "#111111",
   "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",

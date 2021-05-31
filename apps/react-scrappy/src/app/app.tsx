@@ -78,6 +78,7 @@ export const App = () => {
 
   useEffect(() => {
     localStorage.setItem('scrappy_active_lang', activeLang);
+    setLanguage(activeLang);
   }, [activeLang]);
 
   return (
@@ -100,7 +101,7 @@ export const App = () => {
                 <div className="pb-2">
                   <SearchComponent />
                 </div>
-                <SkeletonTheme color="#fff" highlightColor="#e1e1e1">
+                <SkeletonTheme color="#333" highlightColor="#3d3d3d">
                   <main>
                     <Route exact path="/">
                       <Redirect to={`/${activeLang}`} />

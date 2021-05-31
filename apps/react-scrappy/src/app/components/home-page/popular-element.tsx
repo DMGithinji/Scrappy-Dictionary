@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { capitalize } from '../../utils/capitalize.util';
 import { getAsLink, setAsWord } from '../../utils/space-fixer.util';
 
 export default function PopularElement(props: {
