@@ -3,9 +3,9 @@ import { useQuery } from '@apollo/client';
 
 import { ITranslation } from '@ng-scrappy/models';
 import TranslationCard from './translation-card';
-import { useScroll } from './useScroll';
 import Error from './../error';
 import { WORDS_LIST_QUERY } from '../../queries/translations.queries';
+import { useScroll } from '../../hooks/use-scroll.hook';
 
 export function TranslationList(props) {
   const language = props.match.params.language;
@@ -100,6 +100,7 @@ const Loader = () => {
     <div>
       {[...Array(5)].map((x, i) => (
         <div
+          key={i}
           className="m-2 spinner-grow spinner-grow-sm text-dark"
           role="status"
         >
