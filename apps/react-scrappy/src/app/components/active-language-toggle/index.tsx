@@ -9,7 +9,7 @@ import { LanguageContext } from '../../app';
 
 export function ActiveLangToggle() {
   const langsData = useQuery(SUMMARIZED_SUPPORTED_LANGUAGES_QUERY);
-  const supportedLangs: ILanguage[] = langsData?.data?.languages ?? [];
+  const supportedLangs: ILanguage[] = langsData?.data?.supportedLanguages ?? [];
 
   const { activeLang, setLanguage } = useContext(LanguageContext);
   const otherLangs = supportedLangs.filter((l) => l.language !== activeLang);
