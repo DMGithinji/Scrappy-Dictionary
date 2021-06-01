@@ -4,7 +4,7 @@ import { ApolloError, ValidationError } from 'apollo-server';
 import { ILanguage } from '@ng-scrappy/models';
 import {
   getLanguageWords,
-  getSupportedLangs,
+  getLanguages,
   searchWord,
 } from '@ng-scrappy/backend/db';
 
@@ -40,9 +40,18 @@ export const resolvers = {
       }
     },
 
-    async languages() {
+    async supportedLanguages() {
       try {
-        const langs = await getSupportedLangs(db);
+        const langs = await getLanguages(db, 'supported');
+        return langs as ILanguage[];
+      } catch (error) {
+        throw new ApolloError(error);
+      }
+    },
+
+    async unsupportedLanguages() {
+      try {
+        const langs = await getLanguages(db, 'not-supported');
         return langs as ILanguage[];
       } catch (error) {
         throw new ApolloError(error);

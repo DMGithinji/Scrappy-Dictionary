@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
-export const DETAILED_LANGUAGES_QUERY = gql`
+export const DETAILED_SUPPORTED_LANGUAGES_QUERY = gql`
   query GetLanguages {
-    languages {
+    supportedLanguages  {
       language
       description
       popular
@@ -10,10 +10,19 @@ export const DETAILED_LANGUAGES_QUERY = gql`
   }
 `;
 
-export const SUMMARIZED_LANGUAGES_QUERY = gql`
-  query GetLanguages {
-    languages {
+export const SUMMARIZED_SUPPORTED_LANGUAGES_QUERY = gql`
+  query GetSupportedLanguages {
+    supportedLanguages {
       language
+    }
+  }
+`;
+
+export const SUMMARIZED_UNSUPPORTED_LANGUAGES_QUERY = gql`
+  query GetUnsupportedLanguages {
+    unsupportedLanguages {
+      language
+      votes
     }
   }
 `;

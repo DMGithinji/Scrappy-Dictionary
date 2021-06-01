@@ -10,12 +10,13 @@ import LanguageCard from './language-card';
 import PopularElement from './popular-element';
 import Error from './../error';
 import { capitalize } from '../../utils/capitalize.util';
-import { DETAILED_LANGUAGES_QUERY } from '../../queries/translations.queries';
+import { DETAILED_SUPPORTED_LANGUAGES_QUERY } from '../../queries/translations.queries';
+import { LanguageVoteCard } from '../language-vote-card';
 
 
 export function HomePage(props) {
-  const { loading, error, data } = useQuery(DETAILED_LANGUAGES_QUERY);
-  const supportedLangs: ILanguage[] = data?.languages ?? [];
+  const { loading, error, data } = useQuery(DETAILED_SUPPORTED_LANGUAGES_QUERY);
+  const supportedLangs: ILanguage[] = data?.supportedLanguages ?? [];
 
   const lang = props.match.params.language;
   const activeLang = supportedLangs.find((l) => l.language === lang);
@@ -25,7 +26,7 @@ export function HomePage(props) {
 
   return (
     <div>
-      <div className="card  bg-light border-warning m-2">
+      <div className="card bg-light border-warning m-2">
         <span className="card-header text-warning">
           {!loading ? `Language` : <Skeleton width={60} />}
         </span>
@@ -55,6 +56,7 @@ export function HomePage(props) {
             )}
           </p>
         </div>
+
       </div>
 
       <hr />
@@ -75,12 +77,12 @@ export function HomePage(props) {
 
       <hr />
 
-      <div className="jumbotron bg-light border-secondary m-2">
+      <div className="jumbotron bg-light border-secondary pt-4 pb-5">
         <h5 className="text-center text-dark">
           {!loading ? 'More Languages' : <Skeleton width={150} />}
         </h5>
 
-        <div className="scrolling-wrapper d-flex mt-2 pb-2 pt-2">
+        <div className="scrolling-wrapper d-flex pb-1 pt-1">
           {!loading ? (
             otherLangs.map((lang: ILanguage) => (
               <LanguageCard key={lang.language} language={lang} />
@@ -90,6 +92,10 @@ export function HomePage(props) {
           )}
         </div>
       </div>
+
+      <div className="jumbotron bg-light border-secondary pt-4 pb-5">
+          <LanguageVoteCard />
+        </div>
     </div>
   );
 }

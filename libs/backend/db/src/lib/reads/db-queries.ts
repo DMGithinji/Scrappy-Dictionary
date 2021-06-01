@@ -11,7 +11,7 @@ export async function searchWord(
   db: FirebaseFirestore.Firestore,
   word: string
 ) {
-  const langObjs = await getSupportedLangs(db);
+  const langObjs = await getLanguages(db, 'supported');
   const langs = langObjs.map((obj) => obj.language);
 
   try {
@@ -34,8 +34,16 @@ export async function searchWord(
 
 
 /** Queries supported languages */
-export async function getSupportedLangs(db: FirebaseFirestore.Firestore) {
-  return (queryCollection(db, 'supported-languages') as any) as ILanguage[];
+export async function getLanguages(
+  db: FirebaseFirestore.Firestore,
+  status: 'supported' | 'not-supported'
+) {
+  const snapshot = await db
+    .collection(`dictionary`)
+    .where('status', '==', status)
+    .get();
+
+  return (snapshot.docs.map((doc) => doc.data()) as any) as ILanguage[];;
 }
 
 
@@ -51,9 +59,6 @@ export async function getLanguageWords(db: FirebaseFirestore.Firestore, lang: st
 /**
  * Check's if word exists
  * Returns true if it doesn't exist
- * @param {FirebaseFirestore.Firestore} db
- * @param {ITranslationLinkData} trlData
- * @return {void}
  */
 export async function isWordNew(
   db: FirebaseFirestore.Firestore,

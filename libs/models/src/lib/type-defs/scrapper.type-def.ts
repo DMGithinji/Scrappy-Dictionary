@@ -14,10 +14,12 @@ export const scrapperTypeDefs = gql`
     language: String!
     description: String!
     popular: [String]
+    votes: Int
   }
 
   type Query {
-    languages: [Language]
+    supportedLanguages: [Language]
+    unsupportedLanguages: [Language]
     dictionary(language: String, limit: Int, cursor: String): [Translation]
     searchWord(word: String): [Translation]
   }

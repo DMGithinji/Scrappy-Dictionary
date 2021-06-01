@@ -5,4 +5,6 @@ export interface ILanguage extends IObject{
   description: string;
   /** A list of popular searches */
   popular: string[];
+
+  votes?: number;
 }

@@ -3,7 +3,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
 import { ILanguage, ITranslationLinkData } from '@ng-scrappy/models';
-import { getSupportedLangs, isWordNew } from '@ng-scrappy/backend/db';
+import { getLanguages, isWordNew } from '@ng-scrappy/backend/db';
 import { scrapeTrlLinks } from './../utils/trl-links-scrapper';
 import { publishToPubsub } from './../utils/pubsub-publisher';
 import { getAndSave } from '../utils/trl-details-scrapper';
@@ -26,7 +26,7 @@ export const scrappy = functions
       console.log('Executing scrappy.');
 
       // Step 1. Get all trl links for each language
-      const langs = await getSupportedLangs(db);
+      const langs = await getLanguages(db, 'supported');
 
       // TODO: Work of scrapping transaction links should be split to
       //       different pubsubs to avoid timing out especially
