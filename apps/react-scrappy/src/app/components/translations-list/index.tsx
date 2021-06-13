@@ -6,10 +6,13 @@ import TranslationCard from './translation-card';
 import Error from './../error';
 import { WORDS_LIST_QUERY } from '../../queries/translations.queries';
 import { useScroll } from '../../hooks/use-scroll.hook';
+import { useHistory } from 'react-router-dom';
 
-export function TranslationList(props) {
-  const language = props.match.params.language;
-  const limit = 5;
+export function TranslationList() {
+  const history = useHistory();
+  const language = history.location.pathname.split('/')[1];
+
+  const limit = 6;
   const scrollHeight = useScroll();
 
   const { loading, error, data, fetchMore, networkStatus } = useQuery(
@@ -20,6 +23,25 @@ export function TranslationList(props) {
     }
   );
 
+
+  // Updates cursor for pagination
+  const [pointer, setCursor] = useState(null);
+  useEffect(() => {
+    if (data?.dictionary[0].language === language) {
+      const last = data.dictionary[data.dictionary.length - 1];
+
+      const cursor = last.word ?? null;
+      const cursorLang = last.language ?? null;
+      setCursor({ cursor, cursorLang });
+
+    } else {
+      setCursor({ cursor: null, cursorLang: language });
+    }
+
+    return () => setCursor(null);
+  }, [data, language]);
+
+
   // Trigger loader animation
   const [isRefetching, setLoader] = useState(false);
   useEffect(() => {
@@ -29,37 +51,26 @@ export function TranslationList(props) {
     return () => setLoader(false);
   }, [networkStatus, loading]);
 
+
   // Trigger infinite scroll
   useEffect(() => {
     const list = document.getElementById('list');
     const listHeight = list.clientHeight + list.offsetTop;
     const height = scrollHeight.y + window.screenY;
 
-    // HACKY: 900 is the approx height of the list with one request-batch
-    const isInRange = ((listHeight - height) < 900);
+    // HACKY: 850 is the approx height of the list with one request-batch
+    const isInRange = ((listHeight - height) < 850);
     const isInitialLoad = (height === 0);
 
-    const loadMoreButton = document.querySelector('#buttonLoadMore');
+    // FIX: When user quickly scrolls down, triggering a load, then up, leads to crash
+    setTimeout(() => {
+      const loadMoreButton = document.querySelector('#buttonLoadMore');
 
-    if (isInitialLoad || (isInRange && loadMoreButton)) {
-      (loadMoreButton as any).click();
-    }
+      if (isInitialLoad || (isInRange && loadMoreButton)) {
+        (loadMoreButton as any).click();
+      }
+    }, 200)
   }, [scrollHeight]);
-
-  // Updates cursor for pagination
-  const [pointer, setCursor] = useState(null);
-  useEffect(() => {
-    if (data?.dictionary[0].language === language) {
-      const last = data.dictionary[data.dictionary.length - 1];
-      const cursor = last.word ?? null;
-      const cursorLang = last.language ?? null;
-      setCursor({ cursor, cursorLang });
-    } else {
-      setCursor(null);
-    }
-
-    return () => setCursor(null);
-  }, [data, language]);
 
   if (error) return <Error />;
 

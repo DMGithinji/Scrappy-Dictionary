@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Link,
@@ -35,9 +35,8 @@ export const LanguageContext = React.createContext({
 
 
 const getLang = (dictionary) => dictionary[0]?.language ?? null;
-const isValid = (dictionary) => !!dictionary.length;
 const client = new ApolloClient({
-  uri: 'https://us-central1-cloudfunc-101.cloudfunctions.net/scrappyApi',
+  uri: 'http://localhost:5000/cloudfunc-101/us-central1/scrappyApi',
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
@@ -46,7 +45,6 @@ const client = new ApolloClient({
             keyArgs: false,
             merge(existing = [], incoming) {
               if (
-                isValid(incoming) &&
                 getLang(incoming) === getLang(existing)
               ) {
                 const dictionary = [...existing, ...incoming];
@@ -76,9 +74,10 @@ export const App = () => {
   const [activeLang, setLanguage] = useState(language);
   const value = { activeLang, setLanguage };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     localStorage.setItem('scrappy_active_lang', activeLang);
     setLanguage(activeLang);
+    return () => setLanguage(localStorage.getItem('scrappy_active_lang'));
   }, [activeLang]);
 
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import Skeleton from 'react-loading-skeleton';
@@ -12,15 +12,16 @@ import Error from './../error';
 import { capitalize } from '../../utils/capitalize.util';
 import { DETAILED_SUPPORTED_LANGUAGES_QUERY } from '../../queries/translations.queries';
 import { LanguageVoteCard } from '../language-vote-card';
+import { LanguageContext } from '../../app';
 
 
 export function HomePage(props) {
   const { loading, error, data } = useQuery(DETAILED_SUPPORTED_LANGUAGES_QUERY);
   const supportedLangs: ILanguage[] = data?.supportedLanguages ?? [];
 
-  const lang = props.match.params.language;
-  const activeLang = supportedLangs.find((l) => l.language === lang);
-  const otherLangs = supportedLangs.filter((l) => l.language !== lang);
+  const { activeLang } = useContext(LanguageContext);
+  const lang = supportedLangs.find((l) => l.language === activeLang);
+  const otherLangs = supportedLangs.filter((l) => l.language !== activeLang);
 
   if (error) return <Error />;
 
@@ -33,11 +34,11 @@ export function HomePage(props) {
 
         <div className="card-body">
           <h1 className="card-title">
-            {!loading ? capitalize(lang) : <Skeleton width={250} />}
+            {!loading ? capitalize(activeLang) : <Skeleton width={250} />}
           </h1>
           <p className="card-text">
             {!loading ? (
-              capitalize(activeLang.description)
+              capitalize(lang.description)
             ) : (
               <Skeleton count={7} />
             )}
@@ -46,7 +47,7 @@ export function HomePage(props) {
         <div className="card-footer">
           <p className="card-text">
             {!loading ? (
-              <Link to={`/${lang}/words`}>
+              <Link to={`/${activeLang}/words`}>
                 <button className="btn btn-outline-warning">
                   Open dictionary
                 </button>
@@ -68,8 +69,8 @@ export function HomePage(props) {
 
         <div className="scrolling-wrapper d-flex flex-row mt-2">
           {!loading
-            ? activeLang.popular.map((word, i) => (
-                <PopularElement key={i} language={lang} word={word} />
+            ? lang.popular.map((word, i) => (
+                <PopularElement key={i} language={activeLang} word={word} />
               ))
             : <Skeleton count={3} height={35} width={90} className={'mr-3 flex-fill'}/>}
         </div>
