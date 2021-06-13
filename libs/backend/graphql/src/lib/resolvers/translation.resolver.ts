@@ -6,6 +6,7 @@ import {
   getLanguageWords,
   getLanguages,
   searchWord,
+  setVote
 } from '@ng-scrappy/backend/db';
 
 const db = admin.firestore();
@@ -58,4 +59,17 @@ export const resolvers = {
       }
     },
   },
+  Mutation: {
+    async setLanguageVote(_: null, args: { language: string }) {
+      try {
+        const vote = args.language;
+        console.log(`VOTE => ${vote}`)
+        const res = await setVote(db, vote);
+        return res;
+      } catch(error)
+      {
+        throw new ApolloError(error);
+      }
+    }
+  }
 };

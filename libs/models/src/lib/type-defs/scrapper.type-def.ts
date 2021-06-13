@@ -23,4 +23,12 @@ export const scrapperTypeDefs = gql`
     dictionary(language: String, limit: Int, cursor: String): [Translation]
     searchWord(word: String): [Translation]
   }
+
+  type Mutation {
+    setLanguageVote(language: String!): LanguageVote!
+  }
+
+  type LanguageVote {
+    language: String!
+  }
 `;

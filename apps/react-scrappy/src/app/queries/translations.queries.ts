@@ -49,3 +49,11 @@ export const TRANSLATION_DETAILS_QUERY = gql`
     }
   }
 `;
+
+export const SET_LANGUAGE_VOTE_QUERY = gql`
+  mutation SetLanguageVote($language: String!) {
+    setLanguageVote(language: $language) {
+      language
+    }
+  }
+`;
