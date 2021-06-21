@@ -12,12 +12,12 @@ export async function saveTrl(
     const repo = await db.collection(`dictionary/${lang}/words`);
 
     trlRes.word = trlRes.word.toLowerCase();
-    trlRes.createdAt = firestore.Timestamp.now();
     trlRes.language = lang;
+    trlRes.createdAt = firestore.Timestamp.now();
 
-    await repo.add(trlRes);
+    console.log(`[saveTrl]. Saving word - ${trlRes.word}`);
+    return await repo.add(trlRes) as any as ITranslationResults;
 
-    console.log(`[saveTrl]. Saved word - ${trlRes.word}`);
   } catch (err) {
     console.error('[saveTrl]. Error saving translation data - ', err);
   }
@@ -29,7 +29,7 @@ export async function addToBlacklist(
   db: FirebaseFirestore.Firestore,
   trlLinkData: ITranslationLinkData
 ) {
-  const repo = await db.collection(`blacklisted-words`);
+  const repo = await db.collection(`dictionary/${trlLinkData.language}/blacklisted`);
   trlLinkData.word = trlLinkData.word.toLowerCase();
   await repo.add(trlLinkData);
 }

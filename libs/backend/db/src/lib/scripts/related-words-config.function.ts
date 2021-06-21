@@ -2,29 +2,31 @@ import * as _ from 'lodash';
 import { ITranslationResults } from '@ng-scrappy/models';
 
 /**
- * Sets relatedWords to a tranlation from random existing words in language
+ * By default, scraped translations from one language have same related words - which is boring
+ * here we scramble related-words to random translated words
  */
-export function setRelatedWords(db, trlData: ITranslationResults[]) {
-  const suggestedWordsList = _.chunk(trlData.map((t) => t.word), 4);
+export async function scrambleRelatedWords(db, trlData: ITranslationResults[]) {
+  const suggested = _.chunk(trlData.map((t) => t.word), 4);
 
-  return trlData.map(async (trl, ind) =>
+  return await Promise.all(trlData.map(async (trl, i) =>
   {
-    const index = ind % suggestedWordsList.length;
-    let related = suggestedWordsList[index];
+    const index = i % suggested.length;
+    let related = suggested[index];
 
-    const isRelatedInvalid = (trl, suggestions) =>
-      trl.relatedWords.length !== 4 || suggestions.includes(trl.word);
+    const isValid = (trl, suggestions) => !suggestions.includes(trl.word) || trl.relatedWords.length === 4;
 
-    if (isRelatedInvalid(trl, related))
+    let x = 0;
+    while(!isValid(trl, related) && x < suggested.length)
     {
-      related = suggestedWordsList.find((sugg) =>
-        sugg.find((trl) => !isRelatedInvalid(trl, related)));
+      const random = Math.floor(Math.random() * suggested.length);
+      related = suggested[random];
+      x++;
     }
 
     trl.relatedWords = related;
-    await update(db, trl);
+    return update(db, trl);
 
-  })
+  }));
 }
 
 /** Updates the db */

@@ -8,47 +8,58 @@ import { ITranslationLinkData } from '@ng-scrappy/models';
  * @param {string} lang
  * @return {{urls: string[], wordUrls: string[]}}
  */
-export const scrapeTrlLinks = async (lang: string) => {
+export const scrapeTrlLinks = async (languages: string[]) => {
   try {
-    // TODO: Chunk requests for A-Z to split to different PUBSUBS and
-    //       DON'T run function with all letters at once to avoid DDOS
-    const letters = [ "M", "N", "O", "P", "Q", "R", "S"];
+    const letters  = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
+    const linkData = languages.map(lang => letters.map(letter =>( { lang, letter})))
+    const flat     = _.flatten(linkData) as { lang: string, letter: string }[];
 
-    const combinedTrls = await Promise.all(
-      letters.map(async (l) => {
-        const browser = await puppeteer.launch({ headless: true });
-        const page = await browser.newPage();
+    // Split to chunks to avoid DOS to target site from many concurrent requests
+    const chunks   = _.chunk(flat, 9) as { lang: string, letter: string }[][];
 
-        // Configure the navigation timeout
-        await page.setDefaultNavigationTimeout(0);
+    const links: ITranslationLinkData[] = [];
 
-        console.log(
-          `Getting translation links from ${lang} page - Letter ${l}`
-        );
-        await page.goto(`https://www.lughayangu.com/${lang}/az/${l}`);
-        await page.waitForSelector('a', { visible: true });
+    for (let i=0; i<chunks.length; i++)
+    {
+      const combinedTrls = await Promise.all(
+        chunks[i].map(async (x) => {
+          const browser = await puppeteer.launch({ headless: true });
+          const page = await browser.newPage();
 
-        await page.exposeFunction('getTrlLinkData', getTrlLinkData);
+          // Configure the navigation timeout
+          await page.setDefaultNavigationTimeout(0);
 
-        const trlLinkData = await page.evaluate(async (lang) => {
-          const languageElements = document.querySelectorAll('.word-list');
+          console.log(
+            `Getting translation links from ${x.lang} page - Letter ${x.letter}`
+          );
+          await page.goto(`https://www.lughayangu.com/${x.lang}/az/${x.letter}`);
+          await page.waitForSelector('a', { visible: true });
 
-          const urls = Array.from(languageElements).map((v: HTMLAnchorElement) => v.href);
+          await page.exposeFunction('getTrlLinkData', getTrlLinkData);
 
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          return await (window as any).getTrlLinkData(urls, lang);
-        }, lang);
+          const trlLinkData = await page.evaluate(async (lang) => {
+            const languageElements = document.querySelectorAll('.word-list');
 
-        console.log(
-          `${lang} - Letter: ${l} - ${trlLinkData.length} trl links scrapped`
-        );
-        await browser.close();
+            const urls = Array.from(languageElements).map((v: HTMLAnchorElement) => v.href);
 
-        return trlLinkData as ITranslationLinkData;
-      })
-    );
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            return await (window as any).getTrlLinkData(urls, lang);
+          }, x.lang);
 
-    return _.flatMap(combinedTrls);
+          console.log(
+            `${x.lang} - Letter: ${x.letter} - ${trlLinkData.length} trl links scrapped`
+          );
+          await browser.close();
+
+          return trlLinkData as ITranslationLinkData;
+        })
+      );
+
+      links.push( _.flatMap(combinedTrls));
+
+    }
+
+    return links;
   } catch (err) {
     console.log(`[scrapeTrlLinks]. Error - ${err}`);
   }
@@ -59,32 +70,36 @@ export const scrapeTrlLinks = async (lang: string) => {
  * @param {string} lang
  * @return {{urls: string[], wordUrls: string[]}}
  */
- export const scrapePopularTrlLinks = async (lang: string) => {
+ export const scrapePopularTrlLinks = async (langs: string[]) => {
   try {
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
+    const combinedTrls = await Promise.all(langs.map(async lang => {
+      const browser = await puppeteer.launch({ headless: true });
+      const page = await browser.newPage();
 
-    console.log(`Getting translation links from ${lang} page`);
+      console.log(`Getting translation links from ${lang} page`);
 
-    await page.goto(`https://www.lughayangu.com/${lang}/`);
-    await page.waitForSelector('a', { visible: true });
+      await page.goto(`https://www.lughayangu.com/${lang}/`);
+      await page.waitForSelector('a', { visible: true });
 
-    await page.exposeFunction('getTrlLinkData', getTrlLinkData);
+      await page.exposeFunction('getTrlLinkData', getTrlLinkData);
 
-    const trlLinkData = await page.evaluate(async (lang) => {
-      // eslint-disable-next-line no-undef
-      const languageElements = document.querySelectorAll('.word-list');
+      const trlLinkData = await page.evaluate(async (lang) => {
+        // eslint-disable-next-line no-undef
+        const languageElements = document.querySelectorAll('.word-list');
 
-      const urls = Array.from(languageElements).map((v: HTMLAnchorElement) => v.href);
+        const urls = Array.from(languageElements).map((v: HTMLAnchorElement) => v.href);
 
-      // eslint-disable-next-line no-undef
-      return await (window as any).getTrlLinkData(urls, lang);
-    }, lang);
+        // eslint-disable-next-line no-undef
+        return await (window as any).getTrlLinkData(urls, lang);
+      }, lang);
 
-    await browser.close();
+      await browser.close();
 
-    console.log(`${lang}- ${trlLinkData.length} trl links scrapped`);
-    return trlLinkData as ITranslationLinkData[];
+      console.log(`${lang}- ${trlLinkData.length} trl links scrapped`);
+      return trlLinkData as ITranslationLinkData[];
+    }));
+
+    return _.flatMap(combinedTrls) as ITranslationLinkData[];
   } catch (err) {
     console.log(`[scrapeTrlLinks]. Error - ${err}`);
     return null;

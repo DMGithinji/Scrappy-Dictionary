@@ -3,13 +3,10 @@ import {
   ITranslationLinkData,
   ITranslationResults,
 } from '@ng-scrappy/models';
-import { addToBlacklist, saveTrl } from '@ng-scrappy/backend/db';
+import { addToBlacklist, shouldAdd, saveTrl } from '@ng-scrappy/backend/db';
 
 /**
  * Gets translation data and save it to DB
- * @param {FirebaseFirestore.Firestore} db
- * @param {ITranslationLinkData} trlData
- * @return {void}
  */
 export async function getAndSave(
   db: FirebaseFirestore.Firestore,
@@ -17,19 +14,28 @@ export async function getAndSave(
 ) {
   try {
     const trlResults = await scrapeTrlData(trlData);
-    if (trlResults && trlResults.word && trlResults.meaning) {
-      await saveTrl(db, trlData.language, trlResults);
+    if (!trlResults) {
+      await addToBlacklist(db, trlData);
+      return
     }
+
+    const meta = { language: trlResults.language, word: trlResults.word }
+    const isValid = trlResults.word
+                      && trlResults.meaning
+                      && (await shouldAdd(db, meta));
+
+    if (!isValid) { return }
+
+    const saved = await saveTrl(db, trlData.language, trlResults);
+    return saved;
+
   } catch (err) {
-    await addToBlacklist(db, trlData);
-    console.error('[getAndSave]. Error gettng translation data - ', err);
+    console.error(`[getAndSave]. Error gettng translation data for ${JSON.stringify(trlData)} - `, err);
   }
 }
 
 /**
- * 1. Visits word url, gets description,
- * @param {string} trlData
- * @return {ITranslationResults}}
+ * Visits word url, gets description,
  */
 export const scrapeTrlData = async (trlData: ITranslationLinkData) => {
   const word = trlData.word;
@@ -44,7 +50,7 @@ export const scrapeTrlData = async (trlData: ITranslationLinkData) => {
     await page.setDefaultNavigationTimeout(0);
 
     await page.goto(link);
-    await page.waitForSelector('.en-translation', { visible: true, timeout: 10000});
+    await page.waitForSelector('.lang-meaning', { visible: true, timeout: 10000});
 
     const meaningEl = await page.$('.lang-meaning');
     let meaning = await page.evaluate((el) => el.textContent, meaningEl);
@@ -83,23 +89,17 @@ export const scrapeTrlData = async (trlData: ITranslationLinkData) => {
 
   } catch (e) {
     console.error(
-      `[scrapeTrlData]. Error getting translation data: - ${e} for word there ${trlData.word}`
+      `[scrapeTrlData]. Error getting translation data for ${trlData.word}: - ${e}`
     );
   }
 };
 
-/**
- * @param {string} txt
- * @return {string} Text with no excess spaces
- */
+
 function cleanText(txt: string) {
   return txt.replace(/\s+/g, ' ').trim();
 }
 
-/**
- * @param {string} txt
- * @return {string} Text with no 'eg ' or 'en ' prefix
- */
+
 function removePrefix(txt: string) {
   return txt.split(' ').slice(1).join(' ');
 }

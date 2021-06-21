@@ -18,7 +18,7 @@ export const resolvers = {
         const cursor = args.cursor ?? null;
 
         if (args.language) {
-          const trls = await getLanguageWords(db, args.language, args.limit, cursor);
+          const trls = await getLanguageWords(db, args.language, 'word', args.limit, cursor);
           return trls || new ValidationError('Language not supported');
         }
 
@@ -52,7 +52,7 @@ export const resolvers = {
 
     async unsupportedLanguages() {
       try {
-        const langs = await getLanguages(db, 'not-supported');
+        const langs = await getLanguages(db, 'not-supported', 5);
         return langs as ILanguage[];
       } catch (error) {
         throw new ApolloError(error);

@@ -1,28 +1,41 @@
-// Popular words are some times missing from the default
-// search areas that the data is scrapped ie
-// the page words are arranged alphabetically
-// and the popular language words
-// Here is a script to scrape and add the translation if missing
-
 import { ILanguage, ITranslationLinkData } from "@ng-scrappy/models";
-import { isWordNew } from "@ng-scrappy/backend/db";
+import { getLanguageWords, shouldAdd } from "@ng-scrappy/backend/db";
 import { getAndSave } from "../utils/trl-details-scrapper";
 
 
-
-export async function verifyPopularWords(languages: ILanguage[], db: FirebaseFirestore.Firestore)
+/**
+ * Popular words from scraped site are sometimes missing from saved transaltions
+ * here we ensure the missing popular words with translations are added
+ */
+export async function verifyPopularWords(language: string, db: FirebaseFirestore.Firestore)
 {
-  await Promise.all(languages.map(async (l) => {
-    const language = l.language;
-    const popWords = l.popular;
+  // Newly scraped data has scrapped all words' related-words set as the language's popular words
+  const randomWord = (await getLanguageWords(db, language))[0];
+  const popular = randomWord.relatedWords;
 
-     return await Promise.all(popWords.map(async word => {
-      const trlLink = `https://www.lughayangu.com/${language}/${word}`;
-      const trlLinkData = { word, language, trlLink } as ITranslationLinkData
-      const shouldScrape = await isWordNew(db, trlLinkData);
-      if (shouldScrape) {
-        await getAndSave(db, trlLinkData);
-      }
-    }))
-  }));
+  // Ensure popular words translations have been added
+  const popularSaved = await Promise.all(popular.map(async word => {
+    const trlLink = `https://www.lughayangu.com/${language}/${word}`;
+    const trlLinkData = { word, language, trlLink } as ITranslationLinkData
+    const isNew = await shouldAdd(db, trlLinkData);
+    if (!isNew) {
+      return word;
+    }
+    const saved = await getAndSave(db, trlLinkData);
+    if (saved) {
+        return saved.word;
+    }
+
+  }))
+
+  // Set language's popular words to dictionary
+  const dictCollection = db.collection('dictionary');
+  const dictionary = await dictCollection
+                              .doc(language)
+                              .get()
+                              .then(snapshot => snapshot.data()) as ILanguage;
+
+  dictionary.popular = popularSaved.filter(x => !!x);
+  return (await dictCollection.doc(language).update(dictionary)) as any as ILanguage;
+
 }

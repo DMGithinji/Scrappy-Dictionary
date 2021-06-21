@@ -36,11 +36,13 @@ export async function searchWord(
 /** Queries supported languages */
 export async function getLanguages(
   db: FirebaseFirestore.Firestore,
-  status: 'supported' | 'not-supported'
+  status: 'supported' | 'not-supported' | 'scraping',
+  limit = 47
 ) {
   const snapshot = await db
     .collection(`dictionary`)
     .where('status', '==', status)
+    .limit(limit)
     .get();
 
   return (snapshot.docs.map((doc) => doc.data()) as any) as ILanguage[];;
@@ -48,11 +50,11 @@ export async function getLanguages(
 
 
 /** Queries words in a language collection */
-export async function getLanguageWords(db: FirebaseFirestore.Firestore, lang: string, limit: number, cursor: string) {
+export async function getLanguageWords(db: FirebaseFirestore.Firestore, lang: string, orderBy = 'word', limit?: number, cursor?: string) {
   const path = `dictionary/${lang}/words`;
-  const orderBy =  'word';
+  const order =  orderBy ?? 'word';
 
-  return (queryCollection(db, path, orderBy, limit, cursor) as any) as ITranslationResults[];
+  return (queryCollection(db, path, order, limit, cursor) as any) as ITranslationResults[];
 }
 
 
@@ -60,9 +62,9 @@ export async function getLanguageWords(db: FirebaseFirestore.Firestore, lang: st
  * Check's if word exists
  * Returns true if it doesn't exist
  */
-export async function isWordNew(
+export async function shouldAdd(
   db: FirebaseFirestore.Firestore,
-  trlData: ITranslationLinkData
+  trlData: { language: string, word: string }
 ) {
   const trlRef = await db
     .collection(`dictionary/${trlData.language}/words`)
@@ -70,7 +72,7 @@ export async function isWordNew(
     .get();
 
   const blacklistRef = await db
-    .collection(`blacklisted-words`)
+    .collection(`dictionary/${trlData.language}/blacklisted`)
     .where('word', '==', trlData.word.toLowerCase())
     .get();
 
@@ -85,10 +87,11 @@ export async function queryCollection(
   db: FirebaseFirestore.Firestore,
   collectionPath: string,
   orderBy = 'createdAt',
-  limit = 5,
+  limit,
   cursor?: string
 ) {
 
+  limit = limit ?? 5;
   const queryCursor = cursor ?? 0;
 
   const snapshot = await db.collection(collectionPath)

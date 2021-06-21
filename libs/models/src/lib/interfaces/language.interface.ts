@@ -6,7 +6,7 @@ export interface ILanguage extends IObject{
   /** A list of popular searches */
   popular: string[];
 
-  status: 'not-supported' | 'supported'
+  status: 'not-supported' | 'scraping' | 'supported';
 
   votes?: number;
 }
