@@ -9,7 +9,7 @@ import { useLocalStorage } from '../../hooks/use-local-storage.hook';
 const USER_LANGUAGE_VOTES = 'user_language_votes';
 export function LanguageVoteCard() {
   const { loading, data, refetch } = useQuery(SUMMARIZED_UNSUPPORTED_LANGUAGES_QUERY);
-  const [saveLangVote, res] = useMutation(SET_LANGUAGE_VOTE_QUERY);
+  const [saveToDb, res] = useMutation(SET_LANGUAGE_VOTE_QUERY, { refetchQueries: [{ query: SUMMARIZED_UNSUPPORTED_LANGUAGES_QUERY }] });
   const unSupportedLangs: ILanguage[] = data?.unsupportedLanguages;
 
   /**
@@ -41,10 +41,9 @@ export function LanguageVoteCard() {
 
     if (hasVoted || !vote) { return }
 
-      // Set in db
-    saveLangVote({ variables: { language: vote } });
-      // Update data from db
+    saveToDb({ variables: { language: vote } });
     refetch();
+
       // If update successful, update localStorage
     const voted = !votedLangs
       ? [vote]
@@ -53,7 +52,7 @@ export function LanguageVoteCard() {
     setHasVoted(true);
 
     return () => null;
-  }, [votedLangs, vote, votedLanguages, hasVoted, saveLangVote, setLocalStorageVotes, refetch]);
+  }, [votedLangs, vote, votedLanguages, hasVoted, saveToDb, setLocalStorageVotes, refetch]);
 
 
   return (
@@ -73,7 +72,7 @@ export function LanguageVoteCard() {
       { unSupportedLangs
           ? unSupportedLangs.map((lang, i) => (
 
-            <div className="mb-3" key={i}  onClick={() => setVote(lang.language)}>
+            <div className="mb-3" key={i} role="button" onClick={() => setVote(lang.language)}>
                 <div className="w-100 d-flex justify-content-between align-items-center text-capitalize pr-2 pl-2 rounded" style={{background: "#282828", height: 30}}>
                   <div  style={{zIndex: 1000}} className="text-white text-left"><b>{lang.language}</b></div>
                   { hasVoted ? <div  style={{zIndex: 1000}} className="text-white "><b>{lang.votes * 10}%</b></div> : ''}
@@ -106,7 +105,8 @@ export function LanguageVoteCard() {
             <Skeleton count={1} height={10} className="w-50 mb-1 d-block" />
           </div>
         : <p>
-          The first language to hit <b>100%</b> votes will have it's crowd-sourced language translations added to Scrappy by the end of the week 😀😎.
+          The first language to hit <b>100%</b> votes will have it's crowd-sourced language translations after an hour or so 😎.
+          <br></br>Don't hold your breathe though 😜
         </p>}
       </div>
     </div>

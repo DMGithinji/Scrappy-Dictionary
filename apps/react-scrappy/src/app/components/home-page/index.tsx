@@ -64,7 +64,7 @@ export function HomePage(props) {
 
       <div className="card bg-light border-light m-2 p-3">
         <h5 className="text-center text-dark text-capitalize">
-          {!loading ? `Popular ${lang} Searches` : <Skeleton width={250} />}
+          {!loading ? `Popular ${activeLang} Searches` : <Skeleton width={250} />}
         </h5>
 
         <div className="scrolling-wrapper d-flex flex-row mt-2">

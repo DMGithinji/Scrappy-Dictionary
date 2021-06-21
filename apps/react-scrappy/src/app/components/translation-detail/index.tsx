@@ -35,7 +35,7 @@ export function TranslationDetail(props) {
       </div>
       <div className="card-body">
         <h2 className="card-title">{loaded ? setAsWord(trl.word) : <Skeleton width={100} />}</h2>
-        <p className="card-text">{loaded ? (trl.meaning ? capitalize(trl.meaning) : `😬 Meaning wasn't provided`): <Skeleton count={2} width={250} className="d-block mb-2"/>}</p>
+        <p className="card-text">{loaded ? (trl.meaning ? capitalize(trl.meaning) : `😬 Meaning wasn't provided`): <Skeleton count={1} width={250} className="d-block mb-2"/>}</p>
       </div>
 
       <hr/>
@@ -43,7 +43,7 @@ export function TranslationDetail(props) {
       <div className="card-body mb-0">
         <p className="text-muted">{loaded ? 'Example' : <Skeleton width={100} />}</p>
         <p>{loaded ? (trl.example ? capitalize(trl.example) : `😞 No example available.`) : <Skeleton />}</p>
-        <p className="text-muted">{loaded ? 'Translated to...' : <Skeleton width={200} />}</p>
+        <p className="text-muted">{loaded ? 'Translated to...' : <Skeleton width={150} />}</p>
         <p>{loaded ? (trl.translation ? capitalize(trl.translation) : `😞 The translation wasn't provided.`) : <Skeleton />}</p>
       </div>
 
