@@ -25,14 +25,12 @@ import {
   TranslationDetail,
 } from './components';
 
-
 export const LanguageContext = React.createContext({
   activeLang: 'swahili',
   setLanguage: (() => {
     // Set default
   }) as any,
 });
-
 
 const getLang = (dictionary) => dictionary[0]?.language ?? null;
 const client = new ApolloClient({
@@ -44,9 +42,7 @@ const client = new ApolloClient({
           dictionary: {
             keyArgs: false,
             merge(existing = [], incoming) {
-              if (
-                getLang(incoming) === getLang(existing)
-              ) {
+              if (getLang(incoming) === getLang(existing)) {
                 const dictionary = [...existing, ...incoming];
                 return _.uniqBy(dictionary, (x) => x.word);
               }
@@ -58,7 +54,6 @@ const client = new ApolloClient({
     },
   }),
 });
-
 
 function _ScrollToTop(props) {
   const { pathname } = useLocation();

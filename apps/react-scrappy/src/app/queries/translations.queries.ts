@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const DETAILED_SUPPORTED_LANGUAGES_QUERY = gql`
   query GetLanguages {
-    supportedLanguages  {
+    supportedLanguages {
       language
       description
       popular

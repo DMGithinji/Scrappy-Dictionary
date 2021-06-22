@@ -17,7 +17,7 @@ self.addEventListener('install', (event) => {
     caches
       .open(version + 'assetsToCache')
       .then((cache) => cache.addAll(assetsToCache))
-      .then(() => console.log('assets cached')),
+      .then(() => console.log('assets cached'))
   );
 });
 
@@ -26,7 +26,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(event.request).catch(() => {
         return caches.match(event.request);
-      }),
+      })
     );
   }
 });

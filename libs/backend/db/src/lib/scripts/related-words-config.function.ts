@@ -6,27 +6,30 @@ import { ITranslationResults } from '@ng-scrappy/models';
  * here we scramble related-words to random translated words
  */
 export async function scrambleRelatedWords(db, trlData: ITranslationResults[]) {
-  const suggested = _.chunk(trlData.map((t) => t.word), 4);
+  const suggested = _.chunk(
+    trlData.map((t) => t.word),
+    4
+  );
 
-  return await Promise.all(trlData.map(async (trl, i) =>
-  {
-    const index = i % suggested.length;
-    let related = suggested[index];
+  return await Promise.all(
+    trlData.map(async (trl, i) => {
+      const index = i % suggested.length;
+      let related = suggested[index];
 
-    const isValid = (trl, suggestions) => !suggestions.includes(trl.word) || trl.relatedWords.length === 4;
+      const isValid = (trl, suggestions) =>
+        !suggestions.includes(trl.word) || trl.relatedWords.length === 4;
 
-    let x = 0;
-    while(!isValid(trl, related) && x < suggested.length)
-    {
-      const random = Math.floor(Math.random() * suggested.length);
-      related = suggested[random];
-      x++;
-    }
+      let x = 0;
+      while (!isValid(trl, related) && x < suggested.length) {
+        const random = Math.floor(Math.random() * suggested.length);
+        related = suggested[random];
+        x++;
+      }
 
-    trl.relatedWords = related;
-    return update(db, trl);
-
-  }));
+      trl.relatedWords = related;
+      return update(db, trl);
+    })
+  );
 }
 
 /** Updates the db */

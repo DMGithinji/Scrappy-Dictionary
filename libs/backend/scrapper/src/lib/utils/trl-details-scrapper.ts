@@ -1,8 +1,5 @@
 import * as puppeteer from 'puppeteer';
-import {
-  ITranslationLinkData,
-  ITranslationResults,
-} from '@ng-scrappy/models';
+import { ITranslationLinkData, ITranslationResults } from '@ng-scrappy/models';
 import { addToBlacklist, shouldAdd, saveTrl } from '@ng-scrappy/backend/db';
 
 /**
@@ -16,21 +13,26 @@ export async function getAndSave(
     const trlResults = await scrapeTrlData(trlData);
     if (!trlResults) {
       await addToBlacklist(db, trlData);
-      return
+      return;
     }
 
-    const meta = { language: trlResults.language, word: trlResults.word }
-    const isValid = trlResults.word
-                      && trlResults.meaning
-                      && (await shouldAdd(db, meta));
+    const meta = { language: trlResults.language, word: trlResults.word };
+    const isValid =
+      trlResults.word && trlResults.meaning && (await shouldAdd(db, meta));
 
-    if (!isValid) { return }
+    if (!isValid) {
+      return;
+    }
 
     const saved = await saveTrl(db, trlData.language, trlResults);
     return saved;
-
   } catch (err) {
-    console.error(`[getAndSave]. Error gettng translation data for ${JSON.stringify(trlData)} - `, err);
+    console.error(
+      `[getAndSave]. Error gettng translation data for ${JSON.stringify(
+        trlData
+      )} - `,
+      err
+    );
   }
 }
 
@@ -50,7 +52,10 @@ export const scrapeTrlData = async (trlData: ITranslationLinkData) => {
     await page.setDefaultNavigationTimeout(0);
 
     await page.goto(link);
-    await page.waitForSelector('.lang-meaning', { visible: true, timeout: 10000});
+    await page.waitForSelector('.lang-meaning', {
+      visible: true,
+      timeout: 10000,
+    });
 
     const meaningEl = await page.$('.lang-meaning');
     let meaning = await page.evaluate((el) => el.textContent, meaningEl);
@@ -78,15 +83,14 @@ export const scrapeTrlData = async (trlData: ITranslationLinkData) => {
 
     await browser.close();
 
-    return ({
+    return {
       word,
       link,
       meaning,
       example,
       translation,
       relatedWords,
-    }) as ITranslationResults;
-
+    } as ITranslationResults;
   } catch (e) {
     console.error(
       `[scrapeTrlData]. Error getting translation data for ${trlData.word}: - ${e}`
@@ -94,11 +98,9 @@ export const scrapeTrlData = async (trlData: ITranslationLinkData) => {
   }
 };
 
-
 function cleanText(txt: string) {
   return txt.replace(/\s+/g, ' ').trim();
 }
-
 
 function removePrefix(txt: string) {
   return txt.split(' ').slice(1).join(' ');

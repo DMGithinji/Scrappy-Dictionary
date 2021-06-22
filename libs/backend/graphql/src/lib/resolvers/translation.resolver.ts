@@ -6,24 +6,32 @@ import {
   getLanguageWords,
   getLanguages,
   searchWord,
-  setVote
+  setVote,
 } from '@ng-scrappy/backend/db';
 
 const db = admin.firestore();
 
 export const resolvers = {
   Query: {
-    async dictionary(_: null, args: { language: string; limit: number, cursor: string }) {
+    async dictionary(
+      _: null,
+      args: { language: string; limit: number; cursor: string }
+    ) {
       try {
         const cursor = args.cursor ?? null;
 
         if (args.language) {
-          const trls = await getLanguageWords(db, args.language, 'word', args.limit, cursor);
+          const trls = await getLanguageWords(
+            db,
+            args.language,
+            'word',
+            args.limit,
+            cursor
+          );
           return trls || new ValidationError('Language not supported');
         }
 
         return new ValidationError('No language passed');
-
       } catch (error) {
         throw new ApolloError(error);
       }
@@ -33,9 +41,7 @@ export const resolvers = {
       try {
         // Search for word
         const results = await searchWord(db, args.word);
-        return (
-          results || new ValidationError('Error during search')
-        );
+        return results || new ValidationError('Error during search');
       } catch (error) {
         throw new ApolloError(error);
       }
@@ -63,13 +69,12 @@ export const resolvers = {
     async setLanguageVote(_: null, args: { language: string }) {
       try {
         const vote = args.language;
-        console.log(`VOTE => ${vote}`)
+        console.log(`VOTE => ${vote}`);
         const res = await setVote(db, vote);
         return res;
-      } catch(error)
-      {
+      } catch (error) {
         throw new ApolloError(error);
       }
-    }
-  }
+    },
+  },
 };

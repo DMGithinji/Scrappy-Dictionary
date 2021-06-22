@@ -23,7 +23,6 @@ export function TranslationList() {
     }
   );
 
-
   // Updates cursor for pagination
   const [pointer, setCursor] = useState(null);
   useEffect(() => {
@@ -33,14 +32,12 @@ export function TranslationList() {
       const cursor = last.word ?? null;
       const cursorLang = last.language ?? null;
       setCursor({ cursor, cursorLang });
-
     } else {
       setCursor({ cursor: null, cursorLang: language });
     }
 
     return () => setCursor(null);
   }, [data, language]);
-
 
   // Trigger loader animation
   const [isRefetching, setLoader] = useState(false);
@@ -51,7 +48,6 @@ export function TranslationList() {
     return () => setLoader(false);
   }, [networkStatus, loading]);
 
-
   // Trigger infinite scroll
   useEffect(() => {
     const list = document.getElementById('list');
@@ -59,8 +55,8 @@ export function TranslationList() {
     const height = scrollHeight.y + window.screenY;
 
     // HACKY: 850 is the approx height of the list with one request-batch
-    const isInRange = ((listHeight - height) < 850);
-    const isInitialLoad = (height === 0);
+    const isInRange = listHeight - height < 850;
+    const isInitialLoad = height === 0;
 
     // FIX: When user quickly scrolls down, triggering a load, then up, leads to crash
     setTimeout(() => {
@@ -69,38 +65,39 @@ export function TranslationList() {
       if (isInitialLoad || (isInRange && loadMoreButton)) {
         (loadMoreButton as any).click();
       }
-    }, 200)
+    }, 200);
   }, [scrollHeight]);
 
   if (error) return <Error />;
 
   return (
     <div id="list">
-      {data && (pointer?.cursorLang === data.dictionary[0].language)
+      {data && pointer?.cursorLang === data.dictionary[0].language
         ? data.dictionary.map((trl: ITranslation) => (
             <TranslationCard key={trl.word} trl={trl} />
           ))
-        : [...Array(5)].map((x, i) => <TranslationCard key={i} trl={null} />)
-      }
+        : [...Array(5)].map((x, i) => <TranslationCard key={i} trl={null} />)}
 
       <div className="row d-flex justify-content-center mb-3">
-        {isRefetching
-          ? (<Loader />)
-          : (<div className="btn btn-warning d-none"
-                  id="buttonLoadMore"
-                  onClick={() =>
-                    fetchMore({
-                      variables: {
-                        cursor: pointer?.cursor,
-                        language,
-                        limit,
-                      },
-                    })
-                  }
-              >
-                Load More
-              </div>
-            )}
+        {isRefetching ? (
+          <Loader />
+        ) : (
+          <div
+            className="btn btn-warning d-none"
+            id="buttonLoadMore"
+            onClick={() =>
+              fetchMore({
+                variables: {
+                  cursor: pointer?.cursor,
+                  language,
+                  limit,
+                },
+              })
+            }
+          >
+            Load More
+          </div>
+        )}
       </div>
     </div>
   );

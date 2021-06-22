@@ -14,7 +14,6 @@ import { DETAILED_SUPPORTED_LANGUAGES_QUERY } from '../../queries/translations.q
 import { LanguageVoteCard } from '../language-vote-card';
 import { LanguageContext } from '../../app';
 
-
 export function HomePage(props) {
   const { loading, error, data } = useQuery(DETAILED_SUPPORTED_LANGUAGES_QUERY);
   const supportedLangs: ILanguage[] = data?.supportedLanguages ?? [];
@@ -29,7 +28,7 @@ export function HomePage(props) {
     <div>
       <div className="card bg-light border-warning m-2">
         <span className="card-header text-warning">
-          {!loading ? `Language` : <Skeleton width={60} />}
+          {!loading ? 'Language' : <Skeleton width={60} />}
         </span>
 
         <div className="card-body">
@@ -37,11 +36,7 @@ export function HomePage(props) {
             {!loading ? capitalize(activeLang) : <Skeleton width={250} />}
           </h1>
           <p className="card-text">
-            {!loading ? (
-              capitalize(lang.description)
-            ) : (
-              <Skeleton count={7} />
-            )}
+            {!loading ? capitalize(lang.description) : <Skeleton count={7} />}
           </p>
         </div>
         <div className="card-footer">
@@ -57,22 +52,32 @@ export function HomePage(props) {
             )}
           </p>
         </div>
-
       </div>
 
       <hr />
 
       <div className="card bg-light border-light m-2 p-3">
         <h5 className="text-center text-dark text-capitalize">
-          {!loading ? `Popular ${activeLang} Searches` : <Skeleton width={250} />}
+          {!loading ? (
+            `Popular ${activeLang} Searches`
+          ) : (
+            <Skeleton width={250} />
+          )}
         </h5>
 
         <div className="scrolling-wrapper d-flex flex-row mt-2">
-          {!loading
-            ? lang.popular.map((word, i) => (
-                <PopularElement key={i} language={activeLang} word={word} />
-              ))
-            : <Skeleton count={3} height={35} width={90} className={'mr-3 flex-fill'}/>}
+          {!loading ? (
+            lang.popular.map((word, i) => (
+              <PopularElement key={i} language={activeLang} word={word} />
+            ))
+          ) : (
+            <Skeleton
+              count={3}
+              height={35}
+              width={90}
+              className={'mr-3 flex-fill'}
+            />
+          )}
         </div>
       </div>
 
@@ -95,8 +100,8 @@ export function HomePage(props) {
       </div>
 
       <div className="jumbotron bg-light border-secondary pt-4 pb-5">
-          <LanguageVoteCard />
-        </div>
+        <LanguageVoteCard />
+      </div>
     </div>
   );
 }

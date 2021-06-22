@@ -1,10 +1,5 @@
 import * as _ from 'lodash';
-import {
-  ILanguage,
-  ITranslationLinkData,
-  ITranslationResults,
-} from '@ng-scrappy/models';
-
+import { ILanguage, ITranslationResults } from '@ng-scrappy/models';
 
 /**  Queries a word's translations from the different language collections */
 export async function searchWord(
@@ -32,7 +27,6 @@ export async function searchWord(
   }
 }
 
-
 /** Queries supported languages */
 export async function getLanguages(
   db: FirebaseFirestore.Firestore,
@@ -40,23 +34,33 @@ export async function getLanguages(
   limit = 47
 ) {
   const snapshot = await db
-    .collection(`dictionary`)
+    .collection('dictionary')
     .where('status', '==', status)
     .limit(limit)
     .get();
 
-  return (snapshot.docs.map((doc) => doc.data()) as any) as ILanguage[];;
+  return (snapshot.docs.map((doc) => doc.data()) as any) as ILanguage[];
 }
-
 
 /** Queries words in a language collection */
-export async function getLanguageWords(db: FirebaseFirestore.Firestore, lang: string, orderBy = 'word', limit?: number, cursor?: string) {
+export async function getLanguageWords(
+  db: FirebaseFirestore.Firestore,
+  lang: string,
+  orderBy = 'word',
+  limit?: number,
+  cursor?: string
+) {
   const path = `dictionary/${lang}/words`;
-  const order =  orderBy ?? 'word';
+  const order = orderBy ?? 'word';
 
-  return (queryCollection(db, path, order, limit, cursor) as any) as ITranslationResults[];
+  return (queryCollection(
+    db,
+    path,
+    order,
+    limit,
+    cursor
+  ) as any) as ITranslationResults[];
 }
-
 
 /**
  * Check's if word exists
@@ -64,7 +68,7 @@ export async function getLanguageWords(db: FirebaseFirestore.Firestore, lang: st
  */
 export async function shouldAdd(
   db: FirebaseFirestore.Firestore,
-  trlData: { language: string, word: string }
+  trlData: { language: string; word: string }
 ) {
   const trlRef = await db
     .collection(`dictionary/${trlData.language}/words`)
@@ -79,7 +83,6 @@ export async function shouldAdd(
   return trlRef.empty && blacklistRef.empty;
 }
 
-
 /**
  * Queries data for the given collection path
  */
@@ -90,15 +93,15 @@ export async function queryCollection(
   limit,
   cursor?: string
 ) {
-
   limit = limit ?? 5;
   const queryCursor = cursor ?? 0;
 
-  const snapshot = await db.collection(collectionPath)
-                            .orderBy(orderBy)
-                            .startAfter(queryCursor)
-                            .limit(limit)
-                            .get();
+  const snapshot = await db
+    .collection(collectionPath)
+    .orderBy(orderBy)
+    .startAfter(queryCursor)
+    .limit(limit)
+    .get();
   return snapshot.docs.map((doc) => {
     const data = doc.data();
     data.id = doc.id;
@@ -106,28 +109,21 @@ export async function queryCollection(
   });
 }
 
-
-
 /**
  * Updates a language's votes
  */
- export async function setVote(
-  db: FirebaseFirestore.Firestore,
-  lang: string
-) {
+export async function setVote(db: FirebaseFirestore.Firestore, lang: string) {
   console.log('Setting Vote In DB.');
 
   const languagesRepo = db.collection('dictionary');
 
-  const snapshot = await languagesRepo
-                          .where('language', '==', lang)
-                          .get()
-                          // .then((langs) => langs[0].data() ?? null);
+  const snapshot = await languagesRepo.where('language', '==', lang).get();
+  // .then((langs) => langs[0].data() ?? null);
   const langs = (snapshot.docs.map((doc) => doc.data()) as any) as ILanguage;
   const votedLang = langs[0] ?? null;
 
   if (!votedLang) {
-    return {error: 'Voted language not found'};
+    return { error: 'Voted language not found' };
   }
 
   votedLang.votes = votedLang.votes + 1;

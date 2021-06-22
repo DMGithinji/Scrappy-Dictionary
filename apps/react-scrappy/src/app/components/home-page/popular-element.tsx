@@ -11,7 +11,9 @@ export default function PopularElement(props: {
   return (
     <div className="m-3 mb-0">
       <Link to={`/${language}/word/${getAsLink(word)}`}>
-        <button className="btn btn-outline-warning nowrap">{setAsWord(word)}</button>
+        <button className="btn btn-outline-warning nowrap">
+          {setAsWord(word)}
+        </button>
       </Link>
     </div>
   );

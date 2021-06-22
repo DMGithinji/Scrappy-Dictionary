@@ -1,4 +1,4 @@
-import { IObject } from "./db-object.interface";
+import { IObject } from './db-object.interface';
 
 export interface ITranslation {
   word: string;
@@ -9,6 +9,4 @@ export interface ITranslation {
   relatedWords: string[];
 }
 
-export interface ITranslationResults extends IObject, ITranslation {
-
-}
+export interface ITranslationResults extends IObject, ITranslation {}

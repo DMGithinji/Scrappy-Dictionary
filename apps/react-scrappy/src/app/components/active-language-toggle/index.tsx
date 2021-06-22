@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { SUMMARIZED_SUPPORTED_LANGUAGES_QUERY } from '../../queries/translations.queries';
 import { LanguageContext } from '../../app';
 
-
 export function ActiveLangToggle() {
   const langsData = useQuery(SUMMARIZED_SUPPORTED_LANGUAGES_QUERY);
   const supportedLangs: ILanguage[] = langsData?.data?.supportedLanguages ?? [];

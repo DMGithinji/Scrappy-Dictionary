@@ -11,7 +11,7 @@ const firebaseFunctionsPackageJson = {
   dependencies: deps.reduce((acc, cur) => {
     acc[cur] = packageJson.dependencies[cur];
     return acc;
-  }, {})
+  }, {}),
 };
 
 // Only for demo purpose:
