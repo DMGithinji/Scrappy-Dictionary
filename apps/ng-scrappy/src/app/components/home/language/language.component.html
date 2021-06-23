@@ -1,0 +1,17 @@
+<div class="lang-card">
+  <div class="card bg-light border-warning m-3">
+    <div class="card-body">
+      <h1 class="card-title text-capitalize">
+        {{ lang.language }}
+      </h1>
+      <p class="card-text text-wrap">
+        {{ lang.description }}
+      </p>
+    </div>
+    <div class="card-footer">
+          <button [routerLink]="['/', lang.language, 'words']" class="btn btn-outline-warning">
+            Open dictionary
+          </button>
+    </div>
+  </div>
+</div>

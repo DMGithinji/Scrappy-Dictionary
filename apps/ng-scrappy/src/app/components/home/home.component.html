@@ -1,1 +1,49 @@
-<p>home works!</p>
+<div *ngIf="lang$ | async as lang">
+
+  <div class="card bg-light border-warning m-2">
+    <span class="card-header text-warning">
+      Language
+    </span>
+
+    <div class="card-body">
+      <h1 class="card-title">
+        {{lang.language}}
+      </h1>
+      <p class="card-text">
+        {{lang.description}}
+      </p>
+    </div>
+    <div class="card-footer">
+      <p class="card-text">
+
+        <button [routerLink]="['/', lang.language, 'words']" class="btn btn-outline-warning">
+          Open dictionary
+        </button>
+      </p>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="card bg-light border-light m-2 p-3">
+    <h5 class="text-center text-dark text-capitalize">
+      Popular {{ lang.language }} Searches
+    </h5>
+
+    <div class="scrolling-wrapper d-flex flex-row mt-2">
+      <popular *ngFor="let word of lang.popular" [language]="lang.language" [word]="word"></popular>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="jumbotron bg-light border-secondary pt-4 pb-5">
+    <h5 class="text-center text-dark">
+      More Languages
+    </h5>
+
+    <div class="scrolling-wrapper d-flex pb-1 pt-1">
+          <app-language *ngFor="let lang of supportedLangs$ | async" [lang]="lang"></app-language>
+    </div>
+  </div>
+</div>

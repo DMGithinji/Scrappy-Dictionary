@@ -5,10 +5,10 @@ import { TranslationDetailComponent } from './components/translation-detail/tran
 import { TranslationListComponent } from './components/translation-list/translation-list.component';
 
 const routes: Routes = [
-  { path: '**', component: HomeComponent },
   { path: ':language', component: HomeComponent },
   { path: ':language/words', component: TranslationListComponent },
-  { path: ':language/:word', component: TranslationDetailComponent }
+  { path: ':language/words/:word', component: TranslationDetailComponent },
+  { path: '**', component: HomeComponent },
 ];
 
 @NgModule({

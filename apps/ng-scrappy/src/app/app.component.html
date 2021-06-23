@@ -1,14 +1,17 @@
-<active-lang-selector></active-lang-selector>
 
+<div class="app">
+  <header  class="mb-4">
+    <active-lang-selector></active-lang-selector>
 
-<header class="app mb-4">
+      <a [routerLink]="['/', (activeLang$ | async)]" class="d-flex justify-content-center align-items-center">
+        <img class="logo" src='../assets/images/logo.png' alt="logo" />
+        <h1 class="text-warning"> Scrappy Dictionary </h1>
+      </a>
 
-    <div class="d-flex justify-content-center align-items-center">
-      <img class="logo" src='../assets/images/logo.png' alt="logo" />
-      <h1 class="text-warning"> Scrappy Dictionary </h1>
-    </div>
+  </header>
 
-</header>
-<main>
-  <router-outlet></router-outlet>
-</main>
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+
+</div>

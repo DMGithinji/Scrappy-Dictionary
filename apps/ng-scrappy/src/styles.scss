@@ -1,1 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+h1 {
+  font-size: 30px;
+}
+
+h4 {
+  font-size: 20px;
+}
+
+h1,
+h4,
+span,
+small {
+  text-transform: capitalize;
+}
+
+p {
+  letter-spacing: 0.5px;
+  font-size: 14px;
+}
+
+.app {
+  font-family: 'Quicksand', sans-serif;
+  min-width: 300px;
+  max-width: 600px;
+  margin: 20px auto;
+  position: relative;
+
+  .logo {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    margin-top: -5px;
+  }
+}
+
+.scrolling-wrapper {
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+}
+
+
+.btn {
+  white-space: nowrap !important;
+}
