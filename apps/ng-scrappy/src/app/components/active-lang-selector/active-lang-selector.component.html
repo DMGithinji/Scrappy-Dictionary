@@ -1,1 +1,3 @@
-<p>active-lang-selector works!</p>
+<ul *ngFor="let lang of langs$ | async">
+  <li>{{ lang.language  }}</li>
+</ul>
