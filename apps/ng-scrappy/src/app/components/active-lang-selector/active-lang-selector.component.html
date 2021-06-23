@@ -1,3 +1,16 @@
-<ul *ngFor="let lang of langs$ | async">
-  <li>{{ lang.language  }}</li>
-</ul>
+<div class="dropdown m-0 d-flex justify-content-end" data-toggle="tooltip" data-placement="top"
+  title="Change your default language">
+
+  <p class="badge badge-light dropdown-toggle text-warning text-capitalize mt-3 mb-0 p-2 " id="dropdownMenuButton"
+    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="button">
+    {{ (activeLang$ | async) }} 📌 &nbsp;
+  </p>
+  <div class="dropdown-menu dropdown-menu-right"
+    aria-labelledby="dropdownMenuButton">
+    <div *ngFor="let lang of langs$ | async">
+      <button (click)="setActiveLang(lang.language)" class="dropdown-item bg-light text-capitalize">
+        {{lang.language}}
+      </button>
+    </div>
+  </div>
+</div>
