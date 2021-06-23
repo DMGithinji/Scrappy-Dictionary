@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin';
 import { ApolloError, ValidationError } from 'apollo-server';
 
-import { ILanguage } from '@ng-scrappy/models';
+import { ILanguage, LanguageStatus } from '@ng-scrappy/models';
 import {
   getLanguageWords,
   getLanguages,
@@ -49,7 +49,7 @@ export const resolvers = {
 
     async supportedLanguages() {
       try {
-        const langs = await getLanguages(db, 'supported');
+        const langs = await getLanguages(db, LanguageStatus.Supported);
         return langs as ILanguage[];
       } catch (error) {
         throw new ApolloError(error);
@@ -58,7 +58,7 @@ export const resolvers = {
 
     async unsupportedLanguages() {
       try {
-        const langs = await getLanguages(db, 'not-supported', 5);
+        const langs = await getLanguages(db, LanguageStatus.Unsupported, 5);
         return langs as ILanguage[];
       } catch (error) {
         throw new ApolloError(error);
@@ -69,7 +69,6 @@ export const resolvers = {
     async setLanguageVote(_: null, args: { language: string }) {
       try {
         const vote = args.language;
-        console.log(`VOTE => ${vote}`);
         const res = await setVote(db, vote);
         return res;
       } catch (error) {

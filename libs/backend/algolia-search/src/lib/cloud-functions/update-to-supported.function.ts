@@ -1,4 +1,4 @@
-import { ILanguage } from '@ng-scrappy/models';
+import { ILanguage, LanguageStatus } from '@ng-scrappy/models';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 
@@ -18,8 +18,8 @@ export const setToScraping = functions.firestore
     const newData = change.after.data() as ILanguage;
     const objectID = change.after.id;
 
-    if (newData.status === 'not-supported' && newData.votes >= 10) {
-      newData.status = 'scraping';
+    if (newData.status === LanguageStatus.Unsupported && newData.votes >= 10) {
+      newData.status = LanguageStatus.Scrapping;
       await db.collection('dictionary').doc(objectID).update(newData);
 
       // trigger scraping

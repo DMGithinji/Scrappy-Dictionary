@@ -6,7 +6,13 @@ export interface ILanguage extends IObject {
   /** A list of popular searches */
   popular: string[];
 
-  status: 'not-supported' | 'scraping' | 'supported';
+  status: LanguageStatus;
 
   votes?: number;
+}
+
+export enum LanguageStatus {
+  Unsupported = 'not-supported',
+  Scrapping = 'scraping',
+  Supported = 'supported'
 }
