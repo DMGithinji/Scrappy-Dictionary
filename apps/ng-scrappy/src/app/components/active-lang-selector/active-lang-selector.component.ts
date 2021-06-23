@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ILanguage, LanguageStatus } from '@ng-scrappy/models';
 import { Observable } from 'rxjs';
-import { DictonaryService } from '../../shared/services/dictonary.service';
-import { ActiveLangService } from '../../shared/services/active-lang.service';
+import { DictonaryService } from '../../services/dictonary.service';
+import { ActiveLangService } from '../../services/active-lang.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'active-lang-selector',
   templateUrl: './active-lang-selector.component.html',
@@ -14,8 +15,10 @@ export class ActiveLangSelectorComponent implements OnInit {
   langs$: Observable<ILanguage[]>;
 
   constructor(
+    private _activeLang$: ActiveLangService,
     private _dict: DictonaryService,
-    private _activeLang$: ActiveLangService) {}
+    private _router: Router
+    ) {}
 
   ngOnInit(): void {
     this.langs$ = this._dict.getLanguageData(LanguageStatus.Supported);
@@ -24,6 +27,7 @@ export class ActiveLangSelectorComponent implements OnInit {
 
   setActiveLang(lang: string) {
     this._activeLang$.setActiveLang(lang);
+    this._router.navigate(['/', lang]);
   }
 
 }

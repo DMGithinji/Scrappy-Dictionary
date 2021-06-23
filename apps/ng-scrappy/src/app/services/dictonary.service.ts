@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { ILanguage, ITranslationResults, LanguageStatus } from '@ng-scrappy/models';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
+import { ILanguage, ITranslationResults, LanguageStatus } from '@ng-scrappy/models';
 
 const LANGUAGE_PATH = 'dictionary';
 const TRANSLATIONS_PATH = (lang) => `dictionary/${lang}/words`;
@@ -33,6 +35,20 @@ export class DictonaryService {
     return this.db
       .collection<ITranslationResults>(TRANSLATIONS_PATH(lang), ref => ref.orderBy('word', 'asc'))
       .valueChanges();
+  }
+
+
+  /**
+   * Get list of languages and their data for a given language status
+   */
+  getWordTrl(lang: string, word: string): Observable<ITranslationResults> {
+    return this.db
+      .collection<ITranslationResults>(TRANSLATIONS_PATH(lang), ref => ref.where('word', '==', word))
+      .valueChanges()
+      .pipe(map(words => {
+        if (words[0]) { return words[0] }
+        throw new Error('No word found');
+      }));
   }
 
 }

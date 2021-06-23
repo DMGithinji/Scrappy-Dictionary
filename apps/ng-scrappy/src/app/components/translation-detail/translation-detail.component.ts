@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { ITranslationResults } from '@ng-scrappy/models';
+import { DictonaryService } from '../../services/dictonary.service';
 
 @Component({
   selector: 'translation-detail',
@@ -7,9 +12,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TranslationDetailComponent implements OnInit {
 
-  constructor() { }
+  trlData$: Observable<ITranslationResults>;
+
+  constructor(
+    private _route: ActivatedRoute,
+    private _dict$: DictonaryService) { }
 
   ngOnInit(): void {
+    const queryData$ = this._route.params.pipe(map(params => {
+      const { language, word } = params;
+      return { language, word }
+    }));
+
+    this.trlData$ = queryData$.pipe(switchMap(query => {
+      return this._dict$.getWordTrl(query.language, query.word);
+    }))
   }
 
 }

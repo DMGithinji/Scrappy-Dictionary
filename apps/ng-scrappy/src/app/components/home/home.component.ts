@@ -4,8 +4,8 @@ import { map } from 'rxjs/operators';
 
 import { ILanguage, LanguageStatus } from '@ng-scrappy/models';
 
-import { ActiveLangService } from '../../shared/services/active-lang.service';
-import { DictonaryService } from '../../shared/services/dictonary.service';
+import { ActiveLangService } from '../../services/active-lang.service';
+import { DictonaryService } from '../../services/dictonary.service';
 
 @Component({
   selector: 'home',

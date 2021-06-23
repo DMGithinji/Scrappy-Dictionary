@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ActiveLangService } from './shared/services/active-lang.service';
+import { ActiveLangService } from './services/active-lang.service';
 
 @Component({
   selector: 'ng-scrappy-root',
