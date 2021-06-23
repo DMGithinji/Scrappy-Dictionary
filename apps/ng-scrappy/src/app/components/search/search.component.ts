@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ng-scrappy-search',
+  selector: 'search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })

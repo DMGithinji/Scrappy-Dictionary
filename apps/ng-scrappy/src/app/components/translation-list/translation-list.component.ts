@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ng-scrappy-translation-list',
+  selector: 'translation-list',
   templateUrl: './translation-list.component.html',
   styleUrls: ['./translation-list.component.scss']
 })
