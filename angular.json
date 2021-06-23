@@ -65,7 +65,9 @@
               "apps/ng-scrappy/src/favicon.ico",
               "apps/ng-scrappy/src/assets"
             ],
-            "styles": ["apps/ng-scrappy/src/styles.scss"],
+            "styles": [
+              "apps/ng-scrappy/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -126,11 +128,17 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/ng-scrappy"],
+          "outputs": [
+            "coverage/apps/ng-scrappy"
+          ],
           "options": {
             "jestConfig": "apps/ng-scrappy/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     },
@@ -155,7 +163,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/ng-scrappy-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/ng-scrappy-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
@@ -168,12 +178,16 @@
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/functions",
             "main": "apps/functions/src/main.ts",
             "tsConfig": "apps/functions/tsconfig.app.json",
-            "assets": ["apps/functions/src/assets"]
+            "assets": [
+              "apps/functions/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -198,12 +212,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/functions/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/functions/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/functions"],
+          "outputs": [
+            "coverage/apps/functions"
+          ],
           "options": {
             "jestConfig": "apps/functions/jest.config.js",
             "passWithNoTests": true
@@ -219,12 +237,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/backend/scrapper/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/backend/scrapper/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/backend/scrapper"],
+          "outputs": [
+            "coverage/libs/backend/scrapper"
+          ],
           "options": {
             "jestConfig": "libs/backend/scrapper/jest.config.js",
             "passWithNoTests": true
@@ -240,12 +262,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/backend/graphql/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/backend/graphql/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/backend/graphql"],
+          "outputs": [
+            "coverage/libs/backend/graphql"
+          ],
           "options": {
             "jestConfig": "libs/backend/graphql/jest.config.js",
             "passWithNoTests": true
@@ -260,7 +286,9 @@
       "architect": {
         "build": {
           "builder": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/react-scrappy",
             "index": "apps/react-scrappy/src/index.html",
@@ -273,7 +301,9 @@
               "apps/react-scrappy/src/manifest.webmanifest",
               "apps/react-scrappy/src/serviceWorker.js"
             ],
-            "styles": ["apps/react-scrappy/src/styles.scss"],
+            "styles": [
+              "apps/react-scrappy/src/styles.scss"
+            ],
             "scripts": [],
             "webpackConfig": "@nrwl/react/plugins/webpack"
           },
@@ -316,12 +346,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/react-scrappy/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "apps/react-scrappy/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/react-scrappy"],
+          "outputs": [
+            "coverage/apps/react-scrappy"
+          ],
           "options": {
             "jestConfig": "apps/react-scrappy/jest.config.js",
             "passWithNoTests": true
@@ -350,7 +384,9 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/react-scrappy-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/react-scrappy-e2e/**/*.{js,ts}"
+            ]
           }
         }
       }
@@ -363,12 +399,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/models/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/models/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/models"],
+          "outputs": [
+            "coverage/libs/models"
+          ],
           "options": {
             "jestConfig": "libs/models/jest.config.js",
             "passWithNoTests": true
@@ -384,12 +424,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/backend/db/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/backend/db/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/backend/db"],
+          "outputs": [
+            "coverage/libs/backend/db"
+          ],
           "options": {
             "jestConfig": "libs/backend/db/jest.config.js",
             "passWithNoTests": true
@@ -405,12 +449,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/backend/algolia-search/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/backend/algolia-search/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/backend/algolia-search"],
+          "outputs": [
+            "coverage/libs/backend/algolia-search"
+          ],
           "options": {
             "jestConfig": "libs/backend/algolia-search/jest.config.js",
             "passWithNoTests": true
