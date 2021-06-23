@@ -1,1 +1,3 @@
-<p>translation-list works!</p>
+<div *ngFor="let trl of (translations$ | async)" class="card">
+  <app-translation-overview [trl]="trl"></app-translation-overview>
+</div>

@@ -15,6 +15,7 @@ import { LanguageComponent } from './components/home/language/language.component
 import { PopularComponent } from './components/home/popular/popular.component';
 import { RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { TranslationOverviewComponent } from './components/translation-list/translation-overview/translation-overview.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { HomeComponent } from './components/home/home.component';
     TranslationDetailComponent,
     SearchComponent,
     LanguageComponent,
-    PopularComponent
+    PopularComponent,
+    TranslationOverviewComponent
   ],
   imports: [
     BrowserModule,

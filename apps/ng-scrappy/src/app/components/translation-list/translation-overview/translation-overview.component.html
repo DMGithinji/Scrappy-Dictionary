@@ -1,0 +1,18 @@
+<div class="card bg-light border-warning card-body m-2 mb-3">
+
+  <div class="d-flex justify-content-between">
+    <h4 class="mb-4">
+      {{ trl.word }}
+    </h4>
+
+    <div class="link-item">
+      <a [routerLink]="['/', trl.language]" class="badge badge-warning">{{ trl.language }}</a>
+    </div>
+  </div>
+  <p> {{ trl.meaning }}</p>
+
+  <a [routerLink]="['/', trl.language, 'words', trl.word]" class="mt-4 text-dark">
+    <u>Read more...</u>
+  </a>
+
+</div>
