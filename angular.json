@@ -66,7 +66,9 @@
               "apps/ng-scrappy/src/assets"
             ],
             "styles": [
-              "apps/ng-scrappy/src/styles.scss"
+              "apps/ng-scrappy/src/styles.scss",
+              "node_modules/angular-instantsearch/bundles/instantsearch.min.css",
+              "node_modules/angular-instantsearch/bundles/instantsearch-theme-algolia.min.css"
             ],
             "scripts": []
           },

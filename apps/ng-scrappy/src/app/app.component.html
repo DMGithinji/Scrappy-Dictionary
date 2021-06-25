@@ -1,13 +1,13 @@
 
 <div class="app">
-  <header  class="mb-4">
+  <header  class="mb-4 mt-0">
     <active-lang-selector></active-lang-selector>
 
       <a [routerLink]="['/', (activeLang$ | async)]" class="d-flex justify-content-center align-items-center">
         <img class="logo" src='../assets/images/logo.png' alt="logo" />
         <h1 class="text-warning"> Scrappy Dictionary </h1>
       </a>
-
+      <app-search></app-search>
   </header>
 
   <main>

@@ -1,1 +1,25 @@
-<p>search works!</p>
+<div class="search-box">
+  <ais-instantsearch [config]="algoliaConfig">
+
+    <ais-search-box class="search-box"  placeholder="Search word"></ais-search-box>
+    <ais-hits>
+      <ng-template let-hits="hits" let-results="results">
+        <small *ngIf="hits.length === 0" class="pl-2 text-warning">
+          No results found matching <strong>{{results.query}}</strong>.
+        </small>
+
+        <div *ngIf="results.query">
+          <div *ngFor="let hit of hits" class="content">
+            <a (click)="goTo(hit)" class="list-group-item d-flex justify-content-between align-items-center">
+              <span class="text-white">{{ hit.word }}</span>
+              <span class="badge badge-warning badge-pill text-light">
+                {{ hit.language }}
+              </span>
+          </a>
+          </div>
+        </div>
+      </ng-template>
+    </ais-hits>
+
+  </ais-instantsearch>
+</div>

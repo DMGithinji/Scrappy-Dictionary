@@ -5,6 +5,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { RouterModule } from '@angular/router';
+
+import { NgAisModule } from 'angular-instantsearch';
+
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
@@ -41,7 +44,8 @@ import { ScrollableDirective } from './directives/scrollable.directive';
     RouterModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgAisModule.forRoot()
   ],
   providers: [TrlListService],
   bootstrap: [AppComponent],
