@@ -1,5 +1,5 @@
 <div class="m-3 mb-0">
     <button [routerLink]="['/', language, 'words', word]" class="btn btn-outline-warning nowrap">
-      {{ word }}
+      {{ word | titlecase }}
     </button>
 </div>

@@ -1,0 +1,14 @@
+.wrapper {
+  height: calc(100vh - 180px);
+  overflow-y: scroll;
+  min-width: 300px !important;
+  max-width: 600px !important;
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.wrapper::-webkit-scrollbar {
+  display: none !important;
+}

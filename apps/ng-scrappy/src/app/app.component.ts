@@ -5,7 +5,6 @@ import { ActiveLangService } from './services/active-lang.service';
 @Component({
   selector: 'ng-scrappy-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
 

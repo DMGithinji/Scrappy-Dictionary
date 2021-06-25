@@ -26,6 +26,10 @@
   }
 }
 
+.app :global(.btn) {
+  white-space: nowrap !important;
+}
+
 .app :global(.logo) {
   height: 40px;
   width: 40px;
@@ -43,9 +47,11 @@
 
 .app :global(.lang-card) {
   min-width: 100%;
-
 }
 
-.app :global(.btn) {
-  white-space: nowrap !important;
+.app :global(.lang-card .card-body){
+  height: 180px;
+  @media only screen and (max-width: 600px) {
+    height: 280px;
+  }
 }

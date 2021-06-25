@@ -80,7 +80,7 @@ export const App = () => {
       <Router>
         <ScrollToTop>
           <LanguageContext.Provider value={value}>
-            <div className="container">
+            <div className="container mt-0 pt-0">
               <ActiveLangToggle />
 
               <div className={styles.app}>

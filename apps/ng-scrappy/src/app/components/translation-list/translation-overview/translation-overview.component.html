@@ -2,16 +2,16 @@
 
   <div class="d-flex justify-content-between">
     <h4 class="mb-4">
-      {{ trl.word }}
+      {{ trl.word | titlecase }}
     </h4>
 
     <div class="link-item">
-      <a [routerLink]="['/', trl.language]" class="badge badge-warning">{{ trl.language }}</a>
+      <a [routerLink]="['/', trl.language]" class="badge badge-warning">{{ trl.language | titlecase }}</a>
     </div>
   </div>
-  <p> {{ trl.meaning }}</p>
+  <p> {{ trl.meaning | titlecase }}</p>
 
-  <a [routerLink]="['/', trl.language, 'words', trl.word]" class="mt-4 text-dark">
+  <a [routerLink]="['/', trl.language, 'words', trl.word]" class="mt-2 text-dark">
     <u>Read more...</u>
   </a>
 
