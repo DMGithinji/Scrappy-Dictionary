@@ -12,7 +12,7 @@
       "rules": {
         "@angular-eslint/directive-selector": [
           "error",
-          { "type": "attribute", "prefix": "ng-scrappy", "style": "camelCase" }
+          { "type": "attribute", "prefix": "", "style": "camelCase" }
         ],
         "@angular-eslint/component-selector": [
           "error",
