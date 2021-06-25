@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ITranslationResults } from '@ng-scrappy/models';
-import { DictonaryService } from '../../services/dictonary.service';
+import { DbService } from '../../services/db.service';
 
 @Component({
   selector: 'translation-detail',
@@ -16,7 +16,7 @@ export class TranslationDetailComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
-    private _dict$: DictonaryService) { }
+    private _dict$: DbService) { }
 
   ngOnInit(): void {
     const queryData$ = this._route.params.pipe(map(params => {

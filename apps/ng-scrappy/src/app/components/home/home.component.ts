@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { ILanguage, LanguageStatus } from '@ng-scrappy/models';
 
 import { ActiveLangService } from '../../services/active-lang.service';
-import { DictonaryService } from '../../services/dictonary.service';
+import { DbService } from '../../services/db.service';
 
 @Component({
   selector: 'home',
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   supportedLangs$: Observable<ILanguage[]>
 
   constructor(
-    private _dict$: DictonaryService,
+    private _dict$: DbService,
     private _lang$: ActiveLangService) {}
 
   ngOnInit(): void {

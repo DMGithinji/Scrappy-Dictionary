@@ -1,0 +1,48 @@
+<div *ngIf="(data$ | async) as data">
+    <p class="card-header text-dark" [ngStyle]="{ fontSize: '18px' }">
+      <span *ngIf="!data.hasVoted">
+        Which language translations would you like to see added next? <br> Let us know! 😏👇
+      </span>
+      <span *ngIf="data.hasVoted">
+        Thanks for voting 👍🏽 <br> Keep posted to see whether your prefered language will be added! 😉
+      </span>
+    </p>
+
+  <div class="container-fluid pt-3">
+        <div *ngFor="let lang of data.langs" class="mb-3"
+          role="button" (click)="castVote(lang)">
+
+          <!--  -->
+          <div
+            class="w-100 d-flex justify-content-between  text-white pr-2 pl-2 rounded"
+            [ngStyle]="{background: '#282828', height: 30}">
+
+            <div [ngStyle]="{ zIndex: 1000 }" class="pb-1">
+              <b>{{lang.language | titlecase}}</b>
+            </div>
+            <div *ngIf="data.hasVoted" [ngStyle]="{ zIndex: 1000 }" class="pb-1 ">
+              <b>{{lang.votes * 10}}%</b>
+            </div>
+          </div>
+
+          <div class="progress" [ngStyle]="{ height: '25px', marginTop: '-28px', zIndex: 1 }">
+              <div *ngIf="data.hasVoted"
+                [ngStyle]="{ height: '25px', width: (lang.votes * 10) + '%' }"
+                class="progress-bar rounded bg-warning"
+                role="progressbar"
+                aria-valuenow={lang.votes}
+                aria-valuemin={0}
+                aria-valuemax={10}
+              ></div>
+          </div>
+        </div>
+  </div>
+
+  <div class="card-footer">
+      <p>
+        The first language to hit <b>100%</b> votes will have it's
+        crowd-sourced language translations added after approx. an hour 😎.
+      </p>
+  </div>
+
+</div>

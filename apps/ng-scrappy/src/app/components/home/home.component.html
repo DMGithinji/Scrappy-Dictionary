@@ -46,4 +46,8 @@
           <app-language *ngFor="let lang of supportedLangs$ | async" [lang]="lang"></app-language>
     </div>
   </div>
+
+  <div class="jumbotron bg-light border-secondary pt-4 pb-5">
+    <app-vote-card></app-vote-card>
+  </div>
 </div>

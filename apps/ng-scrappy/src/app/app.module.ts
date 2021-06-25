@@ -16,6 +16,7 @@ import { LanguageComponent } from './components/home/language/language.component
 import { PopularComponent } from './components/home/popular/popular.component';
 import { HomeComponent } from './components/home/home.component';
 import { TranslationOverviewComponent } from './components/translation-list/translation-overview/translation-overview.component';
+import { VoteCardComponent } from './components/home/vote-card/vote-card.component';
 
 import { TrlListService } from './services/trlList.service';
 import { ScrollableDirective } from './directives/scrollable.directive';
@@ -32,7 +33,8 @@ import { ScrollableDirective } from './directives/scrollable.directive';
     LanguageComponent,
     PopularComponent,
     TranslationOverviewComponent,
-    ScrollableDirective
+    ScrollableDirective,
+    VoteCardComponent
   ],
   imports: [
     BrowserModule,

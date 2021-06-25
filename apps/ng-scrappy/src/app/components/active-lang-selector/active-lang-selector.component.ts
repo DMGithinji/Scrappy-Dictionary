@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ILanguage, LanguageStatus } from '@ng-scrappy/models';
 import { Observable } from 'rxjs';
-import { DictonaryService } from '../../services/dictonary.service';
+import { DbService } from '../../services/db.service';
 import { ActiveLangService } from '../../services/active-lang.service';
 import { Router } from '@angular/router';
 @Component({
@@ -16,7 +16,7 @@ export class ActiveLangSelectorComponent implements OnInit {
 
   constructor(
     private _activeLang$: ActiveLangService,
-    private _dict: DictonaryService,
+    private _dict: DbService,
     private _router: Router
     ) {}
 
