@@ -9,6 +9,7 @@ export interface ILanguage extends IObject {
   status: LanguageStatus;
 
   votes?: number;
+  wordCount?: number;
 }
 
 export enum LanguageStatus {

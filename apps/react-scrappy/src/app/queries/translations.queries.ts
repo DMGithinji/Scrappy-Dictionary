@@ -6,6 +6,7 @@ export const DETAILED_SUPPORTED_LANGUAGES_QUERY = gql`
       language
       description
       popular
+      wordCount
     }
   }
 `;

@@ -36,21 +36,26 @@ export function HomePage(props) {
             {!loading ? capitalize(activeLang) : <Skeleton width={250} />}
           </h1>
           <p className="card-text">
-            {!loading ? capitalize(lang.description) : <Skeleton count={7} />}
+            {!loading ? capitalize(lang.description) : <Skeleton count={6} />}
           </p>
         </div>
         <div className="card-footer">
-          <p className="card-text">
+          <div className="card-text">
             {!loading ? (
               <Link to={`/${activeLang}/words`}>
-                <button className="btn btn-outline-warning">
-                  Open dictionary
-                </button>
+                <div className="d-flex justify-content-between align-items-center">
+                  <div>
+                    <button className="btn btn-outline-warning">
+                      Open dictionary
+                    </button>
+                  </div>
+                  <small className="text-muted"> {lang.wordCount} words</small>
+              </div>
               </Link>
             ) : (
               <Skeleton height={40} width={140} />
             )}
-          </p>
+          </div>
         </div>
       </div>
 

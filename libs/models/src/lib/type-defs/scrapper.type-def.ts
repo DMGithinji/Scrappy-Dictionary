@@ -15,6 +15,7 @@ export const scrapperTypeDefs = gql`
     description: String!
     popular: [String]
     votes: Int
+    wordCount: Int
   }
 
   type Query {

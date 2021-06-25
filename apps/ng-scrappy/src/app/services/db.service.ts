@@ -23,12 +23,16 @@ export class DbService {
   getLanguageData(status: LanguageStatus, limit?: number) {
 
     if (!limit) {
-      return this.db.collection<ILanguage>(LANGUAGE_PATH, ref => ref.where('status', '==', status))
-                .valueChanges();
+      return this.db.collection<ILanguage>(LANGUAGE_PATH, ref =>
+          ref.where('status', '==', status)
+              .orderBy('wordCount', 'desc'))
+            .valueChanges();
     }
 
-    return this.db.collection<ILanguage>(LANGUAGE_PATH, ref => ref.where('status', '==', status).limit(limit))
-              .valueChanges();
+    return this.db.collection<ILanguage>(LANGUAGE_PATH, ref =>
+      ref.where('status', '==', status)
+          .limit(limit))
+        .valueChanges();
   }
 
 

@@ -13,13 +13,14 @@
         {{lang.description}}
       </p>
     </div>
-    <div class="card-footer">
-      <p class="card-text">
-
+    <div class="card-footer d-flex justify-content-between align-items-center">
         <button [routerLink]="['/', lang.language, 'words']" class="btn btn-outline-warning">
           Open dictionary
         </button>
-      </p>
+
+      <small class="text-muted">
+        {{ lang.wordCount }} Words
+      </small>
     </div>
   </div>
 

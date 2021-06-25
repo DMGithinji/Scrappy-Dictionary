@@ -24,9 +24,14 @@ export default function LanguageCard(props: { language: ILanguage }) {
         <div className="card-footer">
           {lang ? (
             <Link to={`/${lang.language}/words`}>
-              <button className="btn btn-outline-warning">
-                Open dictionary
-              </button>
+              <div className="d-flex justify-content-between align-items-center">
+                <div>
+                  <button className="btn btn-outline-warning">
+                    Open dictionary
+                  </button>
+                </div>
+                <small className="text-muted"> {lang.wordCount} words</small>
+              </div>
             </Link>
           ) : (
             <Skeleton height={40} width={140} />

@@ -26,8 +26,8 @@ export class HomeComponent implements OnInit {
     const activeLang$ = this._lang$.getActiveLang();
     this.supportedLangs$ = this._dict$.getLanguageData(LanguageStatus.Supported);
 
-    this.lang$ = combineLatest([activeLang$, this.supportedLangs$])
-                  .pipe(map(([active, langs]) => langs.find(l => l.language === active)));
-
+    const data$ = combineLatest([activeLang$, this.supportedLangs$])
+    this.lang$ = data$.pipe(map(([active, langs]) => langs.find(l => l.language === active)));
+    this.supportedLangs$ = data$.pipe(map(([active, langs]) => langs.filter(l => l.language !== active)));
   }
 }
