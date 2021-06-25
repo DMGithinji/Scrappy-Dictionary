@@ -19,15 +19,6 @@ export const addToAlgolia = functions.firestore
     return index.saveObject({ ...data, objectID });
   });
 
-/** Will update indexed document in Algolia on translation being updated */
-export const updateToAlgolia = functions.firestore
-  .document(TRANSLATIONS_PATH)
-  .onUpdate((change) => {
-    const newData = change.after.data();
-    const objectID = change.after.id;
-    return index.saveObject({ ...newData, objectID });
-  });
-
 /** Will delete indexed document from Algolia on translation being deleted */
 export const deleteFromAlgolia = functions.firestore
   .document(TRANSLATIONS_PATH)
