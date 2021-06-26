@@ -419,6 +419,13 @@
   dependencies:
     tslib "^2.0.0"
 
+"@angular/service-worker@^11.2.0":
+  version "11.2.14"
+  resolved "https://registry.yarnpkg.com/@angular/service-worker/-/service-worker-11.2.14.tgz#eb5b467f59ec21384546ef6e7c751ff566902670"
+  integrity sha512-QQFITcXsYaKgVuu4bHQ0SKR0P+CIHNJyqrUYhBFU4i8oG2MhS0tlJI8kTESxG9w5nM6/t00q1nlJPqoXPBseLA==
+  dependencies:
+    tslib "^2.0.0"
+
 "@apidevtools/json-schema-ref-parser@^9.0.3":
   version "9.0.9"
   resolved "https://registry.yarnpkg.com/@apidevtools/json-schema-ref-parser/-/json-schema-ref-parser-9.0.9.tgz#d720f9256e3609621280584f2b47ae165359268b"
@@ -4757,10 +4764,10 @@ amdefine@>=0.0.4:
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
   integrity sha1-SlKCrBZHKek2Gbz9OtFR+BfOkfU=
 
-angular-instantsearch@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/angular-instantsearch/-/angular-instantsearch-2.3.0.tgz#72f47d326b4f3dd9617e3ec3c7be8a676745c82e"
-  integrity sha512-jmWgzQ6zxn+YDOjC7DPdt9ElfusSJYuyKJ42ae5z1uZ0T3N6iboCun7TxiYOVxYN/JX44g5gquFY437hNowIkQ==
+angular-instantsearch@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/angular-instantsearch/-/angular-instantsearch-2.2.2.tgz#011292379b4fd63ae04bbcd2cb9b4620e05677b9"
+  integrity sha512-XlprT9wZB0Qd7K1cbOFCo5knYRLZWC9s5ps3deUt2hhWdFP6LJHmplKQihb/wbvP3+z5EEGoUbQiGIWrZ6RtIw==
   dependencies:
     algoliasearch "^3.29.0"
     algoliasearch-helper "^2.26.1"

@@ -63,14 +63,17 @@
             "aot": true,
             "assets": [
               "apps/ng-scrappy/src/favicon.ico",
-              "apps/ng-scrappy/src/assets"
+              "apps/ng-scrappy/src/assets",
+              "apps/ng-scrappy/src/manifest.webmanifest"
             ],
             "styles": [
               "apps/ng-scrappy/src/styles.scss",
               "node_modules/angular-instantsearch/bundles/instantsearch.min.css",
               "node_modules/angular-instantsearch/bundles/instantsearch-theme-algolia.min.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "serviceWorker": true,
+            "ngswConfigPath": "apps/ng-scrappy/ngsw-config.json"
           },
           "configurations": {
             "production": {

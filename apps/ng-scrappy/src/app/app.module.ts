@@ -23,6 +23,7 @@ import { VoteCardComponent } from './components/home/vote-card/vote-card.compone
 
 import { TrlListService } from './services/trlList.service';
 import { ScrollableDirective } from './directives/scrollable.directive';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,12 @@ import { ScrollableDirective } from './directives/scrollable.directive';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     NgAisModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [TrlListService],
   bootstrap: [AppComponent],
