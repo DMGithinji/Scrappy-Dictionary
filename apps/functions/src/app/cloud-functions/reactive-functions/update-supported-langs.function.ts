@@ -1,13 +1,12 @@
 import { ILanguage, LanguageStatus } from '@ng-scrappy/models';
-import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 
 import { IScrapeData } from '../../shared/interfaces';
-import { publishToPubsub } from '../../shared/utils';
+import { initializeApp, publishToPubsub } from '../../shared/utils';
 
 
 const LANGUAGE_PATH = 'dictionary/{id}';
-const db = admin.firestore();
+const { db } = initializeApp()
 
 /**
  * onWrite handler that is fired whenever language is updated

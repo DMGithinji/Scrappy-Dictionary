@@ -1,11 +1,10 @@
 import * as _ from 'lodash';
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
 import { firestore } from 'firebase-admin';
 
 import { ITranslationLinkData } from '@ng-scrappy/models';
 
-import { publishToPubsub } from './../../shared/utils';
+import { initializeApp, publishToPubsub } from './../../shared/utils';
 import { getLanguageWords } from './../../shared/db';
 import { ETLData, IScrapeData } from './../../shared/interfaces';
 
@@ -13,7 +12,7 @@ import { getAndSave } from './utils/trl-details-scrapper';
 import { scrambleRelatedWords } from './utils/related-words-scrambler.function';
 import { verifyPopularWords } from './utils/fix-missing-popular-words.function';
 
-const db = admin.firestore();
+const { db } = initializeApp()
 
 const runtimeOpts = {
   timeoutSeconds: 540,

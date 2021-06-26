@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin';
 import { ApolloError, ValidationError } from 'apollo-server';
 
 import { ILanguage, LanguageStatus } from '@ng-scrappy/models';
@@ -8,8 +7,9 @@ import {
   searchWord,
   setVote,
 } from '@ng-scrappy/backend/db';
+import { initializeApp } from '../../../shared/utils';
 
-const db = admin.firestore();
+const { db } = initializeApp()
 
 export const resolvers = {
   Query: {

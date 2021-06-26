@@ -1,12 +1,11 @@
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
 
 import { getLanguages } from './../../shared/db';
-import { publishToPubsub } from './../../shared/utils';
+import { initializeApp, publishToPubsub } from './../../shared/utils';
 import { IScrapeData } from '../../shared/interfaces/scrapper.interface';
 
 
-const db = admin.firestore();
+const { db } = initializeApp()
 
 /**
  * Cronjob to run every Sunday at 1AM

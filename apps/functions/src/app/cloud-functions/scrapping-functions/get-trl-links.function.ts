@@ -1,10 +1,9 @@
 import * as _ from 'lodash';
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
 
 import { ITranslationLinkData } from '@ng-scrappy/models';
 import { shouldAdd } from './../../shared/db';
-import { publishToPubsub } from './../../shared/utils';
+import { initializeApp, publishToPubsub } from './../../shared/utils';
 import { ETLData, IScrapeData } from './../../shared/interfaces/scrapper.interface';
 
 import {
@@ -12,12 +11,7 @@ import {
   scrapeTrlLinks,
 } from './utils/trl-links-scrapper';
 
-
-const config = functions.config().service_account;
-
-admin.initializeApp(config);
-
-const db = admin.firestore();
+const { db } = initializeApp()
 
 const runtimeOpts = {
   timeoutSeconds: 540,
