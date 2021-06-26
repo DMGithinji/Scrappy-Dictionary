@@ -10,24 +10,26 @@ import { DbService } from '../../services/db.service';
 @Component({
   selector: 'home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-
   lang$: Observable<ILanguage>;
-  supportedLangs$: Observable<ILanguage[]>
+  supportedLangs$: Observable<ILanguage[]>;
 
-  constructor(
-    private _dict$: DbService,
-    private _lang$: ActiveLangService) {}
+  constructor(private _dict$: DbService, private _lang$: ActiveLangService) {}
 
   ngOnInit(): void {
-
     const activeLang$ = this._lang$.getActiveLang();
-    this.supportedLangs$ = this._dict$.getLanguageData(LanguageStatus.Supported);
+    this.supportedLangs$ = this._dict$.getLanguageData(
+      LanguageStatus.Supported
+    );
 
-    const data$ = combineLatest([activeLang$, this.supportedLangs$])
-    this.lang$ = data$.pipe(map(([active, langs]) => langs.find(l => l.language === active)));
-    this.supportedLangs$ = data$.pipe(map(([active, langs]) => langs.filter(l => l.language !== active)));
+    const data$ = combineLatest([activeLang$, this.supportedLangs$]);
+    this.lang$ = data$.pipe(
+      map(([active, langs]) => langs.find((l) => l.language === active))
+    );
+    this.supportedLangs$ = data$.pipe(
+      map(([active, langs]) => langs.filter((l) => l.language !== active))
+    );
   }
 }

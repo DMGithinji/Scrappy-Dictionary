@@ -80,16 +80,20 @@ export function LanguageVoteCard() {
           <Skeleton height={18} width={150} className="mb-2 d-block" />
           <Skeleton height={18} width={200} className="mb-2 d-block" />
         </div>
+      ) : hasVoted ? (
+        <p className="card-header text-dark" style={{ fontSize: '18px' }}>
+          Thanks for voting{' '}
+          <span role="img" aria-label="thumbsUp">
+            👍🏽
+          </span>{' '}
+          <br />
+          Keep posted to see whether your prefered language will be added! 😉
+        </p>
       ) : (
-        hasVoted
-          ? (<p className="card-header text-dark" style={{ fontSize: '18px' }}>
-                Thanks for voting <span role="img" aria-label="thumbsUp">👍🏽</span> <br />
-                Keep posted to see whether your prefered language will be added! 😉
-            </p>)
-          : <p className="card-header text-dark" style={{ fontSize: '18px' }}>
-              Which language translations would you like to see added next? <br />
-              Let us know! 😏👇
-            </p>
+        <p className="card-header text-dark" style={{ fontSize: '18px' }}>
+          Which language translations would you like to see added next? <br />
+          Let us know! 😏👇
+        </p>
       )}
 
       <div className="container-fluid pt-3">

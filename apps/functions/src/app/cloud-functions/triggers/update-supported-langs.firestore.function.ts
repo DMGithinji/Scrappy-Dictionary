@@ -5,7 +5,6 @@ import { IScrapeData } from '../../shared/interfaces';
 import { initializeApp, publishToPubsub } from '../../shared/utils';
 import { GET_TRL_LINKS_PUBSUB_TOPIC } from '../scrappers';
 
-
 const LANGUAGE_PATH = 'dictionary/{id}';
 const { db } = initializeApp();
 

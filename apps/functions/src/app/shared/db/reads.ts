@@ -1,5 +1,9 @@
 import * as _ from 'lodash';
-import { ILanguage, ITranslationResults, LanguageStatus } from '@ng-scrappy/models';
+import {
+  ILanguage,
+  ITranslationResults,
+  LanguageStatus,
+} from '@ng-scrappy/models';
 
 /**  Queries a word's translations from the different language collections */
 export async function searchWord(
@@ -36,7 +40,7 @@ export async function getLanguage(
     .collection('dictionary')
     .doc(lang)
     .get()
-    .then(doc => doc.data() as ILanguage);
+    .then((doc) => doc.data() as ILanguage);
 }
 
 /** Queries supported languages */
@@ -49,16 +53,16 @@ export async function getLanguages(
 
   if (status === LanguageStatus.Supported) {
     snapshot = await db
-    .collection('dictionary')
-    .where('status', '==', status)
-    .orderBy('wordCount', 'desc')
-    .get();
+      .collection('dictionary')
+      .where('status', '==', status)
+      .orderBy('wordCount', 'desc')
+      .get();
   } else {
-  snapshot = await db
-    .collection('dictionary')
-    .where('status', '==', status)
-    .limit(limit)
-    .get();
+    snapshot = await db
+      .collection('dictionary')
+      .where('status', '==', status)
+      .limit(limit)
+      .get();
   }
 
   return (snapshot.docs.map((doc) => doc.data()) as any) as ILanguage[];

@@ -4,7 +4,10 @@ import * as functions from 'firebase-functions';
 import { ITranslationLinkData } from '@ng-scrappy/models';
 import { shouldAdd } from './../../shared/db';
 import { initializeApp, publishToPubsub } from './../../shared/utils';
-import { ETLData, IScrapeData } from './../../shared/interfaces/scrapper.interface';
+import {
+  ETLData,
+  IScrapeData,
+} from './../../shared/interfaces/scrapper.interface';
 
 import {
   scrapePopularTrlLinks,

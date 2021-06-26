@@ -7,14 +7,10 @@ import { ActiveLangService } from './services/active-lang.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-
   activeLang$: Observable<string>;
 
-  constructor(private _lang: ActiveLangService) {
-
-  }
+  constructor(private _lang: ActiveLangService) {}
   ngOnInit() {
     this.activeLang$ = this._lang.getActiveLang();
   }
-
 }

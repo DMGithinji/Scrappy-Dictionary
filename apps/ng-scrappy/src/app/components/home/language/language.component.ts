@@ -3,9 +3,8 @@ import { ILanguage } from '@ng-scrappy/models';
 
 @Component({
   selector: 'app-language',
-  templateUrl: './language.component.html'
+  templateUrl: './language.component.html',
 })
 export class LanguageComponent {
-
   @Input() lang: ILanguage;
 }

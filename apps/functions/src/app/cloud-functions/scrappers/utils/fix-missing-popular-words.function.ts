@@ -41,6 +41,6 @@ export async function verifyPopularWords(
 
   dictionary.popular = popularSaved.filter((x) => !!x);
   return ((await dictCollection
-            .doc(language)
-            .update(dictionary)) as any) as ILanguage;
+    .doc(language)
+    .update(dictionary)) as any) as ILanguage;
 }

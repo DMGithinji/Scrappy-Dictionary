@@ -7,10 +7,9 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'active-lang-selector',
   templateUrl: './active-lang-selector.component.html',
-  styleUrls: ['./active-lang-selector.component.scss']
+  styleUrls: ['./active-lang-selector.component.scss'],
 })
 export class ActiveLangSelectorComponent implements OnInit {
-
   activeLang$: Observable<string>;
   langs$: Observable<ILanguage[]>;
 
@@ -18,7 +17,7 @@ export class ActiveLangSelectorComponent implements OnInit {
     private _activeLang$: ActiveLangService,
     private _dict: DbService,
     private _router: Router
-    ) {}
+  ) {}
 
   ngOnInit(): void {
     this.langs$ = this._dict.getLanguageData(LanguageStatus.Supported);
@@ -29,5 +28,4 @@ export class ActiveLangSelectorComponent implements OnInit {
     this._activeLang$.setActiveLang(lang);
     this._router.navigate(['/', lang]);
   }
-
 }

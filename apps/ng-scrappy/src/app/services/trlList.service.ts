@@ -2,10 +2,9 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import {  map, take } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import { ITranslation, ITranslationResults } from '@ng-scrappy/models';
-
 
 const LANG_PATH = (lang) => `dictionary/${lang}/words`;
 const QUERY_LIMIT = 5;
@@ -18,13 +17,12 @@ const QUERY_LIMIT = 5;
  */
 @Injectable()
 export class TrlListService {
-
   // Application state data
   private _done$$ = new BehaviorSubject(false);
   private _loading$$ = new BehaviorSubject(false);
   private _trlList$$ = new BehaviorSubject<ITranslationResults[]>([]);
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore) {}
 
   /** Returns an object with state loaded translation data, load status and done status */
   getData() {
@@ -32,10 +30,11 @@ export class TrlListService {
     const done$ = this._done$$.asObservable();
     const loading$ = this._loading$$.asObservable();
 
-    return combineLatest([trlData$, loading$, done$])
-            .pipe(map(([trlData, loading, done]) => {
-              return { trlData, loading, done }
-            }));
+    return combineLatest([trlData$, loading$, done$]).pipe(
+      map(([trlData, loading, done]) => {
+        return { trlData, loading, done };
+      })
+    );
   }
 
   /** Triggers firestore query for next set of data then updates the translation data store state */
@@ -47,25 +46,26 @@ export class TrlListService {
 
     this._loading$$.next(true);
 
-    const query = this.db.collection<ITranslation>(LANG_PATH(lang), ref => {
-      return  ref.orderBy('word', 'asc')
-                  .limit(QUERY_LIMIT)
-                  .startAfter(this._getCursor());
-    })
+    const query = this.db.collection<ITranslation>(LANG_PATH(lang), (ref) => {
+      return ref
+        .orderBy('word', 'asc')
+        .limit(QUERY_LIMIT)
+        .startAfter(this._getCursor());
+    });
 
-    query.valueChanges()
-         .pipe(take(1))
-         .subscribe(data => {
-          this._trlList$$.next([...this._trlList$$.value, ...data]);
+    query
+      .valueChanges()
+      .pipe(take(1))
+      .subscribe((data) => {
+        this._trlList$$.next([...this._trlList$$.value, ...data]);
 
-          this._loading$$.next(false);
+        this._loading$$.next(false);
 
-          if (!data.length) {
-            this._done$$.next(true)
-          }
-        });
+        if (!data.length) {
+          this._done$$.next(true);
+        }
+      });
   }
-
 
   /// HELPERS
   /** Used for paginated queries */
@@ -76,5 +76,4 @@ export class TrlListService {
     }
     return null;
   }
-
 }

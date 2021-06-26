@@ -6,10 +6,9 @@ import { DbService } from './db.service';
 const USER_LANGUAGE_VOTES = 'ng_user_language_votes';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class VoteService {
-
   constructor(private _db: DbService) {}
 
   /**
@@ -24,18 +23,23 @@ export class VoteService {
 
   /** Boolean used to track if user has voted for current language-set*/
   getHasVoted() {
-
-    return this._db.getLanguageData(LanguageStatus.Unsupported).pipe(map(langs => {
-      return this._getHasVoted(langs, this._getLocalStorageVotes());
-    }))
+    return this._db.getLanguageData(LanguageStatus.Unsupported).pipe(
+      map((langs) => {
+        return this._getHasVoted(langs, this._getLocalStorageVotes());
+      })
+    );
   }
 
-
   /// HELPERS
-  private _getHasVoted(dbUnsupportedLangs: ILanguage[],localStoreVotes: string[]) {
-    return  !localStoreVotes || !localStoreVotes.length || !dbUnsupportedLangs
-                ? false
-                : !!localStoreVotes.filter((l) => dbUnsupportedLangs.map((l) => l.language).includes(l)).length;
+  private _getHasVoted(
+    dbUnsupportedLangs: ILanguage[],
+    localStoreVotes: string[]
+  ) {
+    return !localStoreVotes || !localStoreVotes.length || !dbUnsupportedLangs
+      ? false
+      : !!localStoreVotes.filter((l) =>
+          dbUnsupportedLangs.map((l) => l.language).includes(l)
+        ).length;
   }
 
   private _getLocalStorageVotes() {
@@ -47,5 +51,4 @@ export class VoteService {
     const newCast = !localVotes ? [lang] : [...localVotes, lang];
     localStorage.setItem(USER_LANGUAGE_VOTES, JSON.stringify(newCast));
   }
-
 }

@@ -6,8 +6,7 @@ import * as admin from 'firebase-admin';
  *
  * Returns the app instance and the applications db
  */
-export function initializeApp()
-{
+export function initializeApp() {
   const config = functions.config().service_account;
 
   let app: admin.app.App;
@@ -22,4 +21,3 @@ export function initializeApp()
 
   return { app, db };
 }
-

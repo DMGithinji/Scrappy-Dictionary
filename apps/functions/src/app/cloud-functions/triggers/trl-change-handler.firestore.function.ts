@@ -26,7 +26,6 @@ const { db } = initializeApp();
 export const handleTrlCreate = functions.firestore
   .document(TRANSLATIONS_PATH)
   .onCreate(async (snapshot) => {
-
     const trl = snapshot.data() as ITranslationResults;
     const objectID = snapshot.id;
 
@@ -35,25 +34,25 @@ export const handleTrlCreate = functions.firestore
     algolia.saveObject({ ...trl, objectID });
   });
 
-
 /**
  * onDelete handler triggered when translation is added
  * - Will reduce word count for word's language
  * - Will delete index from algolia
-*/
+ */
 export const handleTrlDelete = functions.firestore
   .document(TRANSLATIONS_PATH)
   .onDelete(async (snapshot) => {
-
     const trl = snapshot.data() as ITranslationResults;
 
     await updateWordCount(trl, 'CREATE');
 
-    algolia.deleteObject(snapshot.id)
+    algolia.deleteObject(snapshot.id);
   });
 
-
-async function updateWordCount(word: ITranslationResults, dbEvent: 'CREATE' | 'DELETE') {
+async function updateWordCount(
+  word: ITranslationResults,
+  dbEvent: 'CREATE' | 'DELETE'
+) {
   try {
     const lang = await getLanguage(db, word.language);
 
@@ -68,9 +67,7 @@ async function updateWordCount(word: ITranslationResults, dbEvent: 'CREATE' | 'D
     if (dbEvent === 'DELETE') {
       lang.wordCount -= 1;
     }
-
-  } catch(err) {
+  } catch (err) {
     console.log(`Error updating word count:: ${err}`);
   }
-
 }

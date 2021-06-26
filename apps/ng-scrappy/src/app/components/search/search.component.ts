@@ -7,20 +7,19 @@ import { environment } from '../../../../src/environments/environment';
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent {
-
   algoliaConfig = environment.algoliaConfig;
 
   constructor(
     @Inject(DOCUMENT) private _document: HTMLDocument,
-    private _router: Router) { }
+    private _router: Router
+  ) {}
 
   goTo(hit: ITranslationResults) {
     this._router.navigate(['/', hit.language, 'words', hit.word]);
     const el = this._document.querySelector('.ais-SearchBox-resetIcon');
     el.parentElement.click();
   }
-
 }

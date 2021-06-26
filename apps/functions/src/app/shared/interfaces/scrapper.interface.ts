@@ -1,4 +1,4 @@
-import { ITranslationLinkData } from "@ng-scrappy/models";
+import { ITranslationLinkData } from '@ng-scrappy/models';
 
 /** Information used for web scrapping */
 export interface ETLData {

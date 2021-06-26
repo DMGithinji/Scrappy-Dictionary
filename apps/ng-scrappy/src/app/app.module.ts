@@ -24,7 +24,6 @@ import { VoteCardComponent } from './components/home/vote-card/vote-card.compone
 import { TrlListService } from './services/trlList.service';
 import { ScrollableDirective } from './directives/scrollable.directive';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,7 +36,7 @@ import { ScrollableDirective } from './directives/scrollable.directive';
     PopularComponent,
     TranslationOverviewComponent,
     ScrollableDirective,
-    VoteCardComponent
+    VoteCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +44,7 @@ import { ScrollableDirective } from './directives/scrollable.directive';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    NgAisModule.forRoot()
+    NgAisModule.forRoot(),
   ],
   providers: [TrlListService],
   bootstrap: [AppComponent],

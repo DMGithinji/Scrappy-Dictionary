@@ -15,5 +15,5 @@ export interface ILanguage extends IObject {
 export enum LanguageStatus {
   Unsupported = 'not-supported',
   Scrapping = 'scraping',
-  Supported = 'supported'
+  Supported = 'supported',
 }

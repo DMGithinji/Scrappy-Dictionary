@@ -1,5 +1,9 @@
 import { firestore } from 'firebase-admin';
-import { ILanguage, ITranslationLinkData, ITranslationResults } from '@ng-scrappy/models';
+import {
+  ILanguage,
+  ITranslationLinkData,
+  ITranslationResults,
+} from '@ng-scrappy/models';
 
 /** Save translation data to DB */
 export async function saveTrl(
@@ -36,7 +40,7 @@ export async function addToBlacklist(
 /**
  * Updates a language's votes
  */
- export async function setVote(db: FirebaseFirestore.Firestore, lang: string) {
+export async function setVote(db: FirebaseFirestore.Firestore, lang: string) {
   console.log('Setting Vote In DB.');
 
   const languagesRepo = db.collection('dictionary');

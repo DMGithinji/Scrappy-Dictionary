@@ -5,10 +5,9 @@ const DEFAULT_LANG = 'swahili';
 const ACTIVE_LANG_KEY = 'ng_scrappy_active_lang';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ActiveLangService {
-
   private _activeLang = localStorage.getItem(ACTIVE_LANG_KEY) ?? DEFAULT_LANG;
   activeLang$ = new BehaviorSubject<string>(this._activeLang);
 

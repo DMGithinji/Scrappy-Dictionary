@@ -50,7 +50,7 @@ export function HomePage(props) {
                     </button>
                   </div>
                   <small className="text-muted"> {lang.wordCount} words</small>
-              </div>
+                </div>
               </Link>
             ) : (
               <Skeleton height={40} width={140} />

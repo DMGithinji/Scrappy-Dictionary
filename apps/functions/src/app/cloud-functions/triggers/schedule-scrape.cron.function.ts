@@ -5,7 +5,6 @@ import { initializeApp, publishToPubsub } from './../../shared/utils';
 import { IScrapeData } from '../../shared/interfaces';
 import { GET_TRL_LINKS_PUBSUB_TOPIC } from '../scrappers';
 
-
 const { db } = initializeApp();
 
 /**
