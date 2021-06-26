@@ -12,7 +12,9 @@ import { getAndSave } from './utils/trl-details-scrapper';
 import { scrambleRelatedWords } from './utils/related-words-scrambler.function';
 import { verifyPopularWords } from './utils/fix-missing-popular-words.function';
 
-const { db } = initializeApp()
+export const GET_TRL_PUBSUB_TOPIC = 'getTranslations';
+
+const { db } = initializeApp();
 
 const runtimeOpts = {
   timeoutSeconds: 540,
@@ -21,7 +23,7 @@ const runtimeOpts = {
 
 export const getTranslations = functions
   .runWith(runtimeOpts)
-  .pubsub.topic('getTranslations')
+  .pubsub.topic(GET_TRL_PUBSUB_TOPIC)
   .onPublish(async (message) => {
     const messageBody = message.data
       ? Buffer.from(message.data, 'base64').toString()

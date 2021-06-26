@@ -3,10 +3,11 @@ import * as functions from 'firebase-functions';
 
 import { IScrapeData } from '../../shared/interfaces';
 import { initializeApp, publishToPubsub } from '../../shared/utils';
+import { GET_TRL_LINKS_PUBSUB_TOPIC } from '../scrappers';
 
 
 const LANGUAGE_PATH = 'dictionary/{id}';
-const { db } = initializeApp()
+const { db } = initializeApp();
 
 /**
  * onWrite handler that is fired whenever language is updated
@@ -15,7 +16,7 @@ const { db } = initializeApp()
  *
  * Once a language is marked 'supported', it will have it's translations updated weekly
  */
-export const setToScraping = functions.firestore
+export const updateSupportedLangs = functions.firestore
   .document(LANGUAGE_PATH)
   .onUpdate(async (change) => {
     const newData = change.after.data() as ILanguage;
@@ -34,6 +35,6 @@ export const setToScraping = functions.firestore
       console.log(
         `Publishing ${JSON.stringify(newData.language)} for initial scraping`
       );
-      await publishToPubsub(data, 'dictionaryScrapper');
+      await publishToPubsub(data, GET_TRL_LINKS_PUBSUB_TOPIC);
     }
   });

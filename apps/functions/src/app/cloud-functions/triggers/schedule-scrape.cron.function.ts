@@ -2,10 +2,11 @@ import * as functions from 'firebase-functions';
 
 import { getLanguages } from './../../shared/db';
 import { initializeApp, publishToPubsub } from './../../shared/utils';
-import { IScrapeData } from '../../shared/interfaces/scrapper.interface';
+import { IScrapeData } from '../../shared/interfaces';
+import { GET_TRL_LINKS_PUBSUB_TOPIC } from '../scrappers';
 
 
-const { db } = initializeApp()
+const { db } = initializeApp();
 
 /**
  * Cronjob to run every Sunday at 1AM
@@ -13,7 +14,7 @@ const { db } = initializeApp()
  * Triggers scraping of newly added tranlsations of supported languages
  * from target site
  */
-export const scrapingCron = functions.pubsub
+export const scheduleScrape = functions.pubsub
   .schedule('1 0 * * SUN')
   .timeZone('Africa/Nairobi')
   .onRun(async (context) => {
@@ -30,7 +31,7 @@ export const scrapingCron = functions.pubsub
       console.log(
         `Publishing ${JSON.stringify(languages)} for scheduled scraping`
       );
-      await publishToPubsub(data, 'dictionaryScrapper');
+      await publishToPubsub(data, GET_TRL_LINKS_PUBSUB_TOPIC);
     } catch (err) {
       console.log('[scrapper]:- Error scheduling scrapping', err);
     }

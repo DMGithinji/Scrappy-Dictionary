@@ -9,7 +9,7 @@ import {
 } from '@ng-scrappy/backend/db';
 import { initializeApp } from '../../../shared/utils';
 
-const { db } = initializeApp()
+const { db } = initializeApp();
 
 export const resolvers = {
   Query: {

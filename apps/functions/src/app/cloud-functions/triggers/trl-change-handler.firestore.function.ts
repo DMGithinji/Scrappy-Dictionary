@@ -13,7 +13,7 @@ const algolia = client.initIndex('dictionary');
 
 const TRANSLATIONS_PATH = 'dictionary/{language}/words/{id}';
 
-const { db } = initializeApp()
+const { db } = initializeApp();
 
 /**
  * onCreate handler triggered when translation is added
@@ -23,7 +23,7 @@ const { db } = initializeApp()
  * Both functionalities could be handled by seperate cloud functions however
  * it would result to too many cloud functions (twice as many), which is costly
  */
-export const addToAlgolia = functions.firestore
+export const handleTrlCreate = functions.firestore
   .document(TRANSLATIONS_PATH)
   .onCreate(async (snapshot) => {
 
@@ -41,7 +41,7 @@ export const addToAlgolia = functions.firestore
  * - Will reduce word count for word's language
  * - Will delete index from algolia
 */
-export const deleteFromAlgolia = functions.firestore
+export const handleTrlDelete = functions.firestore
   .document(TRANSLATIONS_PATH)
   .onDelete(async (snapshot) => {
 

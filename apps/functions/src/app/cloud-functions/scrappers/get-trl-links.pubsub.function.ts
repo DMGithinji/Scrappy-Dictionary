@@ -10,8 +10,11 @@ import {
   scrapePopularTrlLinks,
   scrapeTrlLinks,
 } from './utils/trl-links-scrapper';
+import { GET_TRL_PUBSUB_TOPIC } from './get-translations.pubsub.function';
 
-const { db } = initializeApp()
+export const GET_TRL_LINKS_PUBSUB_TOPIC = 'getTranslationLinks';
+
+const { db } = initializeApp();
 
 const runtimeOpts = {
   timeoutSeconds: 540,
@@ -25,7 +28,7 @@ const runtimeOpts = {
  */
 export const getTranslationLinks = functions
   .runWith(runtimeOpts)
-  .pubsub.topic('getTranslationLinks')
+  .pubsub.topic(GET_TRL_LINKS_PUBSUB_TOPIC)
   .onPublish(async (message) => {
     console.log('Executing scrappy.');
 
@@ -75,7 +78,7 @@ export const getTranslationLinks = functions
         console.log(
           `Publishing ${etlData.trlLinks.length} to getTranslationsFromLinks`
         );
-        await publishToPubsub(etlData, 'getTranslationsFromLinks');
+        await publishToPubsub(etlData, GET_TRL_PUBSUB_TOPIC);
       }
     } catch (err) {
       console.log('[scrapper]:- Error scrapping', err);

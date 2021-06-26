@@ -1,1 +1,5 @@
-export { scrappyApi } from './gql-server.function';
+/**
+ * Cloud function that hosts the graphQL server
+ */
+
+export { scrappyApi } from './gql-server.https.function';
