@@ -34,7 +34,7 @@ export const LanguageContext = React.createContext({
 
 const getLang = (dictionary) => dictionary[0]?.language ?? null;
 const client = new ApolloClient({
-  uri: 'http://localhost:5001/cloudfunc-101/us-central1/scrappyApi',
+  uri: 'https://us-central1-cloudfunc-101.cloudfunctions.net/scrappyApi',
   cache: new InMemoryCache({
     typePolicies: {
       Query: {
