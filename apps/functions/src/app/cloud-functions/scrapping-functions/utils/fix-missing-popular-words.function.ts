@@ -1,10 +1,12 @@
 import { ILanguage, ITranslationLinkData } from '@ng-scrappy/models';
-import { getLanguageWords, shouldAdd } from '@ng-scrappy/backend/db';
+import { getLanguageWords, shouldAdd } from '../../../shared/db';
 import { getAndSave } from '../utils/trl-details-scrapper';
 
 /**
  * Popular words from scraped site are sometimes missing from saved transaltions
  * here we ensure the missing popular words with translations are added
+ *
+ * Writes popular missing words to db
  */
 export async function verifyPopularWords(
   language: string,

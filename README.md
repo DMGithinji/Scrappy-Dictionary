@@ -3,7 +3,7 @@
 A project built to explore different technologies I am currently curious about.
 
 It is a PWA of a dictionary of multiple Kenyan languages.
-The content is mostly sourced/scrapped from [lughayangu.com](https://lughayangu.com), which inspired the project.
+The content is mostly sourced/scraped from [lughayangu.com](https://lughayangu.com), which inspired the project.
 
 I've used an [Nx](https://nx.dev/) monorepo as my intention is to implement the application with different frontend frameworks and state management patterns so as to compare the developer experience and end result between them, as well as learn a few things.
 

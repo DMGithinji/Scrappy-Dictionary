@@ -1,5 +1,5 @@
 import { firestore } from 'firebase-admin';
-import { ITranslationLinkData, ITranslationResults } from '@ng-scrappy/models';
+import { ILanguage, ITranslationLinkData, ITranslationResults } from '@ng-scrappy/models';
 
 /** Save translation data to DB */
 export async function saveTrl(
@@ -31,4 +31,27 @@ export async function addToBlacklist(
   );
   trlLinkData.word = trlLinkData.word.toLowerCase();
   await repo.add(trlLinkData);
+}
+
+/**
+ * Updates a language's votes
+ */
+ export async function setVote(db: FirebaseFirestore.Firestore, lang: string) {
+  console.log('Setting Vote In DB.');
+
+  const languagesRepo = db.collection('dictionary');
+
+  const snapshot = await languagesRepo.where('language', '==', lang).get();
+  // .then((langs) => langs[0].data() ?? null);
+  const langs = (snapshot.docs.map((doc) => doc.data()) as any) as ILanguage;
+  const votedLang = langs[0] ?? null;
+
+  if (!votedLang) {
+    return { error: 'Voted language not found' };
+  }
+
+  votedLang.votes = votedLang.votes + 1;
+  await languagesRepo.doc(votedLang.language).update(votedLang);
+
+  return votedLang;
 }
