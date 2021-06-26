@@ -147,34 +147,6 @@
         }
       }
     },
-    "ng-scrappy-e2e": {
-      "root": "apps/ng-scrappy-e2e",
-      "sourceRoot": "apps/ng-scrappy-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/ng-scrappy-e2e/cypress.json",
-            "tsConfig": "apps/ng-scrappy-e2e/tsconfig.e2e.json",
-            "devServerTarget": "ng-scrappy:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "ng-scrappy:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/ng-scrappy-e2e/**/*.{js,ts}"
-            ]
-          }
-        }
-      }
-    },
     "functions": {
       "root": "apps/functions",
       "sourceRoot": "apps/functions/src",
@@ -314,34 +286,6 @@
           "options": {
             "jestConfig": "apps/react-scrappy/jest.config.js",
             "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "react-scrappy-e2e": {
-      "root": "apps/react-scrappy-e2e",
-      "sourceRoot": "apps/react-scrappy-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/react-scrappy-e2e/cypress.json",
-            "tsConfig": "apps/react-scrappy-e2e/tsconfig.e2e.json",
-            "devServerTarget": "react-scrappy:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "react-scrappy:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "apps/react-scrappy-e2e/**/*.{js,ts}"
-            ]
           }
         }
       }
