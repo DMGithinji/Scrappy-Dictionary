@@ -231,56 +231,6 @@
         }
       }
     },
-    "backend-scrapper": {
-      "root": "libs/backend/scrapper",
-      "sourceRoot": "libs/backend/scrapper/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/backend/scrapper/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/backend/scrapper"
-          ],
-          "options": {
-            "jestConfig": "libs/backend/scrapper/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "backend-graphql": {
-      "root": "libs/backend/graphql",
-      "sourceRoot": "libs/backend/graphql/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/backend/graphql/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/backend/graphql"
-          ],
-          "options": {
-            "jestConfig": "libs/backend/graphql/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
     "react-scrappy": {
       "root": "apps/react-scrappy",
       "sourceRoot": "apps/react-scrappy/src",
@@ -413,56 +363,6 @@
           ],
           "options": {
             "jestConfig": "libs/models/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "backend-db": {
-      "root": "libs/backend/db",
-      "sourceRoot": "libs/backend/db/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/backend/db/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/backend/db"
-          ],
-          "options": {
-            "jestConfig": "libs/backend/db/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "backend-algolia-search": {
-      "root": "libs/backend/algolia-search",
-      "sourceRoot": "libs/backend/algolia-search/src",
-      "projectType": "library",
-      "architect": {
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/backend/algolia-search/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/backend/algolia-search"
-          ],
-          "options": {
-            "jestConfig": "libs/backend/algolia-search/jest.config.js",
             "passWithNoTests": true
           }
         }

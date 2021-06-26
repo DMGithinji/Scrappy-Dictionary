@@ -6,7 +6,7 @@ import {
   getLanguages,
   searchWord,
   setVote,
-} from '@ng-scrappy/backend/db';
+} from '../../../shared/db';
 import { initializeApp } from '../../../shared/utils';
 
 const { db } = initializeApp();

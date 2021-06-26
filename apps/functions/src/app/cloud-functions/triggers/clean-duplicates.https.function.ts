@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as functions from 'firebase-functions';
-import { getLanguages, getLanguageWords } from '@ng-scrappy/backend/db';
+import { getLanguages, getLanguageWords } from '../../shared/db';
 import { initializeApp } from '../../shared/utils';
 
 const { db } = initializeApp();

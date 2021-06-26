@@ -19,13 +19,7 @@
       "@ng-scrappy/service-json": [
         "apps/functions/src/environments/service-account.json"
       ],
-      "@ng-scrappy/backend/scrapper": ["libs/backend/scrapper/src/index.ts"],
-      "@ng-scrappy/backend/graphql": ["libs/backend/graphql/src/index.ts"],
-      "@ng-scrappy/models": ["libs/models/src/index.ts"],
-      "@ng-scrappy/backend/db": ["libs/backend/db/src/index.ts"],
-      "@ng-scrappy/backend/algolia-search": [
-        "libs/backend/algolia-search/src/index.ts"
-      ]
+      "@ng-scrappy/models": ["libs/models/src/index.ts"]
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,

@@ -24,15 +24,11 @@
     "ng-scrappy": { "tags": [] },
     "ng-scrappy-e2e": { "tags": [], "implicitDependencies": ["ng-scrappy"] },
     "functions": { "tags": [] },
-    "backend-scrapper": { "tags": [] },
-    "backend-graphql": { "tags": [] },
     "react-scrappy": { "tags": [] },
     "react-scrappy-e2e": {
       "tags": [],
       "implicitDependencies": ["react-scrappy"]
     },
-    "models": { "tags": [] },
-    "backend-db": { "tags": [] },
-    "backend-algolia-search": { "tags": [] }
+    "models": { "tags": [] }
   }
 }
