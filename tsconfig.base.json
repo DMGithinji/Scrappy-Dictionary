@@ -16,10 +16,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@ng-scrappy/models": ["libs/models/src/index.ts"],
       "@ng-scrappy/service-json": [
         "apps/functions/src/environments/service-account.json"
-      ],
-      "@ng-scrappy/models": ["libs/models/src/index.ts"]
+      ]
     },
     "resolveJsonModule": true,
     "esModuleInterop": true,

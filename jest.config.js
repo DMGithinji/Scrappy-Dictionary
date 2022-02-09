@@ -1,8 +1,3 @@
-module.exports = {
-  projects: [
-    '<rootDir>/apps/ng-scrappy',
-    '<rootDir>/apps/functions',
-    '<rootDir>/apps/react-scrappy',
-    '<rootDir>/libs/models'
-  ],
-};
+const { getJestProjects } = require('@nrwl/jest');
+
+module.exports = { projects: getJestProjects() };
