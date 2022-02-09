@@ -1,8 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import algoliasearch from 'algoliasearch/lite';
 import { ITranslationResults } from '@ng-scrappy/models';
 import { environment } from '../../../../src/environments/environment';
+
 
 @Component({
   selector: 'app-search',
@@ -10,7 +12,14 @@ import { environment } from '../../../../src/environments/environment';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent {
-  algoliaConfig = environment.algoliaConfig;
+
+  config = {
+    indexName: 'dictionary',
+    searchClient: algoliasearch(
+      environment.algoliaConfig.appId,
+      environment.algoliaConfig.searchKey,
+    ),
+  };
 
   constructor(
     @Inject(DOCUMENT) private _document: HTMLDocument,
