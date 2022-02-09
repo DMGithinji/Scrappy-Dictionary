@@ -13,7 +13,7 @@
         {{ trl.word | titlecase }}
       </h2>
       <p class="card-text">
-        {{ trl.meaning ? trl.meaning : "😬 Meaning wasn't provided" }}
+        {{ trl.meaning ? (trl.meaning | capitalize) : "😬 Meaning wasn't provided" }}
       </p>
     </div>
 
@@ -24,7 +24,7 @@
         Example
       </p>
       <p>
-        {{ trl.example ? (trl.example | titlecase) : "😞 No example available." }}
+        {{ trl.example ? (trl.example | capitalize) : "😞 No example available." }}
       </p>
 
       <p class="text-muted">
@@ -32,7 +32,7 @@
       </p>
 
       <p>
-        {{ trl.translation ? (trl.translation | titlecase) : "😞 The translation wasn't provided." }}
+        {{ trl.translation ? (trl.translation | capitalize) : "😞 The translation wasn't provided." }}
       </p>
     </div>
 

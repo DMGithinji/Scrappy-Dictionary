@@ -24,6 +24,7 @@ import { VoteCardComponent } from './components/home/vote-card/vote-card.compone
 import { TrlListService } from './services/trlList.service';
 import { ScrollableDirective } from './directives/scrollable.directive';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     PopularComponent,
     TranslationOverviewComponent,
     ScrollableDirective,
+    CapitalizePipe,
     VoteCardComponent,
   ],
   imports: [
